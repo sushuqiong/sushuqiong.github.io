@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="sushuqiong 的个人主页与博客，记录公开写作、项目整理和方法笔记。">
+    <meta name="theme-color" content="#ffffff">
+    <title>sushuqiong · 个人主页与博客</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#content">跳到内容</a>
+    <div data-shell></div>
+    <main id="content" class="page">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Home</p>
+            <h1>sushuqiong</h1>
+            <p>一个记录公开写作、项目整理和方法笔记的个人站。这里默认只展示可以分享的内容，不放手机号、住址、单位地址或其他敏感信息。</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="/posts/">阅读文章</a>
+              <a class="button" href="/projects/">查看项目</a>
+              <a class="button" href="/about/">了解我</a>
+            </div>
+          </div>
+          <aside class="hero-panel" aria-label="站点说明">
+            <div class="hero-panel-header">
+              <div>
+                <p class="eyebrow">站点说明</p>
+                <h2>清爽、克制、可持续更新</h2>
+              </div>
+            </div>
+            <p class="hero-note">参考 Huxpro 的博客气质，但更偏向个人主页与公开笔记。布局保持轻量，内容以后可以持续加文章和项目。</p>
+            <ul class="meta-list">
+              <li class="meta-item">
+                <span class="meta-key">发布</span>
+                <span class="meta-value">GitHub Pages + Actions 自动发布</span>
+              </li>
+              <li class="meta-item">
+                <span class="meta-key">公开边界</span>
+                <span class="meta-value">只展示文章、项目和可分享链接</span>
+              </li>
+              <li class="meta-item">
+                <span class="meta-key">联系</span>
+                <span class="meta-value">优先从 GitHub 主页开始</span>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">精选</p>
+              <h2>精选文章</h2>
+            </div>
+            <a class="section-link" href="/posts/">查看全部</a>
+          </div>
+          <div class="post-grid">
+            <a class="post-card" href="/posts/github-pages/">
+              <span class="badge">入门</span>
+              <h3>为什么我选择 GitHub Pages 做个人站</h3>
+              <p>把服务器、域名、SSL 和部署流程尽量收进自动化里，个人写作只需要专注内容本身。</p>
+              <div class="post-meta">
+                <span>5 分钟阅读</span>
+                <span>·</span>
+                <time datetime="2026-08-07">2026-08-07</time>
+              </div>
+            </a>
+            <a class="post-card" href="/posts/site-architecture/">
+              <span class="badge">结构</span>
+              <h3>这个站点是怎样组织的</h3>
+              <p>首页、文章、归档、项目和关于页各自负责什么，如何保持以后继续扩展也不乱。</p>
+              <div class="post-meta">
+                <span>4 分钟阅读</span>
+                <span>·</span>
+                <time datetime="2026-08-06">2026-08-06</time>
+              </div>
+            </a>
+            <a class="post-card" href="/posts/privacy/">
+              <span class="badge">隐私</span>
+              <h3>公开内容与隐私边界</h3>
+              <p>哪些内容适合放在公开站点上，哪些内容应该留在私下，顺手把默认策略定清楚。</p>
+              <div class="post-meta">
+                <span>6 分钟阅读</span>
+                <span>·</span>
+                <time datetime="2026-08-05">2026-08-05</time>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container split">
+          <div>
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">最近</p>
+                <h2>最近项目</h2>
+              </div>
+            </div>
+            <div class="list-rows">
+              <article class="row">
+                <div>
+                  <h3>个人站重构</h3>
+                  <p>把个人主页、文章页、归档页和项目页统一成一套轻量模板。</p>
+                </div>
+                <time datetime="2026-08-07">8 月</time>
+              </article>
+              <article class="row">
+                <div>
+                  <h3>文章写作清单</h3>
+                  <p>统一标题、摘要、归档和文章卡片，写作时不用反复想页面结构。</p>
+                </div>
+                <time datetime="2026-08-06">8 月</time>
+              </article>
+              <article class="row">
+                <div>
+                  <h3>发布流水线</h3>
+                  <p>用 GitHub Actions 自动构建并发布到 Pages，减少手工操作。</p>
+                </div>
+                <time datetime="2026-08-05">8 月</time>
+              </article>
+            </div>
+          </div>
+          <aside class="figure-panel">
+            <p class="eyebrow">写作方向</p>
+            <div class="tag-cloud">
+              <a class="tag" href="/posts/">站点搭建</a>
+              <a class="tag" href="/posts/">博客写作</a>
+              <a class="tag" href="/posts/">工具流程</a>
+              <a class="tag" href="/posts/">公开知识</a>
+              <a class="tag" href="/posts/">笔记整理</a>
+            </div>
+            <p class="muted">以后可以继续补专题页、RSS、文章评论入口，现阶段保持清楚和可扩展。</p>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <div data-footer></div>
+    <script type="module" src="/assets/site.js"></script>
+  </body>
+</html>
+

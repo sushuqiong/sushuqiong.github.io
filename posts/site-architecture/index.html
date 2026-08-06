@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="这个站点是怎样组织的。">
+    <meta name="theme-color" content="#ffffff">
+    <title>这个站点是怎样组织的</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body data-page="posts">
+    <a class="skip-link" href="#content">跳到内容</a>
+    <div data-shell></div>
+    <main id="content" class="page">
+      <article class="article">
+        <div class="container">
+          <header class="article-header">
+            <p class="eyebrow">文章 · 结构</p>
+            <h1>这个站点是怎样组织的</h1>
+            <p class="article-lead">一个清楚的站点，往往不是靠很多组件堆出来的，而是靠内容结构先定好。这个版本先把首页、文章、归档、项目和关于页理顺。</p>
+            <div class="article-meta">
+              <span>4 分钟阅读</span>
+              <span>·</span>
+              <time datetime="2026-08-06">2026-08-06</time>
+              <span>·</span>
+              <span>公开文章</span>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>我想要的不是“一个只看起来像博客”的页面，而是一个真的可以持续写东西、放项目、做归档的站点。所以结构先清楚，内容以后才能更稳地往里填。</p>
+
+            <h2>首页</h2>
+            <p>首页负责第一眼判断：这是谁、写什么、怎么继续看。它会放简介、精选文章、最近项目和写作方向，不追求花哨，只追求清楚。</p>
+
+            <h2>文章页与文章列表</h2>
+            <p>文章列表负责入口，文章页负责阅读。每篇文章尽量写成一件完整的小事，标题、日期、摘要和正文的关系固定下来，后面就好维护。</p>
+
+            <h2>归档页</h2>
+            <p>归档页是给回头翻阅的人看的。它不需要复杂，只要能按时间把内容收好，读者就能迅速找到某个阶段写过什么。</p>
+
+            <h2>项目页</h2>
+            <p>项目页不是作品集式的堆砌，而是把公开项目整理成稳定入口。每个项目说明它做了什么、为什么做、下一步还能怎么补。</p>
+
+            <h2>关于页</h2>
+            <p>关于页主要解释公开边界和联系入口。因为这是个人站，清楚说明什么不公开，往往比堆更多信息更重要。</p>
+
+            <pre><code>/
+├── index.html
+├── posts/
+├── archives/
+├── projects/
+├── about/
+└── assets/</code></pre>
+          </div>
+        </div>
+      </article>
+    </main>
+    <div data-footer></div>
+    <script type="module" src="/assets/site.js"></script>
+  </body>
+</html>
+
