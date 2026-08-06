@@ -32,11 +32,11 @@
               </li>
               <li class="meta-item">
                 <span class="meta-key">Skills</span>
-                <span class="meta-value"><a href="/skills/">查看公开 skills</a></span>
+                <span class="meta-value"><a href="/skills.html">查看公开 skills</a></span>
               </li>
               <li class="meta-item">
                 <span class="meta-key">公众号</span>
-                <span class="meta-value"><a href="/wechat/">查看精选推文</a></span>
+                <span class="meta-value"><a href="/wechat.html">查看精选推文</a></span>
               </li>
               <li class="meta-item">
                 <span class="meta-key">关于</span>
@@ -48,6 +48,16 @@
       </section>
     </main>
     <div data-footer></div>
+    <script>
+      const redirects = {
+        "/skills/": "/skills.html",
+        "/skills/index.html": "/skills.html",
+        "/wechat/": "/wechat.html",
+        "/wechat/index.html": "/wechat.html",
+      }
+      const target = redirects[location.pathname]
+      if (target) location.replace(target + location.search + location.hash)
+    </script>
     <script type="module" src="/assets/site.js"></script>
   </body>
 </html>
