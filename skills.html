@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="sushuqiong 的公开 GitHub skills 与研究工具中心。">
+    <meta name="theme-color" content="#ffffff">
+    <title>Skills · sushuqiong</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body data-page="skills">
+    <a class="skip-link" href="#content">跳到内容</a>
+    <div data-shell></div>
+    <main id="content" class="page">
+      <section class="article">
+        <div class="container">
+          <div class="article-header">
+            <p class="eyebrow">Skills Hub</p>
+            <h1>公开 skills 与研究工具</h1>
+            <p class="article-lead">这些卡片来自公开 GitHub 仓库，展示项目定位、适用任务和打开入口。页面只保留公开摘要，不暴露私有数据、后台信息或本机路径。</p>
+          </div>
+          <div class="toolbar" data-skill-filters aria-label="Skill 筛选"></div>
+          <div class="feature-grid" data-skill-grid></div>
+        </div>
+      </section>
+    </main>
+    <dialog class="detail-dialog" data-detail-dialog>
+      <div class="dialog-card">
+        <button class="dialog-close" type="button" data-close-dialog aria-label="关闭">×</button>
+        <p class="eyebrow" data-dialog-kicker></p>
+        <h2 data-dialog-title></h2>
+        <p data-dialog-body></p>
+        <a class="button button-primary" data-dialog-link target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </dialog>
+    <div data-footer></div>
+    <script type="module" src="/assets/site.js"></script>
+  </body>
+</html>

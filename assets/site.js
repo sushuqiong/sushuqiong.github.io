@@ -1,7 +1,7 @@
 const navItems = [
   { href: "/", label: "首页" },
-  { href: "/skills/", label: "Skills" },
-  { href: "/wechat/", label: "公众号" },
+  { href: "/skills.html", label: "Skills" },
+  { href: "/wechat.html", label: "公众号" },
   { href: "/archives/", label: "归档" },
   { href: "/projects/", label: "项目" },
   { href: "/about/", label: "关于" },
@@ -48,8 +48,8 @@ if (footer) {
         <p>站点不公开手机号、住址、私人邮箱、后台入口或任何登录凭据。</p>
       </div>
       <div class="footer-links">
-        <a href="/skills/">Skills</a>
-        <a href="/wechat/">公众号</a>
+        <a href="/skills.html">Skills</a>
+        <a href="/wechat.html">公众号</a>
         <a href="/projects/">项目</a>
         <a href="/about/">关于</a>
       </div>
