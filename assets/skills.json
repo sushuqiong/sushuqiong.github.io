@@ -1,0 +1,98 @@
+[
+  {
+    "name": "ai-knowledge-writing-skill",
+    "title": "AI Knowledge Workbench",
+    "category": "Knowledge",
+    "tags": ["writing", "routing", "privacy", "pages"],
+    "summary": "Five-lane Codex workbench for source reading, visualization briefs, GitHub Pages surfaces, task queues, and precision review.",
+    "detail": "A route-first knowledge workflow that turns scattered source reading, page building, and public-safe writing into repeatable lanes.",
+    "repo": "https://github.com/sushuqiong/ai-knowledge-writing-skill",
+    "demo": "https://sushuqiong.github.io/ai-knowledge-writing-skill/",
+    "language": "Markdown",
+    "updated": "2026-08-01"
+  },
+  {
+    "name": "med-research-ai-navigator",
+    "title": "Medical Research AI Navigator",
+    "category": "Medical Research",
+    "tags": ["medical", "statistics", "bioinformatics", "paper"],
+    "summary": "Three-lane navigator for medical research planning: statistics, bioinformatics, and paper-ready outputs.",
+    "detail": "Built for clinical statistics, oncology bioinformatics, TCGA/GEO workflows, single-cell analysis, and manuscript packaging.",
+    "repo": "https://github.com/sushuqiong/med-research-ai-navigator",
+    "demo": "",
+    "language": "Markdown",
+    "updated": "2026-07-26"
+  },
+  {
+    "name": "ai-product-teardown-studio",
+    "title": "AI Product Teardown Studio",
+    "category": "AI Product",
+    "tags": ["ai-product", "analysis", "patterns", "originality"],
+    "summary": "Workbench for classifying repositories, mapping AI surfaces, extracting reusable patterns, and drafting originality-safe skills.",
+    "detail": "Useful when turning external product observations into safe, original, reusable workflow ideas.",
+    "repo": "https://github.com/sushuqiong/ai-product-teardown-studio",
+    "demo": "",
+    "language": "Python",
+    "updated": "2026-08-03"
+  },
+  {
+    "name": "medical-review-topic-scout",
+    "title": "Medical Review Topic Scout",
+    "category": "Medical Research",
+    "tags": ["review", "pubmed", "topic", "biomarker"],
+    "summary": "AI skill for scouting biomedical review topics from disease-mechanism and disease-biomarker pairs with PubMed evidence scanning.",
+    "detail": "Designed to separate promising review angles from under-supported ideas before a manuscript project starts.",
+    "repo": "https://github.com/sushuqiong/medical-review-topic-scout",
+    "demo": "",
+    "language": "Python",
+    "updated": "2026-07-19"
+  },
+  {
+    "name": "mr-study-copilot",
+    "title": "MR Study Copilot",
+    "category": "Causal Inference",
+    "tags": ["mendelian-randomization", "omics", "workflow", "research"],
+    "summary": "Execution-first Mendelian randomization workflow copilot.",
+    "detail": "A focused assistant for keeping MR study setup, checks, and interpretation closer to a reproducible analysis route.",
+    "repo": "https://github.com/sushuqiong/mr-study-copilot",
+    "demo": "",
+    "language": "Python",
+    "updated": "2026-07-19"
+  },
+  {
+    "name": "oncobulk-research-copilot",
+    "title": "Oncobulk Research Copilot",
+    "category": "Bioinformatics",
+    "tags": ["oncology", "bulk-rnaseq", "privacy", "workflow"],
+    "summary": "Privacy-aware copilot for tumor-focused bulk transcriptome studies.",
+    "detail": "A workflow layer for public or de-identified tumor transcriptome analysis, with privacy and claim-boundary guardrails.",
+    "repo": "https://github.com/sushuqiong/oncobulk-research-copilot",
+    "demo": "",
+    "language": "Python",
+    "updated": "2026-07-19"
+  },
+  {
+    "name": "multiplot",
+    "title": "multiplot",
+    "category": "Visualization",
+    "tags": ["R", "ggplot2", "visualization", "package"],
+    "summary": "One-call ggplot2 extension that approximates default plot styles from 10 graphing software and academic publication style.",
+    "detail": "An R package with 29 functions and a reproducible plotting workflow for Prism, SPSS, Origin, Stata, MATLAB, JMP, and more.",
+    "repo": "https://github.com/sushuqiong/multiplot",
+    "demo": "https://github.com/sushuqiong/multiplot#readme",
+    "language": "R",
+    "updated": "2026-07-19"
+  },
+  {
+    "name": "l-route-reflection-skill",
+    "title": "L-route Reflection Skill",
+    "category": "Reflection",
+    "tags": ["reflection", "planning", "route"],
+    "summary": "A lightweight route-reflection skill for moving from 2023 to 2025 learning and work trajectories.",
+    "detail": "A smaller planning artifact that keeps reflective route choices explicit rather than scattered across notes.",
+    "repo": "https://github.com/sushuqiong/l-route-reflection-skill",
+    "demo": "",
+    "language": "Markdown",
+    "updated": "2026-07-19"
+  }
+]

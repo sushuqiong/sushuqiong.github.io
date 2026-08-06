@@ -1,15 +1,17 @@
 # sushuqiong.github.io
 
-个人主页 + 博客的 GitHub Pages 站点。
+个人主页 + skills 展示 + 公众号精选的 GitHub Pages 站点。
 
 ## 结构
 
 - `index.html` 首页
+- `skills/` 公开 GitHub skills 与研究工具中心
+- `wechat/` 公众号公开检索精选
 - `posts/` 文章列表和文章页
 - `archives/` 归档页
 - `projects/` 项目页
 - `about/` 关于页
-- `assets/` 样式、脚本和站点图标
+- `assets/` 样式、脚本、站点图标和静态 JSON 数据
 
 ## 发布
 
@@ -28,5 +30,4 @@ python -m http.server 8000
 
 ## 隐私
 
-站点默认只公开可分享的内容，不放手机号、住址、单位地址或其他敏感信息。
-
+站点默认只公开可分享的内容，不放手机号、住址、单位地址、私人邮箱、后台入口、登录凭据或其他敏感信息。公众号内容来自公开检索结果和可维护静态清单，不展示后台数据。

@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="sushuqiong 的个人主页与博客，记录公开写作、项目整理和方法笔记。">
+    <meta name="description" content="sushuqiong 的个人主页，展示公开 GitHub skills、医学与生信写作、公众号精选内容。">
     <meta name="theme-color" content="#ffffff">
-    <title>sushuqiong · 个人主页与博客</title>
+    <title>sushuqiong · Skills 与医学科研写作</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/assets/styles.css">
   </head>
@@ -13,40 +13,39 @@
     <a class="skip-link" href="#content">跳到内容</a>
     <div data-shell></div>
     <main id="content" class="page">
-      <section class="hero">
+      <section class="hero hero-command">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <p class="eyebrow">Home</p>
-            <h1>sushuqiong</h1>
-            <p>一个记录公开写作、项目整理和方法笔记的个人站。这里默认只展示可以分享的内容，不放手机号、住址、单位地址或其他敏感信息。</p>
+            <p class="eyebrow">Public Research Workbench</p>
+            <h1>把 AI skills、生信代码和医学写作收成一个专业入口</h1>
+            <p>这里展示公开 GitHub skills、医学科研工具、R 可视化项目，以及公众号“Oncology树鸡的生信代码”的公开检索精选。站点只放可公开内容，不展示后台、登录凭据、私人邮箱或本机信息。</p>
             <div class="hero-actions">
-              <a class="button button-primary" href="/posts/">阅读文章</a>
-              <a class="button" href="/projects/">查看项目</a>
-              <a class="button" href="/about/">了解我</a>
+              <a class="button button-primary" href="/skills/">浏览 Skills</a>
+              <a class="button" href="/wechat/">公众号精选</a>
+              <a class="button" href="https://github.com/sushuqiong/" target="_blank" rel="noopener noreferrer">GitHub 主页</a>
             </div>
           </div>
-          <aside class="hero-panel" aria-label="站点说明">
-            <div class="hero-panel-header">
+          <aside class="hero-panel signal-panel" aria-label="站点概览">
+            <p class="eyebrow">站点中枢</p>
+            <div class="metric-grid">
               <div>
-                <p class="eyebrow">站点说明</p>
-                <h2>清爽、克制、可持续更新</h2>
+                <strong>8</strong>
+                <span>公开 skills / 工具</span>
+              </div>
+              <div>
+                <strong>10</strong>
+                <span>公众号精选推文</span>
+              </div>
+              <div>
+                <strong>0</strong>
+                <span>敏感联系方式公开</span>
+              </div>
+              <div>
+                <strong>Static</strong>
+                <span>GitHub Pages 托管</span>
               </div>
             </div>
-            <p class="hero-note">参考 Huxpro 的博客气质，但更偏向个人主页与公开笔记。布局保持轻量，内容以后可以持续加文章和项目。</p>
-            <ul class="meta-list">
-              <li class="meta-item">
-                <span class="meta-key">发布</span>
-                <span class="meta-value">GitHub Pages + Actions 自动发布</span>
-              </li>
-              <li class="meta-item">
-                <span class="meta-key">公开边界</span>
-                <span class="meta-value">只展示文章、项目和可分享链接</span>
-              </li>
-              <li class="meta-item">
-                <span class="meta-key">联系</span>
-                <span class="meta-value">优先从 GitHub 主页开始</span>
-              </li>
-            </ul>
+            <p class="hero-note">内容来自公开 GitHub 仓库和 Sogou 微信公开检索；公众号热度不可公开验证时，只标记为精选，不伪造阅读量。</p>
           </aside>
         </div>
       </section>
@@ -55,90 +54,95 @@
         <div class="container">
           <div class="section-head">
             <div>
-              <p class="eyebrow">精选</p>
-              <h2>精选文章</h2>
+              <p class="eyebrow">Skills Hub</p>
+              <h2>公开 skills 与研究工具</h2>
+              <p>按医学科研、AI 工作流、可视化和写作路线组织，先帮助读者判断每个项目适合什么任务。</p>
             </div>
-            <a class="section-link" href="/posts/">查看全部</a>
+            <a class="section-link" href="/skills/">进入中心</a>
           </div>
-          <div class="post-grid">
-            <a class="post-card" href="/posts/github-pages/">
-              <span class="badge">入门</span>
-              <h3>为什么我选择 GitHub Pages 做个人站</h3>
-              <p>把服务器、域名、SSL 和部署流程尽量收进自动化里，个人写作只需要专注内容本身。</p>
-              <div class="post-meta">
-                <span>5 分钟阅读</span>
-                <span>·</span>
-                <time datetime="2026-08-07">2026-08-07</time>
-              </div>
+          <div class="feature-strip">
+            <a class="feature-tile" href="/skills/">
+              <span class="tile-mark">01</span>
+              <h3>医学科研导航</h3>
+              <p>统计、生信、论文输出三条路线，把医学研究问题拆成可执行任务。</p>
             </a>
-            <a class="post-card" href="/posts/site-architecture/">
-              <span class="badge">结构</span>
-              <h3>这个站点是怎样组织的</h3>
-              <p>首页、文章、归档、项目和关于页各自负责什么，如何保持以后继续扩展也不乱。</p>
-              <div class="post-meta">
-                <span>4 分钟阅读</span>
-                <span>·</span>
-                <time datetime="2026-08-06">2026-08-06</time>
-              </div>
+            <a class="feature-tile" href="/skills/">
+              <span class="tile-mark">02</span>
+              <h3>知识写作工作台</h3>
+              <p>从阅读、可视化、站点、队列和精确提问五个入口组织知识生产。</p>
             </a>
-            <a class="post-card" href="/posts/privacy/">
-              <span class="badge">隐私</span>
-              <h3>公开内容与隐私边界</h3>
-              <p>哪些内容适合放在公开站点上，哪些内容应该留在私下，顺手把默认策略定清楚。</p>
-              <div class="post-meta">
-                <span>6 分钟阅读</span>
-                <span>·</span>
-                <time datetime="2026-08-05">2026-08-05</time>
-              </div>
+            <a class="feature-tile" href="/skills/">
+              <span class="tile-mark">03</span>
+              <h3>R 图形风格系统</h3>
+              <p>用 multiplot 把常见统计软件图形风格接入 ggplot2 工作流。</p>
             </a>
           </div>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section section-band">
         <div class="container split">
           <div>
             <div class="section-head">
               <div>
-                <p class="eyebrow">最近</p>
-                <h2>最近项目</h2>
+                <p class="eyebrow">WeChat Selection</p>
+                <h2>公众号精选：Oncology树鸡的生信代码</h2>
+                <p>公开检索到约 56 条相关结果，第一版展示前 10 条代表性文章，并保留后续手工补录空间。</p>
               </div>
             </div>
             <div class="list-rows">
               <article class="row">
                 <div>
-                  <h3>个人站重构</h3>
-                  <p>把个人主页、文章页、归档页和项目页统一成一套轻量模板。</p>
+                  <h3>生信基础与统计建模</h3>
+                  <p>LASSO、岭回归、WGCNA 等适合作为方法入门和实战复盘。</p>
                 </div>
-                <time datetime="2026-08-07">8 月</time>
+                <span class="badge">Methods</span>
               </article>
               <article class="row">
                 <div>
-                  <h3>文章写作清单</h3>
-                  <p>统一标题、摘要、归档和文章卡片，写作时不用反复想页面结构。</p>
+                  <h3>公共数据库范文赏析</h3>
+                  <p>NHANES、CHARLS、空间转录组等文章拆解，适合找选题和写作结构。</p>
                 </div>
-                <time datetime="2026-08-06">8 月</time>
+                <span class="badge">Papers</span>
               </article>
               <article class="row">
                 <div>
-                  <h3>发布流水线</h3>
-                  <p>用 GitHub Actions 自动构建并发布到 Pages，减少手工操作。</p>
+                  <h3>Python 与工具清单</h3>
+                  <p>数据分析库、无代码工具和医学科研网站清单，面向效率型学习。</p>
                 </div>
-                <time datetime="2026-08-05">8 月</time>
+                <span class="badge">Tools</span>
               </article>
             </div>
           </div>
           <aside class="figure-panel">
-            <p class="eyebrow">写作方向</p>
-            <div class="tag-cloud">
-              <a class="tag" href="/posts/">站点搭建</a>
-              <a class="tag" href="/posts/">博客写作</a>
-              <a class="tag" href="/posts/">工具流程</a>
-              <a class="tag" href="/posts/">公开知识</a>
-              <a class="tag" href="/posts/">笔记整理</a>
-            </div>
-            <p class="muted">以后可以继续补专题页、RSS、文章评论入口，现阶段保持清楚和可扩展。</p>
+            <p class="eyebrow">安全边界</p>
+            <p>这里不使用公众号后台链接，不公开登录凭据，不声称无法验证的阅读量排行。文章入口使用公开搜索链接，便于读者自行核对。</p>
+            <a class="button button-primary" href="/wechat/">查看精选</a>
           </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Recent Notes</p>
+              <h2>站点更新</h2>
+            </div>
+            <a class="section-link" href="/archives/">归档</a>
+          </div>
+          <div class="grid-two">
+            <article class="note-card">
+              <h3>建立 skills 中心</h3>
+              <p>把公开 GitHub 仓库整理为可筛选、可打开、可扩展的技能卡片。</p>
+              <div class="post-meta"><time datetime="2026-08-07">2026-08-07</time><span>·</span><span>站点升级</span></div>
+            </article>
+            <article class="note-card">
+              <h3>接入公众号精选</h3>
+              <p>根据公开检索结果整理“Oncology树鸡的生信代码”的代表性推文。</p>
+              <div class="post-meta"><time datetime="2026-08-07">2026-08-07</time><span>·</span><span>公开内容</span></div>
+            </article>
+          </div>
         </div>
       </section>
     </main>
@@ -146,4 +150,3 @@
     <script type="module" src="/assets/site.js"></script>
   </body>
 </html>
-

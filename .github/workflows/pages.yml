@@ -26,7 +26,7 @@ jobs:
         run: |
           rm -rf _site
           mkdir -p _site
-          cp -R assets about archives posts projects 404.html index.html .nojekyll _site/
+          cp -R assets about archives posts projects skills wechat 404.html index.html .nojekyll _site/
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3

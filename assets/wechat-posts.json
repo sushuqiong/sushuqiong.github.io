@@ -1,0 +1,102 @@
+[
+  {
+    "rank": 1,
+    "title": "生信基础第1集:LASSO回归 vs. 岭回归:在“变量大海”中钓出真正的“大鱼”",
+    "topic": "统计建模",
+    "date": "2026-03-11",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "围绕 LASSO 回归与岭回归的变量选择、系数收缩和模型解释展开，适合作为生信建模基础阅读。",
+    "searchQuery": "生信基础第1集 LASSO回归 岭回归 树大鸡"
+  },
+  {
+    "rank": 2,
+    "title": "吐血整理的《医(学)生常用的100个网站(邪修版)》",
+    "topic": "资源清单",
+    "date": "2026-03-09",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "覆盖零代码生信与统计、AI 文献工具、数据库、临床数据和科研作图，是工具型文章入口。",
+    "searchQuery": "医学生常用的100个网站 邪修版 树大鸡"
+  },
+  {
+    "rank": 3,
+    "title": "Python数据分析的四大金刚:手把手入门Numpy、Pandas、Matplotlib、Seaborn",
+    "topic": "Python",
+    "date": "2026-03-04",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "用四个 Python 数据分析库串起数据处理、可视化和基础科研图表工作流。",
+    "searchQuery": "Python数据分析 四大金刚 Numpy Pandas Matplotlib Seaborn 树大鸡"
+  },
+  {
+    "rank": 4,
+    "title": "visualpython,一个实用的 Python 库!",
+    "topic": "Python",
+    "date": "2026-02-06",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "介绍 visualpython 的图形化数据分析能力，适合低代码或初学者快速进入 Python 数据分析。",
+    "searchQuery": "visualpython 一个实用的 Python 库 树大鸡"
+  },
+  {
+    "rank": 5,
+    "title": "Charls数据库范文赏析(3) IF=2.9",
+    "topic": "公共数据库",
+    "date": "2026-03-29",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "以 CHARLS 数据库论文为例，拆解社会活动、抑郁症状和网络分析等公共数据库研究写法。",
+    "searchQuery": "Charls数据库范文赏析 3 IF=2.9 树大鸡"
+  },
+  {
+    "rank": 6,
+    "title": "Nhanes数据库范文赏析(1) IF=3.4",
+    "topic": "公共数据库",
+    "date": "2026-03-07",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "围绕 NHANES 数据库文章，展示膳食指数、肠道菌群、代谢综合征等主题的范文拆解。",
+    "searchQuery": "Nhanes数据库范文赏析 1 IF=3.4 树大鸡"
+  },
+  {
+    "rank": 7,
+    "title": "空间转录组范文赏析(1) IF=11.2",
+    "topic": "空间转录组",
+    "date": "2026-03-02",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "以肝癌空间多组学文章为例，拆解空间转录组、成纤维细胞亚群和癌症干性相关主题。",
+    "searchQuery": "空间转录组范文赏析 1 IF=11.2 树大鸡"
+  },
+  {
+    "rank": 8,
+    "title": "Nhanes数据库范文赏析(2) IF=7.4",
+    "topic": "公共数据库",
+    "date": "2026-03-21",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "继续以 NHANES 数据库文章为样例，关注 TyG 指标、生物年龄和心肾代谢结局。",
+    "searchQuery": "Nhanes数据库范文赏析 2 IF=7.4 树大鸡"
+  },
+  {
+    "rank": 9,
+    "title": "从入门到实战:用 WGCNA 找到和临床分期相关的关键基因模块",
+    "topic": "生信实战",
+    "date": "2026-03-27",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "围绕共表达网络和临床表型关联，说明如何把模块和临床分期联系起来。",
+    "searchQuery": "从入门到实战 WGCNA 临床分期 关键基因模块 树大鸡"
+  },
+  {
+    "rank": 10,
+    "title": "能同时考虑细胞阳性marker和阴性marker的单细胞自动注释工具:scType",
+    "topic": "单细胞",
+    "date": "2026-03-14",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "介绍 scType 在单细胞自动注释中同时考虑阳性和阴性 marker 的思路与代码流程。",
+    "searchQuery": "单细胞 自动注释 scType 阳性marker 阴性marker 树大鸡"
+  }
+]
