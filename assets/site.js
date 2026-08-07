@@ -53,7 +53,7 @@ if (shell) {
         <a class="brand" href="/" aria-label="返回首页">
           <img class="brand-mark" src="/assets/logo.svg" alt="" width="40" height="40">
           <span class="brand-copy">
-            <span class="brand-kicker">GitHub Pages 个人站</span>
+            <span class="brand-kicker">医学研究 · 代码 · AI</span>
             <span class="brand-title">sushuqiong</span>
           </span>
         </a>
