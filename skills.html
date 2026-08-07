@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="sushuqiong 的公开 GitHub skills 与研究工具中心。">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#2563eb">
     <title>Skills · sushuqiong</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/assets/styles.css">
@@ -17,11 +17,15 @@
         <div class="container">
           <div class="article-header">
             <p class="eyebrow">Skills Hub</p>
-            <h1>公开 skills 与研究工具</h1>
-            <p class="article-lead">这些卡片来自公开 GitHub 仓库，展示项目定位、适用任务和打开入口。页面只保留公开摘要，不暴露私有数据、后台信息或本机路径。</p>
+            <h1>
+              <span class="hero-title-line">公开 skills</span>
+              <span class="hero-title-line">与研究工具</span>
+            </h1>
+            <p class="article-lead">这些卡片来自公开 GitHub 仓库，展示项目定位、适用任务和打开入口。页面按三条 lane 分区，不再把所有内容放进同一个泛列表。</p>
           </div>
-          <div class="toolbar" data-skill-filters aria-label="Skill 筛选"></div>
-          <div class="feature-grid" data-skill-grid></div>
+          <div class="track-overview" data-skill-overview aria-label="Skills 概览"></div>
+          <div class="toolbar track-switcher" data-skill-track-tabs aria-label="Skill 分区切换"></div>
+          <div class="track-stack" data-skill-sections></div>
         </div>
       </section>
     </main>
@@ -31,7 +35,11 @@
         <p class="eyebrow" data-dialog-kicker></p>
         <h2 data-dialog-title></h2>
         <p data-dialog-body></p>
-        <a class="button button-primary" data-dialog-link target="_blank" rel="noopener noreferrer"></a>
+        <p class="dialog-meta" data-dialog-meta></p>
+        <div class="dialog-actions">
+          <a class="button button-primary" data-dialog-link target="_blank" rel="noopener noreferrer"></a>
+          <a class="button button-soft" data-dialog-secondary target="_blank" rel="noopener noreferrer" hidden></a>
+        </div>
       </div>
     </dialog>
     <div data-footer></div>

@@ -7,6 +7,38 @@ const navItems = [
   { href: "/about/", label: "关于" },
 ]
 
+const TRACKS = {
+  medical: {
+    id: "medical",
+    label: "医学科研导航",
+    kicker: "Medical Research",
+    note: "统计、生信、论文输出三条线，适合把一个医学研究问题拆成分析路径。",
+    cta: "查看医学科研导航",
+    repo: "https://github.com/sushuqiong/med-research-ai-navigator",
+    tint: "medical",
+  },
+  writing: {
+    id: "writing",
+    label: "知识写作工作台",
+    kicker: "Knowledge Writing",
+    note: "阅读、可视化、站点、队列和精确提问五个入口，面向知识生产与公开写作。",
+    cta: "查看写作工作台",
+    repo: "https://github.com/sushuqiong/ai-knowledge-writing-skill",
+    tint: "writing",
+  },
+  visual: {
+    id: "visual",
+    label: "R 图形风格系统",
+    kicker: "R Graphics System",
+    note: "以 multiplot 为核心，把常见统计软件图形风格收进 ggplot2 工作流。",
+    cta: "查看图形风格系统",
+    repo: "https://github.com/sushuqiong/multiplot",
+    tint: "visual",
+  },
+}
+
+const TRACK_ORDER = ["medical", "writing", "visual"]
+
 function isCurrentPath(href) {
   const path = location.pathname.replace(/index\.html$/, "")
   if (href === "/") return path === "/" || path === ""
@@ -69,7 +101,20 @@ async function loadJson(path) {
 }
 
 function uniqueValues(items, key) {
-  return [...new Set(items.flatMap((item) => item[key] || []))]
+  return [...new Set(items.flatMap((item) => item[key] || []))].filter(Boolean)
+}
+
+function groupByLane(items) {
+  return items.reduce((accumulator, item) => {
+    const lane = item.lane || "writing"
+    if (!accumulator[lane]) accumulator[lane] = []
+    accumulator[lane].push(item)
+    return accumulator
+  }, {})
+}
+
+function sortByDateDesc(items, key = "updated") {
+  return [...items].sort((a, b) => String(b[key] || "").localeCompare(String(a[key] || "")))
 }
 
 function createFilterButtons(values, target, active = "全部") {
@@ -95,43 +140,34 @@ function bindFiltering({ buttons, cards, getCardValues }) {
   })
 }
 
-function openDialog(dialog, item) {
-  dialog.querySelector("[data-dialog-title]").textContent = item.title || item.name
-  dialog.querySelector("[data-dialog-kicker]").textContent = item.category || item.topic || "详情"
-  dialog.querySelector("[data-dialog-body]").textContent = item.detail || item.summary
-  const link = dialog.querySelector("[data-dialog-link]")
-  const href = item.repo || makeWechatSearchUrl(item.searchQuery || item.title)
-  link.href = href
-  link.textContent = item.repo ? "打开 GitHub 仓库" : "搜索这篇推文"
-  dialog.showModal()
-}
-
-function closeDialog(dialog) {
-  dialog.close()
-}
-
 function makeWechatSearchUrl(query) {
   return `https://weixin.sogou.com/weixin?type=2&query=${encodeURIComponent(query)}`
 }
 
+function getTrackMeta(lane) {
+  return TRACKS[lane] || TRACKS.writing
+}
+
 function renderSkillCard(item, index) {
+  const track = getTrackMeta(item.lane)
   const tags = item.tags.map((tag) => `<span class="mini-tag">${tag}</span>`).join("")
   const demo = item.demo
-    ? `<a class="text-link" href="${item.demo}" target="_blank" rel="noopener noreferrer">Demo</a>`
+    ? `<a class="button button-soft" href="${item.demo}" target="_blank" rel="noopener noreferrer">Demo</a>`
     : ""
   return `
-    <article class="feature-card" data-card data-tags="${item.tags.join("|")}" data-index="${index}">
+      <article class="feature-card track-card track-card--${track.tint}" data-card data-tags="${item.tags.join("|")}" data-index="${item.__index}" data-lane="${item.lane}">
       <div class="feature-topline">
-        <span class="badge">${item.category}</span>
-        <span class="muted">${item.language || "Public"}</span>
+        <span class="badge badge-${track.tint}">${track.label}</span>
+        <span class="muted">更新 ${item.updated}</span>
       </div>
       <h3>${item.title}</h3>
-      <p>${item.summary}</p>
+      <p class="card-summary">${item.summary}</p>
+      <p class="card-detail">${item.detail}</p>
       <div class="mini-tags">${tags}</div>
       <div class="card-actions">
         <a class="button button-primary" href="${item.repo}" target="_blank" rel="noopener noreferrer">GitHub</a>
         ${demo}
-        <button class="button" type="button" data-open-detail="${index}">详情</button>
+        <button class="button" type="button" data-open-detail="${item.__index}" data-kind="skill">详情</button>
       </div>
     </article>
   `
@@ -142,50 +178,229 @@ function renderWechatCard(item, index) {
     <article class="feature-card wechat-card" data-card data-topic="${item.topic}" data-index="${index}">
       <div class="feature-topline">
         <span class="rank">#${String(item.rank).padStart(2, "0")}</span>
-        <span class="badge">${item.topic}</span>
+        <span class="badge badge-rose">精选</span>
       </div>
       <h3>${item.title}</h3>
-      <p>${item.summary}</p>
+      <p class="card-summary">${item.summary}</p>
       <div class="post-meta">
         <span>${item.account}</span>
         <span>·</span>
         <time datetime="${item.date}">${item.date}</time>
       </div>
+      <p class="card-detail">${item.source}</p>
       <div class="card-actions">
         <a class="button button-primary" href="${makeWechatSearchUrl(item.searchQuery)}" target="_blank" rel="noopener noreferrer">搜索文章</a>
-        <button class="button" type="button" data-open-detail="${index}">摘要</button>
+        <button class="button" type="button" data-open-detail="${index}" data-kind="wechat">摘要</button>
       </div>
     </article>
   `
 }
 
-async function initSkillGrid() {
-  const grid = document.querySelector("[data-skill-grid]")
-  if (!grid) return
-  const skills = await loadJson("/assets/skills.json")
-  const filters = document.querySelector("[data-skill-filters]")
-  const dialog = document.querySelector("[data-detail-dialog]")
-  if (filters) createFilterButtons(uniqueValues(skills, "tags"), filters)
-  grid.innerHTML = skills.map(renderSkillCard).join("")
-  if (filters) {
-    bindFiltering({
-      buttons: filters,
-      cards: grid,
-      getCardValues: (card) => card.dataset.tags.split("|"),
-    })
+function renderTrackSummary(track, items) {
+  const latest = items[0]?.updated || "—"
+  return `
+    <a class="track-summary track-summary--${track.tint}" href="/skills.html#${track.id}">
+      <span class="track-summary-kicker">${track.kicker}</span>
+      <strong>${track.label}</strong>
+      <span>${items.length} 个公开条目 · 最近更新 ${latest}</span>
+    </a>
+  `
+}
+
+function renderTrackSection(track, items) {
+  const sorted = sortByDateDesc(items)
+  const filters = uniqueValues(sorted, "tags")
+  return `
+    <section class="track-panel track-panel--${track.tint}" id="${track.id}" data-lane-panel="${track.id}">
+      <div class="track-panel-head">
+        <div>
+          <p class="eyebrow">${track.kicker}</p>
+          <h2>${track.label}</h2>
+          <p class="section-lead">${track.note}</p>
+        </div>
+        <div class="track-panel-meta">
+          <span class="track-count">${sorted.length} 项</span>
+          <a class="button button-primary" href="${track.repo}" target="_blank" rel="noopener noreferrer">${track.cta}</a>
+        </div>
+      </div>
+      <div class="toolbar track-toolbar" data-skill-filters="${track.id}" aria-label="${track.label} 筛选"></div>
+      <div class="feature-grid track-grid" data-skill-grid="${track.id}">
+        ${sorted.map((item, index) => renderSkillCard(item, index)).join("")}
+      </div>
+    </section>
+  `
+}
+
+function openDialog(dialog, item, kind = "skill") {
+  const title = dialog.querySelector("[data-dialog-title]")
+  const kicker = dialog.querySelector("[data-dialog-kicker]")
+  const body = dialog.querySelector("[data-dialog-body]")
+  const meta = dialog.querySelector("[data-dialog-meta]")
+  const link = dialog.querySelector("[data-dialog-link]")
+  const secondary = dialog.querySelector("[data-dialog-secondary]")
+
+  if (kind === "wechat") {
+    title.textContent = item.title
+    kicker.textContent = `${item.topic} · ${item.date}`
+    body.textContent = item.summary
+    meta.textContent = `${item.account} · ${item.source}`
+    link.href = makeWechatSearchUrl(item.searchQuery || item.title)
+    link.textContent = "搜索公开原文"
+    if (secondary) secondary.hidden = true
+  } else {
+    const track = getTrackMeta(item.lane)
+    title.textContent = item.title || item.name
+    kicker.textContent = `${track.label} · ${item.category || "公开技能"}`
+    body.textContent = item.detail || item.summary
+    meta.textContent = `${item.updated || "公开条目"} · ${item.tags.join(" / ")}`
+    link.href = item.repo
+    link.textContent = "打开 GitHub 仓库"
+    if (secondary) {
+      if (item.demo) {
+        secondary.hidden = false
+        secondary.href = item.demo
+        secondary.textContent = "打开 Demo"
+      } else {
+        secondary.hidden = true
+      }
+    }
   }
-  grid.addEventListener("click", (event) => {
+
+  dialog.showModal()
+}
+
+function closeDialog(dialog) {
+  dialog.close()
+}
+
+function bindDialog(dialog, items) {
+  const root = dialog.closest("body") || document
+  root.querySelectorAll("[data-close-dialog]").forEach((button) => {
+    button.addEventListener("click", () => closeDialog(dialog))
+  })
+
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) closeDialog(dialog)
+  })
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && dialog.open) closeDialog(dialog)
+  })
+
+  root.addEventListener("click", (event) => {
     const button = event.target.closest("[data-open-detail]")
-    if (button && dialog) openDialog(dialog, skills[Number(button.dataset.openDetail)])
+    if (!button || !items[Number(button.dataset.openDetail)]) return
+    openDialog(dialog, items[Number(button.dataset.openDetail)], button.dataset.kind || "skill")
   })
 }
 
-async function initWechatGrid() {
+async function initHomeStats() {
+  const skillNodes = {
+    total: document.querySelector("[data-home-skill-count]"),
+    lanes: document.querySelector("[data-home-lane-count]"),
+  }
+  const postNodes = {
+    total: document.querySelector("[data-home-post-count]"),
+    topics: document.querySelector("[data-home-topic-count]"),
+  }
+  const [skills, posts] = await Promise.all([loadJson("/assets/skills.json"), loadJson("/assets/wechat-posts.json")])
+
+  if (skillNodes.total) skillNodes.total.textContent = String(skills.length)
+  if (skillNodes.lanes) skillNodes.lanes.textContent = String(new Set(skills.map((item) => item.lane)).size)
+  if (postNodes.total) postNodes.total.textContent = String(posts.length)
+  if (postNodes.topics) postNodes.topics.textContent = String(new Set(posts.map((item) => item.topic)).size)
+
+  document.querySelectorAll("[data-track-count]").forEach((node) => {
+    const lane = node.dataset.trackCount
+    node.textContent = String(skills.filter((item) => item.lane === lane).length)
+  })
+}
+
+async function initSkillHub() {
+  const sections = document.querySelector("[data-skill-sections]")
+  if (!sections) return
+
+  const overview = document.querySelector("[data-skill-overview]")
+  const tabs = document.querySelector("[data-skill-track-tabs]")
+  const dialog = document.querySelector("[data-detail-dialog]")
+  const skills = (await loadJson("/assets/skills.json")).map((item, index) => ({ ...item, __index: index }))
+  const grouped = groupByLane(skills)
+
+  if (overview) {
+    overview.innerHTML = TRACK_ORDER.map((lane) => renderTrackSummary(getTrackMeta(lane), sortByDateDesc(grouped[lane] || []))).join("")
+  }
+
+  if (tabs) {
+    tabs.innerHTML = TRACK_ORDER
+      .map(
+        (lane) =>
+          `<button class="chip chip-track" type="button" data-skill-lane-tab="${lane}">${getTrackMeta(lane).label}</button>`,
+      )
+      .join("")
+
+    tabs.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-skill-lane-tab]")
+      if (!button) return
+      const section = document.querySelector(`#${button.dataset.skillLaneTab}`)
+      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" })
+    })
+  }
+
+  sections.innerHTML = TRACK_ORDER.map((lane) => renderTrackSection(getTrackMeta(lane), grouped[lane] || [])).join("")
+
+  TRACK_ORDER.forEach((lane) => {
+    const toolbar = sections.querySelector(`[data-skill-filters="${lane}"]`)
+    const grid = sections.querySelector(`[data-skill-grid="${lane}"]`)
+    const items = sortByDateDesc(grouped[lane] || [])
+    if (!toolbar || !grid) return
+
+    createFilterButtons(uniqueValues(items, "tags"), toolbar)
+    bindFiltering({
+      buttons: toolbar,
+      cards: grid,
+      getCardValues: (card) => card.dataset.tags.split("|"),
+    })
+  })
+
+  if (dialog) bindDialog(dialog, skills)
+}
+
+async function initWechatHub() {
   const grid = document.querySelector("[data-wechat-grid]")
   if (!grid) return
-  const posts = await loadJson("/assets/wechat-posts.json")
-  const filters = document.querySelector("[data-wechat-filters]")
+
+  const summary = document.querySelector("[data-wechat-summary]")
+  const totalNode = document.querySelector("[data-wechat-total]")
+  const topicNode = document.querySelector("[data-wechat-topic-count]")
   const dialog = document.querySelector("[data-detail-dialog]")
+  const posts = await loadJson("/assets/wechat-posts.json")
+
+  if (totalNode) totalNode.textContent = `${posts.length} 篇精选`
+  if (topicNode) topicNode.textContent = `${new Set(posts.map((item) => item.topic)).size} 个专题`
+
+  if (summary) {
+    const topics = [...new Set(posts.map((item) => item.topic))]
+    const latest = sortByDateDesc(posts, "date")[0]
+    summary.innerHTML = `
+      <article class="track-summary track-summary--rose">
+        <span class="track-summary-kicker">公开精选</span>
+        <strong>${posts.length} 篇推文</strong>
+        <span>${topics.length} 个专题 · 最近更新 ${latest?.date || "—"}</span>
+      </article>
+      <article class="track-summary track-summary--blue">
+        <span class="track-summary-kicker">可核验</span>
+        <strong>${topics.slice(0, 3).join(" / ")}</strong>
+        <span>页面只展示公开检索可见的标题、摘要与链接</span>
+      </article>
+      <article class="track-summary track-summary--gold">
+        <span class="track-summary-kicker">安全边界</span>
+        <strong>不展示后台信息</strong>
+        <span>不放登录凭据、私人邮箱、手机号或住址</span>
+      </article>
+    `
+  }
+
+  const filters = document.querySelector("[data-wechat-filters]")
   if (filters) createFilterButtons(uniqueValues(posts, "topic"), filters)
   grid.innerHTML = posts.map(renderWechatCard).join("")
   if (filters) {
@@ -195,15 +410,9 @@ async function initWechatGrid() {
       getCardValues: (card) => [card.dataset.topic],
     })
   }
-  grid.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-open-detail]")
-    if (button && dialog) openDialog(dialog, posts[Number(button.dataset.openDetail)])
-  })
+  if (dialog) bindDialog(dialog, posts)
 }
 
-document.querySelectorAll("[data-close-dialog]").forEach((button) => {
-  button.addEventListener("click", () => closeDialog(button.closest("dialog")))
-})
-
-initSkillGrid().catch((error) => console.error(error))
-initWechatGrid().catch((error) => console.error(error))
+initHomeStats().catch((error) => console.error(error))
+initSkillHub().catch((error) => console.error(error))
+initWechatHub().catch((error) => console.error(error))

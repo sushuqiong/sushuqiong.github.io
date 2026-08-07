@@ -98,5 +98,105 @@
     "source": "Sogou Weixin public search, queried 2026-08-07",
     "summary": "介绍 scType 在单细胞自动注释中同时考虑阳性和阴性 marker 的思路与代码流程。",
     "searchQuery": "单细胞 自动注释 scType 阳性marker 阴性marker 树大鸡"
+  },
+  {
+    "rank": 11,
+    "title": "生信基础之数据预处理:从“脏乱差”到“整洁美”的数据炼金术",
+    "topic": "数据预处理",
+    "date": "2026-02-28",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "围绕缺失值、重复值、标准化和可追溯记录，补齐生信分析前处理的底层习惯。",
+    "searchQuery": "生信基础 数据预处理 脏乱差 整洁美 树大鸡"
+  },
+  {
+    "rank": 12,
+    "title": "生信基础第42集:DBSCAN聚类:基于密度的“自然聚类”",
+    "topic": "聚类算法",
+    "date": "2026-08-03",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "用密度聚类解释噪声点、核心点和参数选择，适合拿来做无监督分析入门。",
+    "searchQuery": "生信基础 第42集 DBSCAN 聚类 树大鸡"
+  },
+  {
+    "rank": 13,
+    "title": "单细胞+空间转录组的Python分析的最短路径?",
+    "topic": "单细胞 / 空间",
+    "date": "2026-07-31",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "把单细胞和空间转录组分析拆成更短的 Python 路线，强调结果解释和验证。",
+    "searchQuery": "单细胞 空间转录组 Python 分析 最短路径 树大鸡"
+  },
+  {
+    "rank": 14,
+    "title": "用Python进行12种回归分析实战:Scikit-learn库(2000字简析)",
+    "topic": "Python",
+    "date": "2026-02-07",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "从结构化数据预测出发，整理多种回归方法和 scikit-learn 的实战入口。",
+    "searchQuery": "Python 12种回归分析 Scikit-learn 树大鸡"
+  },
+  {
+    "rank": 15,
+    "title": "深度学习中四种最常用的激活函数及其特性",
+    "topic": "深度学习",
+    "date": "2026-02-04",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "解释 ReLU、Sigmoid、Tanh 等激活函数的作用和适用场景，适合入门读者快速理解。",
+    "searchQuery": "深度学习 四种 常用 激活函数 特性 树大鸡"
+  },
+  {
+    "rank": 16,
+    "title": "医学生跨界学习“Python + AI”的步骤?",
+    "topic": "AI入门",
+    "date": "2026-08-05",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "面向医学生的跨界学习路线，强调从工具使用到科研辅助的阶梯式入门。",
+    "searchQuery": "医学生 跨界学习 Python AI 的步骤 树大鸡"
+  },
+  {
+    "rank": 17,
+    "title": "从实验驱动到AI驱动:医学生信研究的三个时代",
+    "topic": "科研范式",
+    "date": "2026-07-27",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "把医学科研从实验、计算到 AI 辅助三个阶段串起来，帮助定位方法演进。",
+    "searchQuery": "从实验驱动到AI驱动 医学生信研究 三个时代 树大鸡"
+  },
+  {
+    "rank": 18,
+    "title": "生信基础第6集:Fine-Gray竞争风险模型:在“死亡赛道”上追踪真正的“凶手”",
+    "topic": "生存分析",
+    "date": "2026-03-22",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "围绕竞争风险模型解释不同终点的处理方式，适合生存分析实战复盘。",
+    "searchQuery": "生信基础 第6集 Fine-Gray 竞争风险模型 树大鸡"
+  },
+  {
+    "rank": 19,
+    "title": "新版GSVA包:一个报错,一句口诀,四种算法全搞定!",
+    "topic": "通路分析",
+    "date": "2026-03-30",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "聚焦新版 GSVA 包常见报错与算法差异，适合做通路分析时的快速排障。",
+    "searchQuery": "新版 GSVA 包 报错 四种算法 树大鸡"
+  },
+  {
+    "rank": 20,
+    "title": "NCBI:生物信息学入门的第一张地图",
+    "topic": "数据库地图",
+    "date": "2026-07-25",
+    "account": "树大鸡",
+    "source": "Sogou Weixin public search, queried 2026-08-07",
+    "summary": "把 NCBI 相关入口整理成入门地图，帮助新手从数据库结构切入。",
+    "searchQuery": "NCBI 生物信息学入门 第一张地图 树大鸡"
   }
 ]

@@ -5,8 +5,8 @@
 ## 结构
 
 - `index.html` 首页
-- `skills/` 公开 GitHub skills 与研究工具中心
-- `wechat/` 公众号公开检索精选
+- `skills.html` 公开 GitHub skills 与研究工具中心，旧路径 `skills/` 保留跳转
+- `wechat.html` 公众号公开检索精选，旧路径 `wechat/` 保留跳转
 - `posts/` 文章列表和文章页
 - `archives/` 归档页
 - `projects/` 项目页
@@ -16,8 +16,8 @@
 ## 发布
 
 1. 仓库名使用 `sushuqiong.github.io`
-2. 在 GitHub Pages 中启用 `GitHub Actions`
-3. 推送到 `main`
+2. GitHub Pages 从 `main` 分支根目录发布
+3. 推送到 `main` 后等待 Pages 自动刷新
 
 ## 本地预览
 

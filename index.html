@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="sushuqiong 的个人主页，展示公开 GitHub skills、医学与生信写作、公众号精选内容。">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#2563eb">
     <title>sushuqiong · Skills 与医学科研写作</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/assets/styles.css">
@@ -17,7 +17,11 @@
         <div class="container hero-grid">
           <div class="hero-copy">
             <p class="eyebrow">Public Research Workbench</p>
-            <h1>把 AI skills、生信代码和医学写作收成一个专业入口</h1>
+            <h1>
+              <span class="hero-title-line">把公开 skills、<span class="mobile-line-break"></span>公众号精选</span>
+              <span class="hero-title-line">和医学科研工具</span>
+              <span class="hero-title-line">收成一个专业中枢</span>
+            </h1>
             <p>这里展示公开 GitHub skills、医学科研工具、R 可视化项目，以及公众号“Oncology树鸡的生信代码”的公开检索精选。站点只放可公开内容，不展示后台、登录凭据、私人邮箱或本机信息。</p>
             <div class="hero-actions">
               <a class="button button-primary" href="/skills.html">浏览 Skills</a>
@@ -29,20 +33,42 @@
             <p class="eyebrow">站点中枢</p>
             <div class="metric-grid">
               <div>
-                <strong>8</strong>
+                <strong data-home-skill-count>8</strong>
                 <span>公开 skills / 工具</span>
               </div>
               <div>
-                <strong>10</strong>
+                <strong data-home-post-count>20</strong>
                 <span>公众号精选推文</span>
               </div>
               <div>
-                <strong>0</strong>
-                <span>敏感联系方式公开</span>
+                <strong data-home-lane-count>3</strong>
+                <span>Skills 内容分区</span>
               </div>
               <div>
-                <strong>Static</strong>
-                <span>GitHub Pages 托管</span>
+                <strong data-home-topic-count>16</strong>
+                <span>公众号专题分组</span>
+              </div>
+            </div>
+            <div class="lane-mini-grid" aria-label="快速入口">
+              <a class="lane-mini lane-mini--medical" href="/skills.html#medical">
+                <span>医学科研导航</span>
+                <strong data-track-count="medical">4</strong>
+                <small>统计 / 生信 / 论文输出</small>
+              </a>
+              <a class="lane-mini lane-mini--writing" href="/skills.html#writing">
+                <span>知识写作工作台</span>
+                <strong data-track-count="writing">3</strong>
+                <small>阅读 / 站点 / 队列 / 精确提问</small>
+              </a>
+              <a class="lane-mini lane-mini--visual" href="/skills.html#visual">
+                <span>R 图形风格系统</span>
+                <strong data-track-count="visual">1</strong>
+                <small>ggplot2 / 多软件风格</small>
+              </a>
+              <div class="lane-mini lane-mini--neutral">
+                <span>公开边界</span>
+                <strong>0</strong>
+                <small>不公开手机号、住址、私密后台</small>
               </div>
             </div>
             <p class="hero-note">内容来自公开 GitHub 仓库和 Sogou 微信公开检索；公众号热度不可公开验证时，只标记为精选，不伪造阅读量。</p>
@@ -56,22 +82,22 @@
             <div>
               <p class="eyebrow">Skills Hub</p>
               <h2>公开 skills 与研究工具</h2>
-              <p>按医学科研、AI 工作流、可视化和写作路线组织，先帮助读者判断每个项目适合什么任务。</p>
+              <p>按医学科研、知识写作和 R 可视化三条线组织，每个入口都会走向不同内容池。</p>
             </div>
             <a class="section-link" href="/skills.html">进入中心</a>
           </div>
           <div class="feature-strip">
-            <a class="feature-tile" href="/skills.html">
+            <a class="feature-tile tile-medical" href="/skills.html#medical">
               <span class="tile-mark">01</span>
               <h3>医学科研导航</h3>
               <p>统计、生信、论文输出三条路线，把医学研究问题拆成可执行任务。</p>
             </a>
-            <a class="feature-tile" href="/skills.html">
+            <a class="feature-tile tile-writing" href="/skills.html#writing">
               <span class="tile-mark">02</span>
               <h3>知识写作工作台</h3>
               <p>从阅读、可视化、站点、队列和精确提问五个入口组织知识生产。</p>
             </a>
-            <a class="feature-tile" href="/skills.html">
+            <a class="feature-tile tile-visual" href="/skills.html#visual">
               <span class="tile-mark">03</span>
               <h3>R 图形风格系统</h3>
               <p>用 multiplot 把常见统计软件图形风格接入 ggplot2 工作流。</p>
@@ -87,14 +113,14 @@
               <div>
                 <p class="eyebrow">WeChat Selection</p>
                 <h2>公众号精选：Oncology树鸡的生信代码</h2>
-                <p>公开检索到约 56 条相关结果，第一版展示前 10 条代表性文章，并保留后续手工补录空间。</p>
+                <p>公开检索已扩展到 20 篇代表作，继续保留精选、可核验和隐私边界三条原则。</p>
               </div>
             </div>
             <div class="list-rows">
               <article class="row">
                 <div>
                   <h3>生信基础与统计建模</h3>
-                  <p>LASSO、岭回归、WGCNA 等适合作为方法入门和实战复盘。</p>
+                  <p>LASSO、岭回归、WGCNA、竞争风险等方法适合作为入门与复盘入口。</p>
                 </div>
                 <span class="badge">Methods</span>
               </article>
