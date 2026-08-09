@@ -45,6 +45,8 @@ function isCurrentPath(href) {
   return path === href || path.startsWith(href)
 }
 
+/* ───────────── 页头 / 页脚 ───────────── */
+
 const shell = document.querySelector("[data-shell]")
 if (shell) {
   shell.innerHTML = `
@@ -74,25 +76,182 @@ if (shell) {
 const footer = document.querySelector("[data-footer]")
 if (footer) {
   footer.innerHTML = `
-    <div class="container site-footer-inner">
-      <div class="footer-note">
-        <p class="footer-title">公开内容只保留 skills、文章、项目和可分享链接。</p>
-        <p>站点不公开手机号、住址、私人邮箱、后台入口或任何登录凭据。</p>
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <div class="footer-note">
+          <p class="footer-title">公开内容只保留 skills、文章、项目和可分享链接。</p>
+          <p>站点不公开手机号、住址、私人邮箱、后台入口或任何登录凭据。</p>
+        </div>
+        <div class="footer-links">
+          <a href="/skills.html">Skills</a>
+          <a href="/wechat.html">公众号</a>
+          <a href="/projects/">项目</a>
+          <a href="/about/">关于</a>
+        </div>
+        <p class="footer-copy">© <span data-year></span> sushuqiong · Research Workbench</p>
       </div>
-      <div class="footer-links">
-        <a href="/skills.html">Skills</a>
-        <a href="/wechat.html">公众号</a>
-        <a href="/projects/">项目</a>
-        <a href="/about/">关于</a>
-      </div>
-      <p class="footer-copy">© <span data-year></span> sushuqiong</p>
-    </div>
+    </footer>
   `
 }
 
 document.querySelectorAll("[data-year]").forEach((node) => {
   node.textContent = String(new Date().getFullYear())
 })
+
+/* ───────────── 页头滚动变色 ───────────── */
+
+function initHeaderScroll() {
+  const header = document.querySelector(".site-header")
+  if (!header) return
+  const update = () => header.classList.toggle("is-scrolled", window.scrollY > 36)
+  update()
+  window.addEventListener("scroll", update, { passive: true })
+}
+
+/* ───────────── 星空粒子（深空 Hero） ───────────── */
+
+function initStarfield() {
+  const canvas = document.getElementById("starfield")
+  if (!canvas) return
+
+  const ctx = canvas.getContext("2d")
+  const DPR = Math.min(window.devicePixelRatio || 1, 2)
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  let stars = []
+  let width = 0
+  let height = 0
+  let raf = null
+  let mouseX = 0
+  let mouseY = 0
+
+  const PALETTE = [
+    [214, 236, 255], // 冷白
+    [214, 236, 255],
+    [214, 236, 255],
+    [214, 236, 255],
+    [100, 255, 218], // 荧光青绿
+    [167, 139, 250], // 星云紫
+  ]
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect()
+    width = rect.width
+    height = rect.height
+    canvas.width = Math.floor(width * DPR)
+    canvas.height = Math.floor(height * DPR)
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
+    createStars()
+  }
+
+  function createStars() {
+    const count = Math.min(150, Math.floor((width * height) / 6500))
+    stars = Array.from({ length: count }, () => {
+      const palette = PALETTE[Math.floor(Math.random() * PALETTE.length)]
+      const big = Math.random() < 0.06
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: big ? Math.random() * 1.1 + 1.3 : Math.random() * 0.9 + 0.3,
+        vx: (Math.random() - 0.5) * 0.1,
+        vy: -(Math.random() * 0.16 + 0.03),
+        tw: Math.random() * Math.PI * 2,
+        ts: Math.random() * 0.02 + 0.005,
+        color: palette,
+        glow: big,
+      }
+    })
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, width, height)
+    // 鼠标视差（轻微，营造穿行感）
+    const px = ((mouseX - width / 2) / width) * 10
+    const py = ((mouseY - height / 2) / height) * 6
+
+    for (const s of stars) {
+      s.x += s.vx
+      s.y += s.vy
+      if (s.y < -6) {
+        s.y = height + 6
+        s.x = Math.random() * width
+      }
+      if (s.x < -6) s.x = width + 6
+      if (s.x > width + 6) s.x = -6
+      s.tw += s.ts
+
+      const alpha = 0.28 + Math.abs(Math.sin(s.tw)) * 0.6
+      const drawX = s.x + px * s.r
+      const drawY = s.y + py * s.r
+      const [r, g, b] = s.color
+
+      ctx.beginPath()
+      ctx.arc(drawX, drawY, s.r, 0, Math.PI * 2)
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+      ctx.fill()
+
+      if (s.glow) {
+        ctx.beginPath()
+        ctx.arc(drawX, drawY, s.r * 3.2, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.16})`
+        ctx.fill()
+      }
+    }
+    raf = requestAnimationFrame(draw)
+  }
+
+  function onMouseMove(event) {
+    mouseX = event.clientX
+    mouseY = event.clientY
+  }
+
+  resize()
+  window.addEventListener("resize", resize)
+
+  if (reduced) {
+    // 无障碍：只画一帧静态星图
+    const t = 0
+    for (const s of stars) {
+      ctx.beginPath()
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
+      ctx.fillStyle = `rgba(${s.color[0]}, ${s.color[1]}, ${s.color[2]}, 0.55)`
+      ctx.fill()
+    }
+  } else {
+    window.addEventListener("mousemove", onMouseMove, { passive: true })
+    raf = requestAnimationFrame(draw)
+  }
+}
+
+/* ───────────── 滚动入场动效 ───────────── */
+
+function initReveal() {
+  const targets = document.querySelectorAll(".reveal")
+  if (!targets.length) return
+  document.body.classList.add("reveal-ready")
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach((el) => el.classList.add("is-visible"))
+    return
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible")
+          io.unobserve(entry.target)
+        }
+      }
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -48px 0px" },
+  )
+  targets.forEach((el) => io.observe(el))
+}
+
+initHeaderScroll()
+initStarfield()
+initReveal()
+
+/* ───────────── 数据加载与渲染（保留原功能） ───────────── */
 
 async function loadJson(path) {
   const response = await fetch(path)

@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="sushuqiong 的个人主页，展示公开 GitHub skills、医学与生信写作、公众号精选内容。">
-    <meta name="theme-color" content="#2563eb">
-    <title>sushuqiong · Skills 与医学科研写作</title>
+    <meta name="description" content="sushuqiong 的个人主页，展示公开 GitHub skills、医学与生信写作、公众号精选内容。研究方向：肿瘤 / 胃癌临床与生信。">
+    <meta name="theme-color" content="#0a1226">
+    <title>sushuqiong · 医学研究，代码与 AI 的公开工作台</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/assets/styles.css">
   </head>
@@ -14,9 +14,10 @@
     <div data-shell></div>
     <main id="content" class="page">
       <section class="hero hero-command">
+        <canvas class="hero-canvas" id="starfield" aria-hidden="true"></canvas>
         <div class="container hero-grid">
           <div class="hero-copy">
-            <p class="eyebrow">Public Research Workbench</p>
+            <p class="eyebrow">Public Research Workbench · Est. 2026</p>
             <div class="profile-lockup">
               <span class="profile-index">01 / PROFILE</span>
               <strong>sushuqiong</strong>
@@ -24,10 +25,11 @@
             </div>
             <h1>
               <span class="hero-title-line">医学研究，代码与 AI</span>
-              <span class="hero-title-line">的公开工作台</span>
+              <span class="hero-title-line hero-title-accent">的公开工作台</span>
             </h1>
             <p class="hero-bio">医学博士，985 临床医学本科，曾任肿瘤内科和介入科医生，爱好代码和 AI。</p>
             <p>这里展示公开 GitHub skills、医学科研工具、R 可视化项目，以及公众号“Oncology树鸡的生信代码”的公开检索精选。站点只放可公开内容，不展示后台、登录凭据、私人邮箱或本机信息。</p>
+            <p class="hero-focus">研究方向 · 肿瘤 / 胃癌临床与生信</p>
             <div class="public-tags" aria-label="公开内容标签">
               <span class="public-tag public-tag--blue">医学研究</span>
               <span class="public-tag public-tag--teal">生信代码</span>
@@ -88,9 +90,10 @@
             <p class="hero-note">内容来自公开 GitHub 仓库和 Sogou 微信公开检索；公众号热度不可公开验证时，只标记为精选，不伪造阅读量。</p>
           </aside>
         </div>
+        <div class="hero-scroll-hint" aria-hidden="true">SCROLL</div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="container">
           <div class="section-head">
             <div>
@@ -102,17 +105,17 @@
           </div>
           <div class="feature-strip">
             <a class="feature-tile tile-medical" href="/skills.html#medical">
-              <span class="tile-mark">01</span>
+              <span class="tile-mark">01 / MEDICAL</span>
               <h3>医学科研导航</h3>
               <p>统计、生信、论文输出三条路线，把医学研究问题拆成可执行任务。</p>
             </a>
             <a class="feature-tile tile-writing" href="/skills.html#writing">
-              <span class="tile-mark">02</span>
+              <span class="tile-mark">02 / WRITING</span>
               <h3>知识写作工作台</h3>
               <p>从阅读、可视化、站点、队列和精确提问五个入口组织知识生产。</p>
             </a>
             <a class="feature-tile tile-visual" href="/skills.html#visual">
-              <span class="tile-mark">03</span>
+              <span class="tile-mark">03 / VISUAL</span>
               <h3>R 图形风格系统</h3>
               <p>用 multiplot 把常见统计软件图形风格接入 ggplot2 工作流。</p>
             </a>
@@ -120,7 +123,7 @@
         </div>
       </section>
 
-      <section class="section section-band">
+      <section class="section section-band reveal">
         <div class="container split">
           <div>
             <div class="section-head">
@@ -162,7 +165,7 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="container">
           <div class="section-head">
             <div>
