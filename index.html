@@ -18,6 +18,7 @@
         <div class="container hero-grid">
           <div class="hero-copy">
             <p class="eyebrow">Public Research Workbench · Est. 2026</p>
+            <p class="hero-greeting" data-greeting></p>
             <div class="profile-lockup">
               <span class="profile-index">01 / PROFILE</span>
               <strong>sushuqiong</strong>
@@ -28,6 +29,7 @@
               <span class="hero-title-line hero-title-accent">的公开工作台</span>
             </h1>
             <p class="hero-bio">医学博士，985 临床医学本科，曾任肿瘤内科和介入科医生，爱好代码和 AI。</p>
+            <p class="hero-typewriter"><span data-typewriter></span><span class="type-caret" aria-hidden="true"></span></p>
             <p>这里展示公开 GitHub skills、医学科研工具、R 可视化项目，以及公众号“Oncology树鸡的生信代码”的公开检索精选。站点只放可公开内容，不展示后台、登录凭据、私人邮箱或本机信息。</p>
             <p class="hero-focus">研究方向 · 肿瘤 / 胃癌临床与生信</p>
             <div class="public-tags" aria-label="公开内容标签">
@@ -123,6 +125,44 @@
         </div>
       </section>
 
+      <section class="section reveal">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">The Road</p>
+              <h2>从病床到代码：我的路线</h2>
+              <p>临床、科研、代码与 AI 是同一条路上的不同站点。每一步都让下一个问题更清晰。</p>
+            </div>
+          </div>
+          <div class="road-grid">
+            <article class="road-step">
+              <span class="road-index">01</span>
+              <span class="road-icon" aria-hidden="true">🩺</span>
+              <h3>临床训练</h3>
+              <p>曾任肿瘤内科与介入科医生，在病床前理解真实临床问题与未被满足的需求。</p>
+            </article>
+            <article class="road-step">
+              <span class="road-index">02</span>
+              <span class="road-icon" aria-hidden="true">🎓</span>
+              <h3>医学博士</h3>
+              <p>985 临床医学本科起步，博士阶段聚焦肿瘤与胃癌研究，从临床问题走向机制与证据。</p>
+            </article>
+            <article class="road-step">
+              <span class="road-index">03</span>
+              <span class="road-icon" aria-hidden="true">💻</span>
+              <h3>生信与代码</h3>
+              <p>用 R 与 Python 处理多组学数据：TCGA、GEO、单细胞、孟德尔随机化，让数据回答临床问题。</p>
+            </article>
+            <article class="road-step">
+              <span class="road-index">04</span>
+              <span class="road-icon" aria-hidden="true">🤖</span>
+              <h3>AI 与公开创作</h3>
+              <p>把 AI 装进科研工作流，打磨 R 包 multiplot，在公众号「树鸡的生信代码」持续公开写作。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="section section-band reveal">
         <div class="container split">
           <div>
@@ -158,9 +198,15 @@
             </div>
           </div>
           <aside class="figure-panel">
-            <p class="eyebrow">安全边界</p>
-            <p>这里不使用公众号后台链接，不公开登录凭据，不声称无法验证的阅读量排行。文章入口使用公开搜索链接，便于读者自行核对。</p>
-            <a class="button button-primary" href="/wechat.html">查看精选</a>
+            <p class="eyebrow">扫码关注 · 树鸡的生信代码</p>
+            <div class="qr-row">
+              <img class="qr-img" src="/assets/wechat-qr.png" alt="Oncology树鸡的生信代码 公众号二维码" width="104" height="104" loading="lazy">
+              <div>
+                <p class="qr-text">用微信扫一扫，关注「Oncology树鸡的生信代码」，一起学生信、写代码、做科研。</p>
+                <a class="button button-primary" href="/wechat.html">查看精选</a>
+              </div>
+            </div>
+            <p class="qr-note">这里不使用公众号后台链接，不公开登录凭据，不声称无法验证的阅读量排行。文章入口使用公开搜索链接，便于读者自行核对。</p>
           </aside>
         </div>
       </section>

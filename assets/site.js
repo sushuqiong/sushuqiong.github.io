@@ -759,3 +759,112 @@ function initStats() {
 
 renderRooster()
 initStats()
+
+/* ───────────── 时间感知问候 ───────────── */
+
+function initGreeting() {
+  const node = document.querySelector("[data-greeting]")
+  if (!node) return
+  const hour = new Date().getHours()
+  let greeting = "你好"
+  if (hour >= 5 && hour < 9) greeting = "早上好"
+  else if (hour >= 9 && hour < 12) greeting = "上午好"
+  else if (hour >= 12 && hour < 14) greeting = "中午好"
+  else if (hour >= 14 && hour < 18) greeting = "下午好"
+  else if (hour >= 18 && hour < 23) greeting = "晚上好"
+  else greeting = "夜深了"
+  node.textContent = `${greeting} 👋 欢迎来到树鸡的工作台`
+}
+
+/* ───────────── Hero 打字机 ───────────── */
+
+const TYPING_PHRASES = [
+  "我在研究肿瘤与胃癌的分子特征",
+  "我在写生信分析代码：TCGA · GEO · 单细胞",
+  "我在把 AI 装进医学科研工作流",
+  "我在打磨 R 可视化：multiplot",
+  "我在公开写作：树鸡的生信代码",
+]
+
+function initTypewriter() {
+  const node = document.querySelector("[data-typewriter]")
+  if (!node) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    node.textContent = TYPING_PHRASES[0]
+    return
+  }
+
+  let phraseIndex = 0
+  let charIndex = 0
+  let deleting = false
+  let timer = null
+
+  function tick() {
+    const phrase = TYPING_PHRASES[phraseIndex]
+    if (!deleting) {
+      charIndex += 1
+      node.textContent = phrase.slice(0, charIndex)
+      if (charIndex === phrase.length) {
+        deleting = true
+        timer = setTimeout(tick, 2200)
+        return
+      }
+      timer = setTimeout(tick, 78 + Math.random() * 60)
+    } else {
+      charIndex -= 1
+      node.textContent = phrase.slice(0, charIndex)
+      if (charIndex === 0) {
+        deleting = false
+        phraseIndex = (phraseIndex + 1) % TYPING_PHRASES.length
+        timer = setTimeout(tick, 420)
+        return
+      }
+      timer = setTimeout(tick, 38)
+    }
+  }
+  timer = setTimeout(tick, 900)
+}
+
+/* ───────────── 滚动进度条 + 回到顶部 ───────────── */
+
+function initScrollChrome() {
+  // 进度条
+  const bar = document.createElement("div")
+  bar.className = "progress-bar"
+  bar.setAttribute("aria-hidden", "true")
+  document.body.appendChild(bar)
+
+  // 回到顶部
+  const topBtn = document.createElement("button")
+  topBtn.className = "back-to-top"
+  topBtn.type = "button"
+  topBtn.setAttribute("aria-label", "回到顶部")
+  topBtn.textContent = "↑"
+  document.body.appendChild(topBtn)
+  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }))
+
+  let ticking = false
+  const update = () => {
+    ticking = false
+    const scrollTop = window.scrollY
+    const height = document.documentElement.scrollHeight - window.innerHeight
+    const progress = height > 0 ? Math.min(1, scrollTop / height) : 0
+    bar.style.width = `${progress * 100}%`
+    topBtn.classList.toggle("is-show", scrollTop > 560)
+  }
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
+    },
+    { passive: true },
+  )
+  update()
+}
+
+initGreeting()
+initTypewriter()
+initScrollChrome()
