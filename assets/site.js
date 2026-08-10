@@ -868,3 +868,54 @@ function initScrollChrome() {
 initGreeting()
 initTypewriter()
 initScrollChrome()
+
+/* ───────────── K: 鼠标光晕跟随 ───────────── */
+
+function initFollowerGlow() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (!window.matchMedia("(hover: hover)").matches) return
+
+  const glow = document.createElement("div")
+  glow.className = "follower-glow"
+  glow.setAttribute("aria-hidden", "true")
+  document.body.appendChild(glow)
+
+  let targetX = window.innerWidth / 2
+  let targetY = window.innerHeight / 2
+  let curX = targetX
+  let curY = targetY
+  let visible = false
+  let raf = null
+
+  function loop() {
+    curX += (targetX - curX) * 0.12
+    curY += (targetY - curY) * 0.12
+    glow.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%)`
+    if (visible || Math.abs(curX - targetX) > 1 || Math.abs(curY - targetY) > 1) {
+      raf = requestAnimationFrame(loop)
+    } else {
+      raf = null
+    }
+  }
+
+  window.addEventListener(
+    "mousemove",
+    (event) => {
+      targetX = event.clientX
+      targetY = event.clientY
+      if (!visible) {
+        visible = true
+        glow.style.opacity = "1"
+        if (!raf) raf = requestAnimationFrame(loop)
+      }
+    },
+    { passive: true },
+  )
+
+  document.documentElement.addEventListener("mouseleave", () => {
+    visible = false
+    glow.style.opacity = "0"
+  })
+}
+
+initFollowerGlow()

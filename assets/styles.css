@@ -2377,3 +2377,30 @@ body[data-page="home"] .site-header:not(.is-scrolled) .nav a[aria-current="page"
 .giscus iframe {
   width: 100%;
 }
+
+/* ── K: 鼠标光晕跟随（Stripe 风格） ── */
+.follower-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, rgba(99, 102, 241, 0.06) 38%, transparent 66%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: transform;
+}
+
+/* 深空 hero 上用荧光青绿光晕 */
+body[data-page="home"] .follower-glow {
+  background: radial-gradient(circle, rgba(100, 255, 218, 0.1) 0%, rgba(100, 255, 218, 0.04) 38%, transparent 66%);
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .follower-glow {
+    display: none;
+  }
+}
