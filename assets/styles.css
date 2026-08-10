@@ -1820,3 +1820,303 @@ body[data-page="home"] .site-header:not(.is-scrolled) .nav a[aria-current="page"
     transform: none;
   }
 }
+
+/* ============================================================
+   小公鸡吉祥物 + 访客统计
+   ============================================================ */
+
+/* ── 右下角悬浮小公鸡 ── */
+.rooster {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 80;
+  width: 76px;
+  height: 76px;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 18px rgba(7, 13, 31, 0.35));
+  animation: rooster-bob 3.2s ease-in-out infinite;
+  transition: transform 0.25s ease;
+}
+
+.rooster:hover {
+  transform: scale(1.08);
+}
+
+.rooster svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+@keyframes rooster-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* 身体：左右轻微摇摆 */
+.rooster-body {
+  animation: rooster-sway 3.2s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+@keyframes rooster-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-1.6deg); }
+}
+
+/* 翅膀：快速扇动 */
+.rooster-wing {
+  animation: rooster-flap 1.6s ease-in-out infinite;
+  transform-origin: 88% 62%;
+}
+
+@keyframes rooster-flap {
+  0%, 100% { transform: rotate(0deg); }
+  18% { transform: rotate(-24deg); }
+  36% { transform: rotate(0deg); }
+  54% { transform: rotate(-18deg); }
+  72% { transform: rotate(0deg); }
+}
+
+/* 头：偶尔点头 */
+.rooster-head {
+  animation: rooster-nod 5.4s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes rooster-nod {
+  0%, 82%, 100% { transform: rotate(0deg); }
+  88% { transform: rotate(5deg); }
+  94% { transform: rotate(-3deg); }
+}
+
+/* 尾巴：轻摆 */
+.rooster-tail {
+  animation: rooster-tail 3.2s ease-in-out infinite;
+  transform-origin: 100% 70%;
+}
+
+@keyframes rooster-tail {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-5deg); }
+}
+
+/* 偶发小步走（JS 触发） */
+.rooster.is-walking {
+  animation: rooster-walk 0.9s ease-in-out;
+}
+
+@keyframes rooster-walk {
+  0% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(7px) translateY(-6px) rotate(6deg); }
+  50% { transform: translateX(0) translateY(0) rotate(0); }
+  75% { transform: translateX(-7px) translateY(-6px) rotate(-6deg); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* 点击跳起 */
+.rooster.is-hopping {
+  animation: rooster-hop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes rooster-hop {
+  0% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-26px) scale(1.06); }
+  70% { transform: translateY(4px) scale(0.97); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 气泡 */
+.rooster-bubble {
+  position: fixed;
+  right: 104px;
+  bottom: 44px;
+  z-index: 81;
+  max-width: 150px;
+  padding: 7px 12px;
+  border-radius: 14px 14px 4px 14px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(6px) scale(0.92);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.rooster-bubble.is-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ── 页脚访问统计按钮 ── */
+.footer-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  background: rgba(100, 255, 218, 0.08);
+  color: var(--space-accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.footer-stats:hover {
+  background: rgba(100, 255, 218, 0.16);
+  box-shadow: 0 0 18px rgba(100, 255, 218, 0.22);
+  transform: translateY(-2px);
+  color: var(--space-accent);
+}
+
+.footer-stats .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--space-accent);
+  box-shadow: 0 0 8px var(--space-accent);
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+
+/* ── 统计弹卡 ── */
+.stats-pop {
+  position: fixed;
+  right: 20px;
+  bottom: 104px;
+  z-index: 82;
+  width: min(340px, calc(100vw - 40px));
+  padding: 24px 22px 20px;
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.stats-pop.is-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.stats-pop-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.stats-pop-head strong {
+  font-size: 15.5px;
+  font-weight: 700;
+}
+
+.stats-pop-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stats-pop-close:hover {
+  color: var(--rose);
+  border-color: var(--rose);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.stats-grid > div {
+  padding: 14px 12px;
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+}
+
+.stats-grid strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  background: var(--grad-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stats-grid span {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--subtle);
+}
+
+.stats-note {
+  margin: 14px 0 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--subtle);
+}
+
+@media (max-width: 640px) {
+  .rooster {
+    width: 62px;
+    height: 62px;
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .rooster-bubble {
+    right: 84px;
+    bottom: 34px;
+  }
+
+  .stats-pop {
+    right: 14px;
+    bottom: 86px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rooster,
+  .rooster-body,
+  .rooster-wing,
+  .rooster-head,
+  .rooster-tail {
+    animation: none !important;
+  }
+}
+
+/* 统计面板第 4 格（信息格） */
+.stats-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  color: var(--subtle);
+  line-height: 1.5;
+  border-style: dashed !important;
+  background: transparent !important;
+}

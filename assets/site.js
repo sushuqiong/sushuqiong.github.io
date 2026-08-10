@@ -81,6 +81,7 @@ if (footer) {
         <div class="footer-note">
           <p class="footer-title">公开内容只保留 skills、文章、项目和可分享链接。</p>
           <p>站点不公开手机号、住址、私人邮箱、后台入口或任何登录凭据。</p>
+          <button class="footer-stats" type="button" data-stats-toggle><span class="dot"></span>访问统计</button>
         </div>
         <div class="footer-links">
           <a href="/skills.html">Skills</a>
@@ -575,3 +576,186 @@ async function initWechatHub() {
 initHomeStats().catch((error) => console.error(error))
 initSkillHub().catch((error) => console.error(error))
 initWechatHub().catch((error) => console.error(error))
+
+/* ───────────── 小公鸡吉祥物 ───────────── */
+
+const ROOSTER_PHRASES = ["咕咕！", "咯咯哒！", "今天也要加油鸭~", "看，有人来了！", "咕～"]
+
+function renderRooster() {
+  const wrapper = document.querySelector(".rooster")
+  if (wrapper) return
+
+  const rooster = document.createElement("div")
+  rooster.className = "rooster"
+  rooster.setAttribute("role", "button")
+  rooster.setAttribute("tabindex", "0")
+  rooster.setAttribute("aria-label", "小公鸡吉祥物，点击互动")
+  rooster.innerHTML = `
+    <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="rooster-body" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fdba74"/>
+          <stop offset="1" stop-color="#f97316"/>
+        </linearGradient>
+        <linearGradient id="rooster-wing" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fb923c"/>
+          <stop offset="1" stop-color="#ea580c"/>
+        </linearGradient>
+      </defs>
+      <g class="rooster-tail">
+        <path d="M26 50 Q10 44 6 28 Q18 36 26 42 Z" fill="#ef4444"/>
+        <path d="M26 52 Q8 52 4 40 Q16 46 26 48 Z" fill="#22c55e"/>
+        <path d="M26 54 Q10 58 8 50 Q18 52 26 52 Z" fill="#3b82f6"/>
+      </g>
+      <g stroke="#ea580c" stroke-width="3" stroke-linecap="round" fill="none">
+        <line x1="40" y1="74" x2="38" y2="85"/>
+        <line x1="48" y1="74" x2="50" y2="85"/>
+        <path d="M33 85 L38 85 L43 85"/>
+        <path d="M45 85 L50 85 L55 85"/>
+      </g>
+      <ellipse class="rooster-body" cx="44" cy="54" rx="26" ry="22" fill="url(#rooster-body)"/>
+      <path class="rooster-wing" d="M36 46 Q24 42 28 30 Q38 34 42 44 Z" fill="url(#rooster-wing)" stroke="#c2410c" stroke-width="1.5"/>
+      <g class="rooster-head">
+        <circle cx="66" cy="34" r="13" fill="url(#rooster-body)"/>
+        <path d="M58 26 Q56 14 62 12 Q60 18 64 18 Q63 8 70 10 Q68 16 72 16 Q72 20 74 22 L74 26 Z" fill="#ef4444"/>
+        <path d="M77 34 L90 36 L77 40 Z" fill="#facc15" stroke="#d97706" stroke-width="1"/>
+        <ellipse cx="74" cy="44" rx="3.5" ry="5" fill="#ef4444"/>
+        <circle cx="68" cy="31" r="4" fill="#ffffff"/>
+        <circle cx="69" cy="31" r="2" fill="#1e293b"/>
+        <circle cx="69.8" cy="30.2" r="0.7" fill="#ffffff"/>
+      </g>
+      <ellipse cx="48" cy="89" rx="22" ry="3" fill="rgba(7, 13, 31, 0.16)"/>
+    </svg>
+  `
+  document.body.appendChild(rooster)
+
+  const bubble = document.createElement("div")
+  bubble.className = "rooster-bubble"
+  bubble.textContent = ROOSTER_PHRASES[0]
+  document.body.appendChild(bubble)
+
+  function hop() {
+    rooster.classList.remove("is-hopping")
+    void rooster.offsetWidth
+    rooster.classList.add("is-hopping")
+    bubble.textContent = ROOSTER_PHRASES[Math.floor(Math.random() * ROOSTER_PHRASES.length)]
+    bubble.classList.add("is-show")
+    setTimeout(() => bubble.classList.remove("is-show"), 1600)
+  }
+
+  rooster.addEventListener("click", hop)
+  rooster.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      hop()
+    }
+  })
+
+  // 偶发小步走（7–12 秒随机一次）
+  function scheduleWalk() {
+    setTimeout(() => {
+      rooster.classList.remove("is-walking")
+      void rooster.offsetWidth
+      rooster.classList.add("is-walking")
+      scheduleWalk()
+    }, 7000 + Math.random() * 5000)
+  }
+  scheduleWalk()
+}
+
+/* ───────────── 访客统计（不蒜子） ───────────── */
+
+const STATS = {
+  uv: null,
+  pv: null,
+  pagePv: null,
+  loaded: false,
+  failed: false,
+}
+
+function renderStatsValues() {
+  const nodes = {
+    site_uv: document.querySelector('[data-stat="site_uv"]'),
+    site_pv: document.querySelector('[data-stat="site_pv"]'),
+    page_pv: document.querySelector('[data-stat="page_pv"]'),
+  }
+  const fmt = (value) => (value == null ? "—" : Number(value).toLocaleString("zh-CN"))
+  if (nodes.site_uv) nodes.site_uv.textContent = STATS.failed ? "—" : fmt(STATS.uv)
+  if (nodes.site_pv) nodes.site_pv.textContent = STATS.failed ? "—" : fmt(STATS.pv)
+  if (nodes.page_pv) nodes.page_pv.textContent = STATS.failed ? "—" : fmt(STATS.pagePv)
+}
+
+function loadBusuanzi() {
+  if (STATS.loaded || STATS.failed) return
+  const script = document.createElement("script")
+  // 服务端固定调用全局 BusuanziCallback，且按 Referer 域名计数
+  script.src = "https://busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback"
+  const timeout = setTimeout(() => {
+    STATS.failed = true
+    renderStatsValues()
+  }, 7000)
+  window.BusuanziCallback = (data) => {
+    clearTimeout(timeout)
+    if (!data || typeof data.site_uv === "undefined") {
+      STATS.failed = true
+    } else {
+      STATS.uv = data.site_uv
+      STATS.pv = data.site_pv
+      STATS.pagePv = data.page_pv
+      STATS.loaded = true
+    }
+    renderStatsValues()
+  }
+  script.onerror = () => {
+    clearTimeout(timeout)
+    STATS.failed = true
+    renderStatsValues()
+  }
+  document.head.appendChild(script)
+}
+
+function initStats() {
+  const pop = document.querySelector("[data-stats-pop]")
+  if (!pop) {
+    const node = document.createElement("div")
+    node.className = "stats-pop"
+    node.dataset.statsPop = ""
+    node.innerHTML = `
+      <div class="stats-pop-head">
+        <strong>👀 访客统计</strong>
+        <button class="stats-pop-close" type="button" data-stats-close aria-label="关闭">×</button>
+      </div>
+      <div class="stats-grid">
+        <div><strong data-stat="site_uv">—</strong><span>总访客 UV</span></div>
+        <div><strong data-stat="site_pv">—</strong><span>总浏览量 PV</span></div>
+        <div><strong data-stat="page_pv">—</strong><span>本页浏览 PV</span></div>
+        <div class="stats-info"><span>匿名 · 无身份记录</span></div>
+      </div>
+      <p class="stats-note">统计由不蒜子提供，仅记录匿名聚合数据（人数与次数），不采集个人身份、IP、位置等隐私信息。GitHub Pages 为纯静态托管，无法识别具体访客身份。</p>
+    `
+    document.body.appendChild(node)
+  }
+  const panel = document.querySelector("[data-stats-pop]")
+  const toggle = document.querySelector("[data-stats-toggle]")
+  const close = document.querySelector("[data-stats-close]")
+  if (!toggle || !panel) return
+
+  loadBusuanzi()
+
+  const show = (on) => {
+    panel.classList.toggle("is-show", on)
+    if (on) loadBusuanzi()
+  }
+
+  toggle.addEventListener("click", () => show(!panel.classList.contains("is-show")))
+  if (close) close.addEventListener("click", () => show(false))
+  document.addEventListener("click", (event) => {
+    if (!panel.contains(event.target) && !toggle.contains(event.target)) show(false)
+  })
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") show(false)
+  })
+}
+
+renderRooster()
+initStats()
