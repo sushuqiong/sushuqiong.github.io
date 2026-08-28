@@ -146,11 +146,32 @@ function initStarfield() {
   }
 
   function createStars() {
-    const count = Math.min(150, Math.floor((width * height) / 6500))
-    stars = Array.from({ length: count }, () => {
+    const count = Math.min(170, Math.floor((width * height) / 5800))
+    const bandCount = Math.floor(count * 0.42) // 银河带粒子
+    stars = []
+    // 银河光带：沿对角线密集分布，暖白为主，缓慢流动
+    for (let i = 0; i < bandCount; i++) {
+      const t = Math.random()
+      const warm = Math.random() < 0.55
+      stars.push({
+        x: t * width + (Math.random() - 0.5) * width * 0.08,
+        y: t * height * 0.75 + (Math.random() - 0.5) * height * 0.16 + height * 0.1,
+        r: Math.random() * 1.2 + 0.4,
+        vx: (Math.random() - 0.5) * 0.06,
+        vy: -(Math.random() * 0.12 + 0.02),
+        tw: Math.random() * Math.PI * 2,
+        ts: Math.random() * 0.016 + 0.004,
+        color: warm ? [255, 246, 224] : [205, 225, 255],
+        glow: Math.random() < 0.12,
+        band: true,
+        bandT: t,
+      })
+    }
+    // 随机星尘
+    for (let i = bandCount; i < count; i++) {
       const palette = PALETTE[Math.floor(Math.random() * PALETTE.length)]
-      const big = Math.random() < 0.06
-      return {
+      const big = Math.random() < 0.05
+      stars.push({
         x: Math.random() * width,
         y: Math.random() * height,
         r: big ? Math.random() * 1.1 + 1.3 : Math.random() * 0.9 + 0.3,
@@ -160,8 +181,9 @@ function initStarfield() {
         ts: Math.random() * 0.02 + 0.005,
         color: palette,
         glow: big,
-      }
-    })
+        band: false,
+      })
+    }
   }
 
   function draw(t) {
@@ -169,6 +191,8 @@ function initStarfield() {
     // 鼠标视差（轻微，营造穿行感）
     const px = ((mouseX - width / 2) / width) * 10
     const py = ((mouseY - height / 2) / height) * 6
+    // 银河带整体缓慢摆动（"银河铺开"感）
+    const bandShift = Math.sin(t / 4200) * 7
 
     for (const s of stars) {
       s.x += s.vx
@@ -182,7 +206,7 @@ function initStarfield() {
       s.tw += s.ts
 
       const alpha = 0.28 + Math.abs(Math.sin(s.tw)) * 0.6
-      const drawX = s.x + px * s.r
+      const drawX = s.x + px * s.r + (s.band ? (s.bandT - 0.5) * bandShift : 0)
       const drawY = s.y + py * s.r
       const [r, g, b] = s.color
 
@@ -919,3 +943,28 @@ function initFollowerGlow() {
 }
 
 initFollowerGlow()
+
+/* ───────────── WELCOME 开场仪式 ───────────── */
+
+function initIntro() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  try {
+    if (sessionStorage.getItem("site_intro_seen")) return
+    sessionStorage.setItem("site_intro_seen", "1")
+  } catch (e) {
+    return
+  }
+  const overlay = document.createElement("div")
+  overlay.className = "intro-overlay"
+  overlay.setAttribute("aria-hidden", "true")
+  overlay.innerHTML = `
+    <p class="intro-title">WELCOME<span class="accent">.</span></p>
+    <p class="intro-sub">SUSHUQIONG · RESEARCH LAB</p>
+    <span class="intro-dot"></span>
+  `
+  document.body.appendChild(overlay)
+  setTimeout(() => overlay.classList.add("is-done"), 1750)
+  setTimeout(() => overlay.remove(), 2700)
+}
+
+initIntro()

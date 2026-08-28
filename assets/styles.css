@@ -837,7 +837,7 @@ body[data-page="home"] .site-header:not(.is-scrolled) .nav a[aria-current="page"
 }
 
 .feature-tile:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px) rotate(-0.6deg) scale(1.01);
   box-shadow: var(--shadow-lg);
   border-color: transparent;
   color: inherit;
@@ -2401,6 +2401,208 @@ body[data-page="home"] .follower-glow {
 
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .follower-glow {
+    display: none;
+  }
+}
+
+/* ============================================================
+   第三批：学术成果 / L-Path 五步 / 粉丝徽章 / 极光星尘 / 开场仪式
+   ============================================================ */
+
+/* ── 全页极光星尘背景（极淡，不影响阅读） ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(640px 320px at 18% 26%, rgba(100, 255, 218, 0.09), transparent 70%),
+    radial-gradient(760px 360px at 78% 58%, rgba(124, 58, 237, 0.11), transparent 70%),
+    radial-gradient(560px 300px at 52% 88%, rgba(37, 99, 235, 0.09), transparent 70%);
+  filter: blur(28px);
+  animation: aurora-drift 30s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(2%, 1.4%, 0) scale(1.06); }
+  100% { transform: translate3d(-1.6%, -1%, 0) scale(0.98); }
+}
+
+/* ── 页脚星河流淌 ── */
+.site-footer {
+  position: relative;
+  overflow: hidden;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 30%, rgba(230, 241, 255, 0.7), transparent 60%),
+    radial-gradient(2px 2px at 28% 72%, rgba(100, 255, 218, 0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 45% 22%, rgba(230, 241, 255, 0.6), transparent 60%),
+    radial-gradient(2.5px 2.5px at 62% 80%, rgba(167, 139, 250, 0.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 78% 38%, rgba(230, 241, 255, 0.65), transparent 60%),
+    radial-gradient(2px 2px at 90% 68%, rgba(100, 255, 218, 0.45), transparent 60%),
+    radial-gradient(1.5px 1.5px at 8% 88%, rgba(230, 241, 255, 0.5), transparent 60%),
+    radial-gradient(2px 2px at 55% 92%, rgba(167, 139, 250, 0.4), transparent 60%);
+  opacity: 0.5;
+  animation: star-drift 18s linear infinite;
+}
+
+@keyframes star-drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-26px); }
+}
+
+/* ── 学术成果 ── */
+.pub-list {
+  gap: 16px;
+}
+
+.pub-row {
+  align-items: flex-start;
+}
+
+.pub-row h3 {
+  margin-bottom: 8px;
+}
+
+.pub-row .post-meta {
+  margin-top: 10px;
+}
+
+.pub-row .post-meta a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pub-row .post-meta a:hover {
+  text-decoration: underline;
+}
+
+.badge-journal {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.12));
+  color: var(--accent-deep);
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border: 1px solid rgba(124, 58, 237, 0.18);
+}
+
+/* ── 粉丝徽章 ── */
+.fans-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #92400e;
+  background: linear-gradient(135deg, #fef3c7, #fde68a 55%, #fcd34d);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  box-shadow: 0 8px 22px rgba(217, 119, 6, 0.18);
+}
+
+/* ── L-Path 五步路线 ── */
+.road-grid--five {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.road-grid--five::before {
+  top: 46px;
+  left: 5%;
+  right: 5%;
+  background: linear-gradient(90deg, var(--teal), var(--violet), #7c3aed, var(--coral), var(--gold));
+}
+
+@media (max-width: 1100px) {
+  .road-grid--five {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .road-grid--five::before {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .road-grid--five {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .road-grid--five {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── WELCOME 开场仪式 ── */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background:
+    radial-gradient(900px 500px at 70% 20%, rgba(124, 58, 237, 0.2), transparent 60%),
+    radial-gradient(700px 420px at 20% 85%, rgba(37, 99, 235, 0.22), transparent 60%),
+    linear-gradient(165deg, #070d1f, #0d1b36 70%);
+  opacity: 1;
+  transition: opacity 0.9s ease;
+}
+
+.intro-overlay.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.9rem, 6.5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--space-text);
+  text-shadow: 0 0 40px rgba(100, 255, 218, 0.35);
+}
+
+.intro-title .accent {
+  background: linear-gradient(92deg, #64ffda, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.intro-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--space-dim);
+  text-transform: uppercase;
+}
+
+.intro-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--space-accent);
+  box-shadow: 0 0 12px var(--space-accent);
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-overlay {
     display: none;
   }
 }

@@ -69,22 +69,22 @@
             </div>
             <div class="lane-mini-grid" aria-label="快速入口">
               <a class="lane-mini lane-mini--medical" href="/skills.html#medical">
-                <span>医学科研导航</span>
+                <span>🔭 医学科研导航</span>
                 <strong data-track-count="medical">4</strong>
                 <small>统计 / 生信 / 论文输出</small>
               </a>
               <a class="lane-mini lane-mini--writing" href="/skills.html#writing">
-                <span>知识写作工作台</span>
+                <span>💻 知识写作工作台</span>
                 <strong data-track-count="writing">3</strong>
                 <small>阅读 / 站点 / 队列 / 精确提问</small>
               </a>
               <a class="lane-mini lane-mini--visual" href="/skills.html#visual">
-                <span>R 图形风格系统</span>
+                <span>📊 R 图形风格系统</span>
                 <strong data-track-count="visual">1</strong>
                 <small>ggplot2 / 多软件风格</small>
               </a>
               <div class="lane-mini lane-mini--neutral">
-                <span>公开边界</span>
+                <span>🔒 公开边界</span>
                 <strong>0</strong>
                 <small>不公开手机号、住址、私密后台</small>
               </div>
@@ -93,6 +93,60 @@
           </aside>
         </div>
         <div class="hero-scroll-hint" aria-hidden="true">SCROLL</div>
+      </section>
+
+      <section class="section reveal">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Publications</p>
+              <h2>学术成果</h2>
+              <p>从临床问题出发，用生信与代码回答：免疫微环境、公共数据库挖掘与临床综述。</p>
+            </div>
+          </div>
+          <div class="list-rows pub-list">
+            <article class="row pub-row">
+              <div>
+                <h3>ICD 基因集衍生的结直肠癌免疫特征预后模型</h3>
+                <p>整合 TCGA/GEO 单细胞与批量转录组，以 WGCNA 与机器学习构建 7 基因免疫环境签名（CD79A、CXCR6、IRF4、ISG20、PLCG2、TIGIT、TRAF1），并在外部队列验证其预后分层价值。</p>
+                <div class="post-meta"><span>Cancer Treatment and Research Communications · 2026</span><span>·</span><span>共同一作</span><span>·</span><a href="https://doi.org/10.1016/j.ctarc.2026.101389" target="_blank" rel="noopener noreferrer">DOI</a></div>
+              </div>
+              <span class="badge badge-journal">CTARC</span>
+            </article>
+            <article class="row pub-row">
+              <div>
+                <h3>类风湿关节炎与宫颈癌共享基因的预后研究</h3>
+                <p>通过 WGCNA 与蛋白互作网络挖掘类风湿关节炎与宫颈癌的共享分子通路，鉴定 CXCL1、CXCL13、ZWINT、PTTG1 四个关键基因与宫颈癌预后相关。</p>
+                <div class="post-meta"><span>Scientific Reports · 2025</span><span>·</span><span>共同一作</span><span>·</span><a href="https://doi.org/10.1038/s41598-025-01177-x" target="_blank" rel="noopener noreferrer">DOI</a></div>
+              </div>
+              <span class="badge badge-journal">Sci Rep</span>
+            </article>
+            <article class="row pub-row">
+              <div>
+                <h3>multiplot：在 R 中近似九种作图软件的统计图形风格</h3>
+                <p>开源 ggplot2 扩展，29 个函数一键模拟 Prism、SPSS、Origin、Stata、MATLAB 等九种软件与学术出版风格，以 Plot Style Ontology 形式化图形风格规范。</p>
+                <div class="post-meta"><span>F1000Research · 2026</span><span>·</span><span>第一作者</span><span>·</span><a href="https://doi.org/10.12688/f1000research.186629.1" target="_blank" rel="noopener noreferrer">DOI</a></div>
+              </div>
+              <span class="badge badge-journal">F1000R</span>
+            </article>
+            <article class="row pub-row">
+              <div>
+                <h3>恶性肠梗阻的治疗现状与展望</h3>
+                <p>系统综述恶性肠梗阻的概念演变、综合治疗策略与未来研究方向，为临床诊治提供参考。</p>
+                <div class="post-meta"><span>中国临床研究 · 2025</span><span>·</span><span>参与</span></div>
+              </div>
+              <span class="badge badge-journal">综述</span>
+            </article>
+            <article class="row pub-row">
+              <div>
+                <h3>化疗治疗胃腺癌腹膜转移合并恶性肠梗阻的临床疗效分析</h3>
+                <p>回顾性分析化疗在胃腺癌腹膜转移合并恶性肠梗阻中的临床疗效与安全性，关注晚期患者的生存质量。</p>
+                <div class="post-meta"><span>消化肿瘤杂志（电子版） · 2024</span><span>·</span><span>参与</span></div>
+              </div>
+              <span class="badge badge-journal">论著</span>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section class="section reveal">
@@ -134,30 +188,36 @@
               <p>临床、科研、代码与 AI 是同一条路上的不同站点。每一步都让下一个问题更清晰。</p>
             </div>
           </div>
-          <div class="road-grid">
+          <div class="road-grid road-grid--five">
             <article class="road-step">
               <span class="road-index">01</span>
               <span class="road-icon" aria-hidden="true">🩺</span>
               <h3>临床训练</h3>
-              <p>曾任肿瘤内科与介入科医生，在病床前理解真实临床问题与未被满足的需求。</p>
+              <p>肿瘤内科与介入科医生，在病床前理解真实临床问题与未被满足的需求。</p>
             </article>
             <article class="road-step">
               <span class="road-index">02</span>
-              <span class="road-icon" aria-hidden="true">🎓</span>
-              <h3>医学博士</h3>
-              <p>985 临床医学本科起步，博士阶段聚焦肿瘤与胃癌研究，从临床问题走向机制与证据。</p>
+              <span class="road-icon" aria-hidden="true">🧭</span>
+              <h3>L-Path 转折</h3>
+              <p>面对不确定的处境，选择一条自我突围路线：学 AI、写代码、写论文、考博——把风险转化为可迁移的能力。</p>
             </article>
             <article class="road-step">
               <span class="road-index">03</span>
-              <span class="road-icon" aria-hidden="true">💻</span>
-              <h3>生信与代码</h3>
-              <p>用 R 与 Python 处理多组学数据：TCGA、GEO、单细胞、孟德尔随机化，让数据回答临床问题。</p>
+              <span class="road-icon" aria-hidden="true">🎓</span>
+              <h3>考博突围</h3>
+              <p>2025 年完成考博突围，进入博士阶段，聚焦肿瘤与胃癌研究。</p>
             </article>
             <article class="road-step">
               <span class="road-index">04</span>
+              <span class="road-icon" aria-hidden="true">💻</span>
+              <h3>生信与代码</h3>
+              <p>用 R 与 Python 处理多组学数据：TCGA、GEO、单细胞、孟德尔随机化。</p>
+            </article>
+            <article class="road-step">
+              <span class="road-index">05</span>
               <span class="road-icon" aria-hidden="true">🤖</span>
               <h3>AI 与公开创作</h3>
-              <p>把 AI 装进科研工作流，打磨 R 包 multiplot，在公众号「树鸡的生信代码」持续公开写作。</p>
+              <p>把 AI 装进科研工作流，打磨 R 包 multiplot，在公众号持续公开写作。</p>
             </article>
           </div>
         </div>
@@ -172,6 +232,7 @@
                 <h2>公众号精选：Oncology树鸡的生信代码</h2>
                 <p>公开检索已扩展到 20 篇代表作，继续保留精选、可核验和隐私边界三条原则。</p>
               </div>
+              <span class="fans-badge" title="公众号当前关注人数">⭐ 粉丝 1.6 万</span>
             </div>
             <div class="list-rows">
               <article class="row">
