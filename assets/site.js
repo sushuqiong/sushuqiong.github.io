@@ -127,18 +127,18 @@ function initStarfield() {
   let mouseY = 0
 
   const PALETTE = [
-    [214, 236, 255], // 冷白
-    [214, 236, 255],
-    [214, 236, 255],
-    [214, 236, 255],
+    [150, 168, 205], // 蓝灰（浅色底可见）
+    [165, 180, 215],
+    [130, 150, 190],
+    [150, 168, 205],
     [100, 255, 218], // 荧光青绿
     [167, 139, 250], // 星云紫
   ]
 
   function resize() {
-    const rect = canvas.parentElement.getBoundingClientRect()
-    width = rect.width
-    height = rect.height
+    // 全页固定背景：使用视口尺寸
+    width = window.innerWidth
+    height = window.innerHeight
     canvas.width = Math.floor(width * DPR)
     canvas.height = Math.floor(height * DPR)
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
@@ -146,28 +146,28 @@ function initStarfield() {
   }
 
   function createStars() {
-    const count = Math.min(170, Math.floor((width * height) / 5800))
-    const bandCount = Math.floor(count * 0.42) // 银河带粒子
+    const count = Math.min(220, Math.floor((width * height) / 5200))
+    const bandCount = Math.floor(count * 0.4) // 银河带粒子
     stars = []
     // 银河光带：沿对角线密集分布，暖白为主，缓慢流动
     for (let i = 0; i < bandCount; i++) {
       const t = Math.random()
-      const warm = Math.random() < 0.55
+      const warm = Math.random() < 0.5
       stars.push({
         x: t * width + (Math.random() - 0.5) * width * 0.08,
-        y: t * height * 0.75 + (Math.random() - 0.5) * height * 0.16 + height * 0.1,
+        y: t * height * 0.8 + (Math.random() - 0.5) * height * 0.14 + height * 0.08,
         r: Math.random() * 1.2 + 0.4,
         vx: (Math.random() - 0.5) * 0.06,
         vy: -(Math.random() * 0.12 + 0.02),
         tw: Math.random() * Math.PI * 2,
         ts: Math.random() * 0.016 + 0.004,
-        color: warm ? [255, 246, 224] : [205, 225, 255],
-        glow: Math.random() < 0.12,
+        color: warm ? [255, 246, 224] : [195, 214, 245],
+        glow: Math.random() < 0.14,
         band: true,
         bandT: t,
       })
     }
-    // 随机星尘
+    // 随机星尘（蓝灰色，在浅色内容区上也可见）
     for (let i = bandCount; i < count; i++) {
       const palette = PALETTE[Math.floor(Math.random() * PALETTE.length)]
       const big = Math.random() < 0.05
@@ -968,3 +968,49 @@ function initIntro() {
 }
 
 initIntro()
+
+/* ───────────── Hero 标题逐字浮现 ───────────── */
+
+function initTitleChars() {
+  const lines = document.querySelectorAll(".hero-title-line")
+  if (!lines.length) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  lines.forEach((line, lineIndex) => {
+    const text = line.textContent
+    line.textContent = ""
+    ;[...text].forEach((ch, i) => {
+      const span = document.createElement("span")
+      span.className = "char"
+      span.textContent = ch
+      span.style.animationDelay = `${0.15 + lineIndex * 0.25 + i * 0.03}s`
+      line.appendChild(span)
+    })
+  })
+}
+
+/* ───────────── 点击星星特效 ───────────── */
+
+function initClickStars() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const colors = ["#64ffda", "#a78bfa", "#93c5fd", "#fde68a", "#f9a8d4"]
+  document.addEventListener("click", (event) => {
+    const count = 6 + Math.floor(Math.random() * 4)
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement("span")
+      star.className = "click-star"
+      const color = colors[Math.floor(Math.random() * colors.length)]
+      star.style.background = color
+      star.style.left = `${event.clientX + (Math.random() - 0.5) * 30}px`
+      star.style.top = `${event.clientY + (Math.random() - 0.5) * 30}px`
+      const angle = Math.random() * Math.PI * 2
+      const dist = 26 + Math.random() * 34
+      star.style.setProperty("--dx", `${Math.cos(angle) * dist}px`)
+      star.style.setProperty("--dy", `${Math.sin(angle) * dist}px`)
+      document.body.appendChild(star)
+      setTimeout(() => star.remove(), 750)
+    }
+  })
+}
+
+initTitleChars()
+initClickStars()

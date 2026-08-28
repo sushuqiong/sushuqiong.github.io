@@ -2606,3 +2606,461 @@ body::after {
     display: none;
   }
 }
+
+/* ============================================================
+   第四批：论文详情页 / 六步路线 / 全页银河 / 动态增强 / 创意元素
+   ============================================================ */
+
+/* ── 论文卡片（可点击整卡） ── */
+.pub-row {
+  position: relative;
+  transition: transform 0.22s ease, box-shadow 0.28s ease, border-color 0.22s ease;
+}
+
+.pub-row:hover {
+  transform: translateY(-4px) rotate(0.2deg);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+  color: inherit;
+}
+
+.pub-row:hover h3 {
+  color: var(--accent);
+}
+
+.pub-row h3 {
+  transition: color 0.2s ease;
+}
+
+.pub-read-hint {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ── 六步路线 ── */
+.road-grid--six {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.road-grid--six::before {
+  top: 46px;
+  left: 4%;
+  right: 4%;
+  background: linear-gradient(90deg, #4f46e5, var(--teal), var(--violet), #7c3aed, var(--coral), var(--gold));
+}
+
+@media (max-width: 1200px) {
+  .road-grid--six {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .road-grid--six::before {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .road-grid--six {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .road-grid--six {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── 论文详情页：沉浸式阅读 ── */
+.pub-hero {
+  position: relative;
+  padding: 110px 0 64px;
+  overflow: hidden;
+  color: var(--space-text);
+  background:
+    radial-gradient(900px 500px at 80% 0%, rgba(124, 58, 237, 0.22), transparent 60%),
+    radial-gradient(700px 420px at 10% 100%, rgba(37, 99, 235, 0.2), transparent 60%),
+    linear-gradient(165deg, var(--space-1), var(--space-2) 70%);
+}
+
+.pub-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 90px;
+  background: linear-gradient(180deg, transparent, var(--bg) 96%);
+  pointer-events: none;
+}
+
+.pub-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+}
+
+.pub-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 26px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  color: var(--space-muted);
+  transition: color 0.2s ease;
+}
+
+.pub-back:hover {
+  color: var(--space-accent);
+}
+
+.pub-hero .eyebrow {
+  color: var(--space-accent);
+  text-shadow: 0 0 18px rgba(100, 255, 218, 0.4);
+}
+
+.pub-hero h1 {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 4.6vw, 3rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.pub-subtitle {
+  margin: 0 0 22px;
+  font-size: 16px;
+  color: var(--space-muted);
+}
+
+.pub-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pub-role {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--space-accent);
+  background: rgba(100, 255, 218, 0.1);
+  border: 1px solid var(--space-border);
+}
+
+.pub-icon {
+  font-size: 26px;
+}
+
+.pub-body {
+  padding: 48px 0 72px;
+}
+
+.pub-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.pub-info {
+  position: sticky;
+  top: 88px;
+}
+
+.pub-info-card {
+  padding: 26px 22px;
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.pub-info-card h2 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pub-info-card dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pub-info-card dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+.pub-info-card dd {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.pub-doi {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.pub-doi-note {
+  margin: 18px 0 0;
+  font-size: 12px;
+  color: var(--subtle);
+  text-align: center;
+}
+
+.pub-reading {
+  max-width: 780px;
+}
+
+.pub-section {
+  margin-bottom: 34px;
+  padding: 30px 32px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.pub-section h2 {
+  margin: 0 0 12px;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--accent-deep);
+  position: relative;
+  padding-left: 16px;
+}
+
+.pub-section h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--grad-cta);
+}
+
+.pub-section p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  line-height: 2;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 960px) {
+  .pub-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .pub-info {
+    position: static;
+  }
+}
+
+/* ── 全页银河背景（渲染整个网页） ── */
+.hero-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* hero 背景改半透明，让银河透出 */
+.hero {
+  background:
+    radial-gradient(1100px 620px at 82% -12%, rgba(124, 58, 237, 0.16), transparent 60%),
+    radial-gradient(900px 560px at 8% 108%, rgba(37, 99, 235, 0.18), transparent 58%),
+    linear-gradient(165deg, rgba(10, 18, 38, 0.72) 0%, rgba(13, 27, 54, 0.62) 55%, rgba(18, 36, 80, 0.55) 100%);
+}
+
+/* body 背景半透明，银河在全页若隐若现 */
+body {
+  background: rgba(247, 249, 252, 0.92);
+}
+
+/* ── 内容区层次：区块交替色 ── */
+.section-tint {
+  background: linear-gradient(180deg, transparent, rgba(37, 99, 235, 0.035) 12%, rgba(124, 58, 237, 0.035) 88%, transparent);
+  padding-bottom: 96px;
+}
+
+/* ── 场景标牌（借鉴 FIND-A-WORLD 式地图名） ── */
+.scene-sign {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--space-accent);
+  background: rgba(100, 255, 218, 0.08);
+  border: 1px solid rgba(100, 255, 218, 0.25);
+  box-shadow: 0 0 22px rgba(100, 255, 218, 0.12);
+}
+
+.scene-sign::before {
+  content: "✦";
+  font-size: 12px;
+}
+
+/* ── 便签（借鉴贴纸墙手账感） ── */
+.sticky-note {
+  position: absolute;
+  z-index: 3;
+  padding: 14px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #44403c;
+  box-shadow: 0 10px 24px rgba(7, 13, 31, 0.18);
+  transform: rotate(var(--tilt, 0deg));
+  animation: sticky-float 5s ease-in-out infinite;
+  transition: transform 0.25s ease;
+}
+
+.sticky-note:hover {
+  transform: rotate(0deg) scale(1.05);
+  z-index: 5;
+}
+
+.sticky-note--yellow { background: #fef08a; --tilt: -3deg; }
+.sticky-note--pink { background: #fbcfe8; --tilt: 2.5deg; }
+.sticky-note--teal { background: #99f6e4; --tilt: -2deg; }
+
+@keyframes sticky-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+
+/* ── 星轨流动（路线连接线动画） ── */
+.road-grid--six::before,
+.road-grid::before {
+  background-size: 200% 100%;
+  animation: road-flow 6s linear infinite;
+}
+
+@keyframes road-flow {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── 标题字符动画（hero 逐字浮现） ── */
+.hero-title-line .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  animation: char-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes char-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 渐变文字流动 ── */
+.hero-title-accent {
+  background-size: 200% auto;
+  animation: gradient-flow 6s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ── 点击星星特效 ── */
+.click-star {
+  position: fixed;
+  z-index: 150;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: star-pop 0.7s ease-out forwards;
+}
+
+.click-star::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.45;
+}
+
+@keyframes star-pop {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+}
+
+/* ── 论文卡片顶部彩色条（对应期刊色） ── */
+.pub-row {
+  position: relative;
+  overflow: hidden;
+}
+
+.pub-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--pub-accent, var(--accent));
+}
+
+/* ── 内容区装饰元素（天马行空） ── */
+.floating-deco {
+  position: absolute;
+  z-index: 0;
+  font-size: 64px;
+  opacity: 0.07;
+  pointer-events: none;
+  animation: deco-float 9s ease-in-out infinite;
+}
+
+@keyframes deco-float {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-14px) rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-note,
+  .road-grid--six::before,
+  .road-grid::before,
+  .hero-title-accent {
+    animation: none !important;
+  }
+
+  .hero-title-line .char {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -17,6 +17,7 @@
         <canvas class="hero-canvas" id="starfield" aria-hidden="true"></canvas>
         <div class="container hero-grid">
           <div class="hero-copy">
+            <p class="scene-sign">DEEP-SPACE Research Lab</p>
             <p class="eyebrow">Public Research Workbench · Est. 2026</p>
             <p class="hero-greeting" data-greeting></p>
             <div class="profile-lockup">
@@ -45,6 +46,7 @@
             </div>
           </div>
           <aside class="hero-panel signal-panel" aria-label="站点概览">
+            <div class="sticky-note sticky-note--yellow" style="top: -14px; right: -10px;" aria-hidden="true">🐔 树鸡在线<br>咕咕！</div>
             <div class="panel-topline">
               <p class="eyebrow">站点中枢</p>
               <span class="panel-status"><i></i> OPEN / PUBLIC</span>
@@ -95,56 +97,57 @@
         <div class="hero-scroll-hint" aria-hidden="true">SCROLL</div>
       </section>
 
-      <section class="section reveal">
-        <div class="container">
+      <section class="section section-tint reveal" id="publications">
+        <div class="container" style="position: relative;">
+          <span class="floating-deco" style="top: -18px; right: 4%;" aria-hidden="true">🧬</span>
           <div class="section-head">
             <div>
               <p class="eyebrow">Publications</p>
               <h2>学术成果</h2>
-              <p>从临床问题出发，用生信与代码回答：免疫微环境、公共数据库挖掘与临床综述。</p>
+              <p>从临床问题出发，用生信与代码回答：免疫微环境、公共数据库挖掘与临床综述。点击卡片进入沉浸式阅读。</p>
             </div>
           </div>
           <div class="list-rows pub-list">
-            <article class="row pub-row">
+            <a class="row pub-row" href="/publications/crc-icd.html">
               <div>
                 <h3>ICD 基因集衍生的结直肠癌免疫特征预后模型</h3>
                 <p>整合 TCGA/GEO 单细胞与批量转录组，以 WGCNA 与机器学习构建 7 基因免疫环境签名（CD79A、CXCR6、IRF4、ISG20、PLCG2、TIGIT、TRAF1），并在外部队列验证其预后分层价值。</p>
-                <div class="post-meta"><span>Cancer Treatment and Research Communications · 2026</span><span>·</span><span>共同一作</span><span>·</span><a href="https://doi.org/10.1016/j.ctarc.2026.101389" target="_blank" rel="noopener noreferrer">DOI</a></div>
+                <div class="post-meta"><span>Cancer Treatment and Research Communications · 2026</span><span>·</span><span>第一作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
               </div>
               <span class="badge badge-journal">CTARC</span>
-            </article>
-            <article class="row pub-row">
+            </a>
+            <a class="row pub-row" href="/publications/ra-cervical-cancer.html">
               <div>
                 <h3>类风湿关节炎与宫颈癌共享基因的预后研究</h3>
                 <p>通过 WGCNA 与蛋白互作网络挖掘类风湿关节炎与宫颈癌的共享分子通路，鉴定 CXCL1、CXCL13、ZWINT、PTTG1 四个关键基因与宫颈癌预后相关。</p>
-                <div class="post-meta"><span>Scientific Reports · 2025</span><span>·</span><span>共同一作</span><span>·</span><a href="https://doi.org/10.1038/s41598-025-01177-x" target="_blank" rel="noopener noreferrer">DOI</a></div>
+                <div class="post-meta"><span>Scientific Reports · 2025</span><span>·</span><span>第一作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
               </div>
               <span class="badge badge-journal">Sci Rep</span>
-            </article>
-            <article class="row pub-row">
+            </a>
+            <a class="row pub-row" href="/publications/multiplot.html">
               <div>
                 <h3>multiplot：在 R 中近似九种作图软件的统计图形风格</h3>
                 <p>开源 ggplot2 扩展，29 个函数一键模拟 Prism、SPSS、Origin、Stata、MATLAB 等九种软件与学术出版风格，以 Plot Style Ontology 形式化图形风格规范。</p>
-                <div class="post-meta"><span>F1000Research · 2026</span><span>·</span><span>第一作者</span><span>·</span><a href="https://doi.org/10.12688/f1000research.186629.1" target="_blank" rel="noopener noreferrer">DOI</a></div>
+                <div class="post-meta"><span>F1000Research · 2026</span><span>·</span><span>第一作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
               </div>
               <span class="badge badge-journal">F1000R</span>
-            </article>
-            <article class="row pub-row">
+            </a>
+            <a class="row pub-row" href="/publications/mbo-review.html">
               <div>
                 <h3>恶性肠梗阻的治疗现状与展望</h3>
                 <p>系统综述恶性肠梗阻的概念演变、综合治疗策略与未来研究方向，为临床诊治提供参考。</p>
-                <div class="post-meta"><span>中国临床研究 · 2025</span><span>·</span><span>参与</span></div>
+                <div class="post-meta"><span>中国临床研究 · 2025</span><span>·</span><span>通讯作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
               </div>
               <span class="badge badge-journal">综述</span>
-            </article>
-            <article class="row pub-row">
+            </a>
+            <a class="row pub-row" href="/publications/mbo-chemo.html">
               <div>
                 <h3>化疗治疗胃腺癌腹膜转移合并恶性肠梗阻的临床疗效分析</h3>
                 <p>回顾性分析化疗在胃腺癌腹膜转移合并恶性肠梗阻中的临床疗效与安全性，关注晚期患者的生存质量。</p>
-                <div class="post-meta"><span>消化肿瘤杂志（电子版） · 2024</span><span>·</span><span>参与</span></div>
+                <div class="post-meta"><span>消化肿瘤杂志（电子版） · 2024</span><span>·</span><span>通讯作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
               </div>
               <span class="badge badge-journal">论著</span>
-            </article>
+            </a>
           </div>
         </div>
       </section>
@@ -188,33 +191,39 @@
               <p>临床、科研、代码与 AI 是同一条路上的不同站点。每一步都让下一个问题更清晰。</p>
             </div>
           </div>
-          <div class="road-grid road-grid--five">
+          <div class="road-grid road-grid--six">
             <article class="road-step">
               <span class="road-index">01</span>
+              <span class="road-icon" aria-hidden="true">🎓</span>
+              <h3>中山大学求学</h3>
+              <p>中山大学临床医学本科与硕士，在名校打下临床与科研的起点。</p>
+            </article>
+            <article class="road-step">
+              <span class="road-index">02</span>
               <span class="road-icon" aria-hidden="true">🩺</span>
               <h3>临床训练</h3>
               <p>肿瘤内科与介入科医生，在病床前理解真实临床问题与未被满足的需求。</p>
             </article>
             <article class="road-step">
-              <span class="road-index">02</span>
+              <span class="road-index">03</span>
               <span class="road-icon" aria-hidden="true">🧭</span>
               <h3>L-Path 转折</h3>
               <p>面对不确定的处境，选择一条自我突围路线：学 AI、写代码、写论文、考博——把风险转化为可迁移的能力。</p>
             </article>
             <article class="road-step">
-              <span class="road-index">03</span>
-              <span class="road-icon" aria-hidden="true">🎓</span>
-              <h3>考博突围</h3>
-              <p>2025 年完成考博突围，进入博士阶段，聚焦肿瘤与胃癌研究。</p>
+              <span class="road-index">04</span>
+              <span class="road-icon" aria-hidden="true">🚀</span>
+              <h3>自学考博读博</h3>
+              <p>2025 年通过自学考博读博，进入博士阶段，聚焦肿瘤与胃癌研究；爱好 Vibe Coding，关注 AI + 医疗发展。</p>
             </article>
             <article class="road-step">
-              <span class="road-index">04</span>
+              <span class="road-index">05</span>
               <span class="road-icon" aria-hidden="true">💻</span>
               <h3>生信与代码</h3>
               <p>用 R 与 Python 处理多组学数据：TCGA、GEO、单细胞、孟德尔随机化。</p>
             </article>
             <article class="road-step">
-              <span class="road-index">05</span>
+              <span class="road-index">06</span>
               <span class="road-icon" aria-hidden="true">🤖</span>
               <h3>AI 与公开创作</h3>
               <p>把 AI 装进科研工作流，打磨 R 包 multiplot，在公众号持续公开写作。</p>
@@ -282,6 +291,16 @@
             <a class="section-link" href="/archives/">归档</a>
           </div>
           <div class="grid-two">
+            <article class="note-card">
+              <h3>深空实验室大版本更新</h3>
+              <p>银河背景、学术成果沉浸阅读、L-Path 路线、小公鸡吉祥物与全站动效上线。</p>
+              <div class="post-meta"><time datetime="2026-08-28">2026-08-28</time><span>·</span><span>视觉升级</span></div>
+            </article>
+            <article class="note-card">
+              <h3>学术成果页上线</h3>
+              <p>五篇论文加入沉浸式阅读详情页，支持点击卡片进入全文导读。</p>
+              <div class="post-meta"><time datetime="2026-08-28">2026-08-28</time><span>·</span><span>内容更新</span></div>
+            </article>
             <article class="note-card">
               <h3>建立 skills 中心</h3>
               <p>把公开 GitHub 仓库整理为可筛选、可打开、可扩展的技能卡片。</p>
