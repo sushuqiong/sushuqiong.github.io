@@ -3616,3 +3616,80 @@ body {
 .pub-reading a:hover {
   border-bottom-color: var(--pub-theme, var(--accent));
 }
+
+/* ── 第七批：3D tilt / 视差 / 拖尾 / 区块主题色 ── */
+
+/* 卡片 tilt：hover transform 使用 JS 变量 */
+.pub-row,
+.road-step,
+.feature-tile {
+  transform: perspective(760px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0));
+  transition: transform 0.16s ease-out, box-shadow 0.28s ease, border-color 0.22s ease;
+  will-change: transform;
+}
+
+.pub-row:hover,
+.road-step:hover,
+.feature-tile:hover {
+  transform: perspective(760px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-5px);
+}
+
+/* hero 文字视差平滑 */
+.hero-copy {
+  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+/* 鼠标星空拖尾 */
+.trail-star {
+  position: fixed;
+  z-index: 140;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 10px currentColor;
+  animation: trail-fade 0.7s ease-out forwards;
+}
+
+.trail-star::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.4;
+}
+
+@keyframes trail-fade {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.95; }
+  100% { transform: translate(-50%, -50%) scale(0.15) rotate(120deg); opacity: 0; }
+}
+
+/* 区块主题色（各 section 的 eyebrow/标题点缀） */
+#road .eyebrow { color: var(--violet); text-shadow: 0 0 16px rgba(167, 139, 250, 0.4); }
+#publications .eyebrow { color: #2563eb; text-shadow: 0 0 16px rgba(37, 99, 235, 0.35); }
+#skills-hub .eyebrow { color: #0ea5e9; text-shadow: 0 0 16px rgba(14, 165, 233, 0.35); }
+#wechat .eyebrow { color: #e11d48; text-shadow: 0 0 16px rgba(225, 29, 72, 0.3); }
+
+/* section-head 标题下划线装饰 */
+.section-head h2 {
+  position: relative;
+}
+
+.section-head h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 46px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--grad-cta);
+  animation: underline-grow 1.2s ease-out;
+}
+
+@keyframes underline-grow {
+  from { width: 0; }
+  to { width: 46px; }
+}

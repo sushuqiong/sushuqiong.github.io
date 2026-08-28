@@ -1099,3 +1099,73 @@ function initClickStars() {
 
 initTitleChars()
 initClickStars()
+
+/* ───────────── 卡片 3D tilt（鼠标跟随旋转） ───────────── */
+
+function initTilt() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const cards = document.querySelectorAll(".pub-row, .road-step, .feature-tile")
+  if (!cards.length) return
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect()
+      const x = (e.clientX - rect.left) / rect.width - 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5
+      card.style.setProperty("--rx", `${(-y * 4).toFixed(2)}deg`)
+      card.style.setProperty("--ry", `${(x * 6).toFixed(2)}deg`)
+    })
+    card.addEventListener("mouseleave", () => {
+      card.style.setProperty("--rx", "0deg")
+      card.style.setProperty("--ry", "0deg")
+    })
+  })
+}
+
+/* ───────────── Hero 滚动视差 ───────────── */
+
+function initParallax() {
+  const heroContent = document.querySelector(".hero-copy")
+  const hero = document.querySelector(".hero")
+  if (!heroContent || !hero) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  window.addEventListener(
+    "scroll",
+    () => {
+      const y = window.scrollY
+      if (y < window.innerHeight * 1.2) {
+        heroContent.style.transform = `translateY(${y * 0.16}px)`
+        heroContent.style.opacity = String(Math.max(0, 1 - y / (window.innerHeight * 0.75)))
+      }
+    },
+    { passive: true },
+  )
+}
+
+/* ───────────── 星空鼠标拖尾 ───────────── */
+
+function initStarTrail() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (window.matchMedia("(hover: none)").matches) return
+  const colors = ["#64ffda", "#a78bfa", "#93c5fd", "#fde68a", "#f9a8d4"]
+  let last = 0
+  document.addEventListener(
+    "mousemove",
+    (e) => {
+      const now = Date.now()
+      if (now - last < 70) return
+      last = now
+      const star = document.createElement("span")
+      star.className = "trail-star"
+      star.style.left = `${e.clientX}px`
+      star.style.top = `${e.clientY}px`
+      star.style.background = colors[Math.floor(Math.random() * colors.length)]
+      document.body.appendChild(star)
+      setTimeout(() => star.remove(), 700)
+    },
+    { passive: true },
+  )
+}
+
+initTilt()
+initParallax()
+initStarTrail()
