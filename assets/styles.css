@@ -2414,7 +2414,7 @@ body::after {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   background:
     radial-gradient(640px 320px at 18% 26%, rgba(100, 255, 218, 0.09), transparent 70%),
@@ -2878,13 +2878,26 @@ body::after {
 }
 
 /* ── 全页银河背景（渲染整个网页） ── */
+/* 层级修复：canvas 从 -1 提到 0，内容提到 1，body 背景改透明 */
 .hero-canvas {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
+}
+
+main#content,
+.site-footer,
+.site-header {
+  position: relative;
+  z-index: 1;
+}
+
+/* body 背景完全透明，让银河全屏可见 */
+body {
+  background: transparent;
 }
 
 /* hero 背景改半透明，让银河透出 */
@@ -2893,11 +2906,6 @@ body::after {
     radial-gradient(1100px 620px at 82% -12%, rgba(124, 58, 237, 0.16), transparent 60%),
     radial-gradient(900px 560px at 8% 108%, rgba(37, 99, 235, 0.18), transparent 58%),
     linear-gradient(165deg, rgba(10, 18, 38, 0.72) 0%, rgba(13, 27, 54, 0.62) 55%, rgba(18, 36, 80, 0.55) 100%);
-}
-
-/* body 背景半透明，银河在全页若隐若现 */
-body {
-  background: rgba(247, 249, 252, 0.92);
 }
 
 /* ── 内容区层次：区块交替色 ── */
@@ -3062,5 +3070,419 @@ body {
   .hero-title-line .char {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ── 论文详情页增强：数字卡 / 引用 / 图表 / 主题色 ── */
+.pub-numbers {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.pub-number {
+  padding: 14px 12px;
+  border-radius: var(--radius);
+  background: linear-gradient(140deg, color-mix(in srgb, var(--pub-theme, #2563eb) 8%, white), white);
+  border: 1px solid color-mix(in srgb, var(--pub-theme, #2563eb) 22%, var(--border));
+}
+
+.pub-number strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--pub-theme, var(--accent));
+}
+
+.pub-number span {
+  display: block;
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: var(--subtle);
+}
+
+.pub-hero {
+  --pub-theme: #2563eb;
+}
+
+.pub-hero .eyebrow {
+  color: var(--pub-theme, var(--space-accent));
+  text-shadow: 0 0 18px color-mix(in srgb, var(--pub-theme) 50%, transparent);
+}
+
+.pub-hero h1 {
+  background: linear-gradient(92deg, #e6f1ff, var(--pub-theme, #a78bfa));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pub-role {
+  color: var(--pub-theme, var(--space-accent));
+  background: color-mix(in srgb, var(--pub-theme) 14%, transparent);
+  border-color: color-mix(in srgb, var(--pub-theme) 35%, transparent);
+}
+
+.pub-quote {
+  margin: 0 0 34px;
+  padding: 24px 28px;
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--pub-theme, var(--accent));
+  background: linear-gradient(150deg, color-mix(in srgb, var(--pub-theme) 7%, white), white);
+  box-shadow: var(--shadow-sm);
+}
+
+.pub-quote p {
+  margin: 0 0 8px;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.pub-quote footer {
+  font-size: 13px;
+  color: var(--subtle);
+}
+
+.pub-figure {
+  margin: 24px 0 0;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+}
+
+.pub-figure img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.pub-figure figcaption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .pub-numbers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── 学术卡片多样化（五色主题） ── */
+.pub-icon-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 30px;
+  opacity: 0.85;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.pub-row:hover .pub-icon-badge {
+  transform: scale(1.25) rotate(-8deg);
+}
+
+.pub-row--ctarc { --pub-accent: #2563eb; }
+.pub-row--sci { --pub-accent: #7c3aed; }
+.pub-row--f1000 { --pub-accent: #f97316; }
+.pub-row--review { --pub-accent: #0ea5e9; }
+.pub-row--chemo { --pub-accent: #e11d48; }
+
+.pub-row--ctarc { background: linear-gradient(120deg, #eff6ff 0%, var(--surface) 55%); }
+.pub-row--sci { background: linear-gradient(120deg, #f5f3ff 0%, var(--surface) 55%); }
+.pub-row--f1000 { background: linear-gradient(120deg, #fff7ed 0%, var(--surface) 55%); }
+.pub-row--review { background: linear-gradient(120deg, #f0f9ff 0%, var(--surface) 55%); }
+.pub-row--chemo { background: linear-gradient(120deg, #fff1f2 0%, var(--surface) 55%); }
+
+.pub-row--ctarc .badge-journal { background: rgba(37, 99, 235, 0.12); color: #1d4ed8; border-color: rgba(37, 99, 235, 0.25); }
+.pub-row--sci .badge-journal { background: rgba(124, 58, 237, 0.12); color: #6d28d9; border-color: rgba(124, 58, 237, 0.25); }
+.pub-row--f1000 .badge-journal { background: rgba(249, 115, 22, 0.12); color: #c2410c; border-color: rgba(249, 115, 22, 0.25); }
+.pub-row--review .badge-journal { background: rgba(14, 165, 233, 0.12); color: #0369a1; border-color: rgba(14, 165, 233, 0.25); }
+.pub-row--chemo .badge-journal { background: rgba(225, 29, 72, 0.12); color: #be123c; border-color: rgba(225, 29, 72, 0.25); }
+
+/* ── 公众号精选：紧凑列表 ── */
+.wechat-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wechat-compact li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 9px 4px;
+  border-bottom: 1px dashed var(--border);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wechat-compact li:last-child {
+  border-bottom: none;
+}
+
+.wechat-compact .wc-date {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--subtle);
+}
+
+.wechat-compact .wc-title {
+  color: var(--text);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wechat-compact a.wc-title:hover {
+  color: var(--accent);
+}
+
+/* ── 公众号紧凑列表补充 ── */
+.wechat-more-note {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  color: var(--subtle);
+}
+
+/* ── The Road 详情页 ── */
+.road-hero {
+  position: relative;
+  padding: 110px 0 64px;
+  overflow: hidden;
+  color: var(--space-text);
+  background:
+    radial-gradient(900px 500px at 80% 0%, rgba(124, 58, 237, 0.2), transparent 60%),
+    radial-gradient(700px 420px at 10% 100%, rgba(37, 99, 235, 0.22), transparent 60%),
+    linear-gradient(165deg, var(--space-1), var(--space-2) 70%);
+}
+
+.road-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 90px;
+  background: linear-gradient(180deg, transparent, var(--bg) 96%);
+  pointer-events: none;
+}
+
+.road-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+}
+
+.road-hero .eyebrow {
+  color: var(--space-accent);
+  text-shadow: 0 0 18px rgba(100, 255, 218, 0.4);
+}
+
+.road-hero h1 {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  background: linear-gradient(92deg, #e6f1ff, #64ffda);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.road-hero p:last-child {
+  margin: 0;
+  font-size: 16px;
+  color: var(--space-muted);
+}
+
+.road-timeline {
+  padding: 48px 0 40px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.road-node {
+  position: relative;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  padding: 0 0 42px 34px;
+}
+
+.road-node::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  bottom: -4px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--road-color, var(--accent)), transparent);
+  opacity: 0.5;
+}
+
+.road-node:last-child::before {
+  display: none;
+}
+
+.road-node::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 10px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--road-color, var(--accent));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--road-color, var(--accent)) 14%, transparent);
+}
+
+.road-node-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--road-color, var(--accent));
+  padding-top: 6px;
+}
+
+.road-node-card {
+  padding: 26px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.road-node-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.road-node-card h2 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.road-node-card h2 .rn-icon {
+  margin-right: 8px;
+}
+
+.road-node-card p {
+  margin: 0 0 10px;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.road-node-card .rn-tag {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--road-color, var(--accent)) 10%, white);
+  color: var(--road-color, var(--accent));
+}
+
+.road-lpath {
+  max-width: 860px;
+  margin: 0 auto 56px;
+  padding: 30px 32px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(150deg, rgba(100, 255, 218, 0.07), rgba(124, 58, 237, 0.09));
+  border: 1px solid rgba(100, 255, 218, 0.22);
+}
+
+.road-lpath h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  color: var(--space-accent);
+}
+
+.road-lpath > p {
+  margin: 0 0 18px;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+
+.lpath-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.lpath-step {
+  padding: 16px 14px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border);
+}
+
+.lpath-step strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.lpath-step span {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.road-summary {
+  max-width: 860px;
+  margin: 0 auto 72px;
+  padding: 34px 36px;
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.road-summary .rs-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.road-summary p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 2;
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .road-node {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-left: 30px;
+  }
+
+  .lpath-steps {
+    grid-template-columns: 1fr;
   }
 }

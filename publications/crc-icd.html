@@ -6,14 +6,13 @@
     <meta name="description" content="ICD 基因集衍生的结直肠癌免疫特征预后模型 —— 单细胞与批量转录组整合分析及外部验证">
     <meta name="theme-color" content="#0a1226">
     <title>ICD 基因集衍生的结直肠癌免疫特征预后模型 · sushuqiong</title>
-    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/assets/styles.css">
   </head>
   <body data-page="pub">
     <a class="skip-link" href="#content">跳到内容</a>
     <div data-shell></div>
     <main id="content" class="page">
-      <section class="pub-hero">
+      <section class="pub-hero" style="--pub-theme: #2563eb;">
         <div class="container pub-hero-inner">
           <a class="pub-back" href="/#publications">← 返回学术成果</a>
           <p class="eyebrow">Cancer Treatment and Research Communications · 2026</p>
@@ -39,13 +38,25 @@
               </dl>
               <a class="button button-primary pub-doi" href="https://doi.org/10.1016/j.ctarc.2026.101389" target="_blank" rel="noopener noreferrer">查看 DOI 原文</a>
             </div>
+            <div class="pub-numbers">
+              <div class="pub-number"><strong>7</strong><span>基因免疫签名</span></div>
+<div class="pub-number"><strong>P=0.001</strong><span>训练集分层</span></div>
+<div class="pub-number"><strong>HR=1.906</strong><span>风险比</span></div>
+<div class="pub-number"><strong>n=561</strong><span>外部验证</span></div>
+            </div>
           </aside>
           <article class="pub-reading">
+            <blockquote class="pub-quote">
+              <p>The signature provides modest prognostic stratification, but is limited by non-significant primary external validation.</p>
+              <footer>—— 签名提供中等预后分层，但受限于非显著的主要外部验证（保持克制的诚实）</footer>
+            </blockquote>
             <section class="pub-section"><h2>研究概览</h2><p>结直肠癌（CRC）是全球第三大常见恶性肿瘤、癌症死亡的第二大原因。免疫原性细胞死亡（ICD）把肿瘤细胞死亡与抗肿瘤免疫联系起来——但 ICD 基因表达模式背后的转录特征，以及它对结直肠癌预后的意义，仍是活跃探索的领域。本研究把单细胞与批量转录组数据整合起来，尝试回答：ICD 相关基因表达，能不能帮我们识别预后不同的患者？</p></section>
 <section class="pub-section"><h2>方法与数据</h2><p>研究整合了 TCGA 与 GEO 的转录组数据：先在结肠癌和直肠癌中分别用加权基因共表达网络分析（WGCNA）识别 ICD 相关基因模块；再用随机生存森林、梯度提升机和 Lasso-Cox 回归并行筛选基因，最终得到七基因免疫环境签名（ICS）：CD79A、CXCR6、IRF4、ISG20、PLCG2、TIGIT、TRAF1。外部队列 GSE39582（n=561）用于验证。</p></section>
-<section class="pub-section"><h2>主要发现</h2><p>在 TCGA-CRC 训练队列中，签名以中位数为界将患者分层（P=0.001，HR=1.906），1 年、2 年、5 年 AUC 分别为 0.68、0.68、0.58。单细胞表达谱证实七个基因主要由免疫细胞转录——所以这个签名应理解为『ICD 基因集衍生的免疫环境评分』，反映与 ICD 相关基因表达对应的免疫学状态，而不是 ICD 诱导的直接测量。</p></section>
+<section class="pub-section"><h2>主要发现</h2><p>在 TCGA-CRC 训练队列中，签名以中位数为界将患者分层（P=0.001，HR=1.906）。单细胞表达谱证实七个基因主要由免疫细胞转录——所以这个签名应理解为『ICD 基因集衍生的免疫环境评分』，反映与 ICD 相关基因表达对应的免疫学状态，而不是 ICD 诱导的直接测量。</p></section>
 <section class="pub-section"><h2>诚实边界</h2><p>外部验证（GSE39582）呈现非显著趋势（P=0.072，HR=1.298）；在调整免疫浸润估计后，风险评分效应减弱。研究提供的是一个产生假说的框架：签名的预测性能中等、主要外部验证不显著、属于相关性研究——任何临床应用之前都需要独立验证。</p></section>
 <section class="pub-section"><h2>意义</h2><p>这篇工作最大的价值是方法论示范：在结肠癌和直肠癌中并行做基因筛选、把单细胞证据嵌入批量模型、对『ICD 签名』的命名与解释保持克制。它提示：免疫特征签名要经得起外部数据、细胞来源和混淆因素的层层拷问。</p></section>
+            <section class="pub-section pub-figures"><h2>论文图表</h2><figure class="pub-figure"><img src="/assets/pub-imgs/crc_icd_p9_142.png" alt="ROC 曲线验证：训练集 1/2/5 年 AUC 0.68 / 0.68 / 0.58" loading="lazy"><figcaption>ROC 曲线验证：训练集 1/2/5 年 AUC 0.68 / 0.68 / 0.58</figcaption></figure>
+<figure class="pub-figure"><img src="/assets/pub-imgs/crc_icd_p11_168.png" alt="单细胞表达谱：七个基因主要由免疫细胞转录" loading="lazy"><figcaption>单细胞表达谱：七个基因主要由免疫细胞转录</figcaption></figure></section>
           </article>
         </div>
       </section>

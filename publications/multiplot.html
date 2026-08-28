@@ -6,14 +6,13 @@
     <meta name="description" content="multiplot：在 R 中近似九种作图软件的统计图形风格 —— 一个函数，让 R 图长得像 Prism、SPSS 或 Stata">
     <meta name="theme-color" content="#0a1226">
     <title>multiplot：在 R 中近似九种作图软件的统计图形风格 · sushuqiong</title>
-    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/assets/styles.css">
   </head>
   <body data-page="pub">
     <a class="skip-link" href="#content">跳到内容</a>
     <div data-shell></div>
     <main id="content" class="page">
-      <section class="pub-hero">
+      <section class="pub-hero" style="--pub-theme: #f97316;">
         <div class="container pub-hero-inner">
           <a class="pub-back" href="/#publications">← 返回学术成果</a>
           <p class="eyebrow">F1000Research · 2026</p>
@@ -39,13 +38,25 @@
               </dl>
               <a class="button button-primary pub-doi" href="https://doi.org/10.12688/f1000research.186629.1" target="_blank" rel="noopener noreferrer">查看 DOI 原文</a>
             </div>
+            <div class="pub-numbers">
+              <div class="pub-number"><strong>29</strong><span>导出函数</span></div>
+<div class="pub-number"><strong>10</strong><span>种风格</span></div>
+<div class="pub-number"><strong>100%</strong><span>纯 R 实现</span></div>
+<div class="pub-number"><strong>1</strong><span>个依赖 ggplot2</span></div>
+            </div>
           </aside>
           <article class="pub-reading">
+            <blockquote class="pub-quote">
+              <p>No two styles share an identical combination of the theme-level attributes — these are distinctive visual identities, not minor permutations of a single default theme.</p>
+              <footer>—— 十种风格是真正的『视觉身份』，不是同一默认主题的微小变体</footer>
+            </blockquote>
             <section class="pub-section"><h2>研究概览</h2><p>生物医学研究者经常在 GraphPad Prism、SPSS、OriginPro、Stata、MATLAB 等作图软件之间切换——每套软件的默认图形风格都不一样。结果就是：用 R 画出的图在技术上完全正确，却让习惯了另一套软件的审稿人或合作者觉得『陌生』。multiplot 的目标很直接：让 R 的 ggplot2 一键长出其他软件的样子。</p></section>
 <section class="pub-section"><h2>方法设计</h2><p>multiplot 是一个开源的 ggplot2 扩展：ggchoice() 一次调用同时应用完整主题、离散配色和离散填充；include_scales = FALSE 时只用主题。研究团队用五组件 Plot Style Ontology 把每种软件的风格形式化，从文档、scheme 文件和实际输出检查中提取参数。默认调色板还做了色盲（CVD）安全、灰度打印保真和印刷色风险三套评估。</p></section>
-<section class="pub-section"><h2>主要结果</h2><p>multiplot 导出 29 个用户函数，纯 R 实现，核心绘图只需要 ggplot2。Prism、SPSS 和 MATLAB 风格对照真实软件截图验证；其他软件风格对照官方文档、用户报告和公开图例核对。十种风格（九软件 + 学术出版风格）在主题层参数上各不相同——它们是真正的『视觉身份』，不是同一个默认主题的微小变体。</p></section>
+<section class="pub-section"><h2>主要结果</h2><p>multiplot 导出 29 个用户函数，纯 R 实现，核心绘图只需要 ggplot2。Prism、SPSS 和 MATLAB 风格对照真实软件截图验证；其他软件风格对照官方文档、用户报告和公开图例核对。</p></section>
 <section class="pub-section"><h2>意义</h2><p>对科研团队来说，这解决了一个真实痛点：协作与投稿时，图风格统一意味着沟通成本下降。对 R 生态来说，它是第一个把『软件风格』当作可形式化对象（Ontology）来建模的工具——风格不是玄学，是可以测量、比较和复现的参数空间。</p></section>
 <section class="pub-section"><h2>展望</h2><p>当前处于开放同行评审阶段（Awaiting peer review）。未来方向包括：更多软件风格、交互式预览、与 Quarto/论文流水线的更深度集成。</p></section>
+            <section class="pub-section pub-figures"><h2>论文图表</h2><figure class="pub-figure"><img src="/assets/pub-imgs/multiplot_p4_130.png" alt="multiplot 风格近似：同一数据在多种软件风格下的呈现" loading="lazy"><figcaption>multiplot 风格近似：同一数据在多种软件风格下的呈现</figcaption></figure>
+<figure class="pub-figure"><img src="/assets/pub-imgs/multiplot_p6_154.png" alt="Plot Style Ontology：五组件风格形式化模型" loading="lazy"><figcaption>Plot Style Ontology：五组件风格形式化模型</figcaption></figure></section>
           </article>
         </div>
       </section>

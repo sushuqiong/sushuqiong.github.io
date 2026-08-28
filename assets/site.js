@@ -146,23 +146,23 @@ function initStarfield() {
   }
 
   function createStars() {
-    const count = Math.min(220, Math.floor((width * height) / 5200))
-    const bandCount = Math.floor(count * 0.4) // 银河带粒子
+    const count = Math.min(300, Math.floor((width * height) / 4200))
+    const bandCount = Math.floor(count * 0.42) // 银河带粒子
     stars = []
     // 银河光带：沿对角线密集分布，暖白为主，缓慢流动
     for (let i = 0; i < bandCount; i++) {
       const t = Math.random()
       const warm = Math.random() < 0.5
       stars.push({
-        x: t * width + (Math.random() - 0.5) * width * 0.08,
-        y: t * height * 0.8 + (Math.random() - 0.5) * height * 0.14 + height * 0.08,
-        r: Math.random() * 1.2 + 0.4,
-        vx: (Math.random() - 0.5) * 0.06,
-        vy: -(Math.random() * 0.12 + 0.02),
+        x: t * width + (Math.random() - 0.5) * width * 0.09,
+        y: t * height * 0.8 + (Math.random() - 0.5) * height * 0.16 + height * 0.06,
+        r: Math.random() * 1.4 + 0.4,
+        vx: (Math.random() - 0.5) * 0.07,
+        vy: -(Math.random() * 0.13 + 0.02),
         tw: Math.random() * Math.PI * 2,
-        ts: Math.random() * 0.016 + 0.004,
-        color: warm ? [255, 246, 224] : [195, 214, 245],
-        glow: Math.random() < 0.14,
+        ts: Math.random() * 0.02 + 0.005,
+        color: warm ? [255, 244, 220] : [200, 218, 248],
+        glow: Math.random() < 0.16,
         band: true,
         bandT: t,
       })
@@ -174,11 +174,11 @@ function initStarfield() {
       stars.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: big ? Math.random() * 1.1 + 1.3 : Math.random() * 0.9 + 0.3,
-        vx: (Math.random() - 0.5) * 0.1,
-        vy: -(Math.random() * 0.16 + 0.03),
+        r: big ? Math.random() * 1.2 + 1.4 : Math.random() * 1 + 0.3,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: -(Math.random() * 0.18 + 0.03),
         tw: Math.random() * Math.PI * 2,
-        ts: Math.random() * 0.02 + 0.005,
+        ts: Math.random() * 0.024 + 0.005,
         color: palette,
         glow: big,
         band: false,
@@ -186,13 +186,73 @@ function initStarfield() {
     }
   }
 
+  // 彩色星云（缓慢漂移的光团）
+  const NEBULAE = [
+    { cx: 0.2, cy: 0.28, r: 0.3, color: [124, 58, 237], a: 0.12 },
+    { cx: 0.8, cy: 0.52, r: 0.34, color: [37, 99, 235], a: 0.12 },
+    { cx: 0.52, cy: 0.86, r: 0.28, color: [100, 255, 218], a: 0.08 },
+    { cx: 0.1, cy: 0.75, r: 0.22, color: [236, 72, 153], a: 0.06 },
+  ]
+
+  // 流星
+  const meteors = []
+
   function draw(t) {
     ctx.clearRect(0, 0, width, height)
+
+    // 星云光团
+    for (const n of NEBULAE) {
+      const nx = n.cx * width + Math.sin(t / 8000 + n.cx * 12) * width * 0.05
+      const ny = n.cy * height + Math.cos(t / 9000 + n.cy * 12) * height * 0.05
+      const nr = n.r * Math.max(width, height)
+      const g = ctx.createRadialGradient(nx, ny, 0, nx, ny, nr)
+      g.addColorStop(0, `rgba(${n.color[0]}, ${n.color[1]}, ${n.color[2]}, ${n.a})`)
+      g.addColorStop(1, "rgba(0, 0, 0, 0)")
+      ctx.fillStyle = g
+      ctx.fillRect(0, 0, width, height)
+    }
+
+    // 流星：偶发划过
+    if (Math.random() < 0.006 && meteors.length < 3) {
+      meteors.push({
+        x: width * 0.3 + Math.random() * width * 0.7,
+        y: Math.random() * height * 0.35,
+        vx: -(4.5 + Math.random() * 4),
+        vy: 1.8 + Math.random() * 1.8,
+        life: 55 + Math.random() * 30,
+      })
+    }
+    for (let i = meteors.length - 1; i >= 0; i--) {
+      const m = meteors[i]
+      m.x += m.vx
+      m.y += m.vy
+      m.life -= 1
+      if (m.life <= 0 || m.x < -80 || m.y > height + 40) {
+        meteors.splice(i, 1)
+        continue
+      }
+      const alpha = Math.min(0.9, m.life / 22)
+      const tail = ctx.createLinearGradient(m.x, m.y, m.x - m.vx * 12, m.y - m.vy * 12)
+      tail.addColorStop(0, `rgba(235, 245, 255, ${alpha})`)
+      tail.addColorStop(1, "rgba(235, 245, 255, 0)")
+      ctx.strokeStyle = tail
+      ctx.lineWidth = 1.8
+      ctx.lineCap = "round"
+      ctx.beginPath()
+      ctx.moveTo(m.x, m.y)
+      ctx.lineTo(m.x - m.vx * 12, m.y - m.vy * 12)
+      ctx.stroke()
+      ctx.beginPath()
+      ctx.arc(m.x, m.y, 1.8, 0, Math.PI * 2)
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`
+      ctx.fill()
+    }
+
     // 鼠标视差（轻微，营造穿行感）
-    const px = ((mouseX - width / 2) / width) * 10
-    const py = ((mouseY - height / 2) / height) * 6
+    const px = ((mouseX - width / 2) / width) * 12
+    const py = ((mouseY - height / 2) / height) * 7
     // 银河带整体缓慢摆动（"银河铺开"感）
-    const bandShift = Math.sin(t / 4200) * 7
+    const bandShift = Math.sin(t / 4200) * 9
 
     for (const s of stars) {
       s.x += s.vx
@@ -205,7 +265,7 @@ function initStarfield() {
       if (s.x > width + 6) s.x = -6
       s.tw += s.ts
 
-      const alpha = 0.28 + Math.abs(Math.sin(s.tw)) * 0.6
+      const alpha = 0.3 + Math.abs(Math.sin(s.tw)) * 0.65
       const drawX = s.x + px * s.r + (s.band ? (s.bandT - 0.5) * bandShift : 0)
       const drawY = s.y + py * s.r
       const [r, g, b] = s.color
@@ -217,8 +277,8 @@ function initStarfield() {
 
       if (s.glow) {
         ctx.beginPath()
-        ctx.arc(drawX, drawY, s.r * 3.2, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.16})`
+        ctx.arc(drawX, drawY, s.r * 3.4, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.18})`
         ctx.fill()
       }
     }
@@ -600,6 +660,31 @@ async function initWechatHub() {
 initHomeStats().catch((error) => console.error(error))
 initSkillHub().catch((error) => console.error(error))
 initWechatHub().catch((error) => console.error(error))
+
+/* ───────────── 公众号精选：首页紧凑列表 ───────────── */
+
+async function initWechatCompact() {
+  const list = document.querySelector("[data-wechat-compact]")
+  if (!list) return
+  try {
+    const posts = await loadJson("/assets/wechat-posts.json")
+    if (!posts.length) return
+    list.innerHTML = posts
+      .slice(0, 20)
+      .map(
+        (post) => `
+        <li>
+          <time class="wc-date" datetime="${post.date}">${post.date}</time>
+          <span class="wc-title" title="${post.title}">${post.title}</span>
+        </li>`,
+      )
+      .join("")
+  } catch (e) {
+    list.innerHTML = "<li>精选推文加载失败</li>"
+  }
+}
+
+initWechatCompact()
 
 /* ───────────── 小公鸡吉祥物 ───────────── */
 
