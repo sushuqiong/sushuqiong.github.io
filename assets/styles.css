@@ -2895,24 +2895,80 @@ main#content,
   z-index: 1;
 }
 
-/* body 背景完全透明，让银河全屏可见 */
+/* body 背景完全透明，让银河全屏可见 → 改为彩色 mesh 渐变（内容区不再白呆） */
 body {
-  background: transparent;
+  background:
+    radial-gradient(900px 520px at 12% 12%, rgba(168, 85, 247, 0.12), transparent 62%),
+    radial-gradient(1000px 600px at 88% 28%, rgba(56, 189, 248, 0.12), transparent 62%),
+    radial-gradient(820px 520px at 45% 62%, rgba(244, 114, 182, 0.09), transparent 62%),
+    radial-gradient(720px 440px at 15% 92%, rgba(100, 255, 218, 0.08), transparent 62%),
+    linear-gradient(180deg, #e9edf9 0%, #f1eef9 42%, #e9f2fa 100%);
 }
 
-/* hero 背景改半透明，让银河透出 */
+/* hero 背景：更亮、更绚烂的紫蓝渐变 + 强光效 */
 .hero {
   background:
-    radial-gradient(1100px 620px at 82% -12%, rgba(124, 58, 237, 0.16), transparent 60%),
-    radial-gradient(900px 560px at 8% 108%, rgba(37, 99, 235, 0.18), transparent 58%),
-    linear-gradient(165deg, rgba(10, 18, 38, 0.72) 0%, rgba(13, 27, 54, 0.62) 55%, rgba(18, 36, 80, 0.55) 100%);
+    radial-gradient(1200px 700px at 85% -10%, rgba(168, 85, 247, 0.4), transparent 62%),
+    radial-gradient(1000px 620px at 8% 110%, rgba(56, 189, 248, 0.38), transparent 60%),
+    radial-gradient(760px 480px at 50% 125%, rgba(100, 255, 218, 0.22), transparent 62%),
+    radial-gradient(600px 420px at 20% 40%, rgba(244, 114, 182, 0.16), transparent 60%),
+    linear-gradient(165deg, #101b45 0%, #1c2a6b 38%, #312e81 72%, #164e63 100%);
 }
 
-/* ── 内容区层次：区块交替色 ── */
+/* 顶部彩色光带 */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(230, 241, 255, 0.045) 0, rgba(230, 241, 255, 0.045) 1px, transparent 1px, transparent 96px),
+    repeating-linear-gradient(0deg, rgba(230, 241, 255, 0.045) 0, rgba(230, 241, 255, 0.045) 1px, transparent 1px, transparent 96px);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, rgba(0, 0, 0, 0.9), transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, rgba(0, 0, 0, 0.9), transparent 78%);
+  opacity: 0.6;
+}
+
+/* ── 内容区层次：区块交替色 + 玻璃卡片 ── */
 .section-tint {
-  background: linear-gradient(180deg, transparent, rgba(37, 99, 235, 0.035) 12%, rgba(124, 58, 237, 0.035) 88%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(168, 85, 247, 0.06) 14%, rgba(56, 189, 248, 0.06) 86%, transparent);
   padding-bottom: 96px;
 }
+
+/* 卡片玻璃化：让彩色背景透出 */
+.pub-row,
+.road-step,
+.feature-tile,
+.note-card,
+.track-panel,
+.row,
+.post-card,
+.project-card,
+.track-summary,
+.feature-card {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.pub-row,
+.road-step,
+.feature-tile,
+.note-card,
+.track-panel,
+.row,
+.post-card,
+.project-card,
+.track-summary,
+.feature-card {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+/* 五色学术卡：半透明彩色渐变 */
+.pub-row--ctarc { background: linear-gradient(120deg, rgba(239, 246, 255, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
+.pub-row--sci { background: linear-gradient(120deg, rgba(245, 243, 255, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
+.pub-row--f1000 { background: linear-gradient(120deg, rgba(255, 247, 237, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
+.pub-row--review { background: linear-gradient(120deg, rgba(240, 249, 255, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
+.pub-row--chemo { background: linear-gradient(120deg, rgba(255, 241, 242, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
 
 /* ── 场景标牌（借鉴 FIND-A-WORLD 式地图名） ── */
 .scene-sign {
@@ -3177,10 +3233,10 @@ body {
 /* ── 学术卡片多样化（五色主题） ── */
 .pub-icon-badge {
   position: absolute;
-  top: 18px;
+  bottom: 16px;
   right: 18px;
-  font-size: 30px;
-  opacity: 0.85;
+  font-size: 34px;
+  opacity: 0.9;
   transition: transform 0.3s ease;
   pointer-events: none;
 }
@@ -3485,4 +3541,78 @@ body {
   .lpath-steps {
     grid-template-columns: 1fr;
   }
+}
+
+/* ── 第六批：色彩与字体增强 ── */
+
+/* 论文详情页：正文色彩更丰富，章节卡主题色交替 */
+.pub-section {
+  background: var(--surface);
+}
+
+.pub-section:nth-child(even) {
+  background: linear-gradient(150deg, color-mix(in srgb, var(--pub-theme) 5%, white), white);
+}
+
+.pub-section h2 {
+  color: var(--pub-theme, var(--accent-deep));
+}
+
+.pub-section h2::before {
+  background: var(--pub-theme, var(--grad-cta));
+}
+
+.pub-section p strong {
+  color: var(--pub-theme, var(--accent-deep));
+  font-weight: 700;
+}
+
+/* 学术卡片：标题主题色 + 光效 hover */
+.pub-row h3 {
+  background: linear-gradient(92deg, var(--pub-accent, var(--text)), color-mix(in srgb, var(--pub-accent, var(--text)) 55%, var(--violet)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: filter 0.25s ease;
+}
+
+.pub-row:hover {
+  border-color: var(--pub-accent, var(--accent));
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--pub-accent, var(--accent)) 22%, transparent);
+}
+
+.pub-row:hover h3 {
+  filter: brightness(1.25);
+}
+
+.pub-row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(400px 120px at 90% 0%, color-mix(in srgb, var(--pub-accent, var(--accent)) 14%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.pub-row:hover::after {
+  opacity: 1;
+}
+
+/* 路线卡片 hover 光效 */
+.road-step:hover {
+  border-color: var(--violet);
+  box-shadow: 0 16px 44px rgba(124, 58, 237, 0.16);
+}
+
+/* 正文链接更醒目 */
+.pub-reading a {
+  color: var(--pub-theme, var(--accent));
+  font-weight: 600;
+  border-bottom: 1px solid color-mix(in srgb, var(--pub-theme, var(--accent)) 40%, transparent);
+}
+
+.pub-reading a:hover {
+  border-bottom-color: var(--pub-theme, var(--accent));
 }
