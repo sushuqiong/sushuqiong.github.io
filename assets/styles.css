@@ -3800,3 +3800,340 @@ body[data-page="skills"] .toolbar {
   position: relative;
   z-index: 1;
 }
+
+/* ── 第十批：文章阅读排版优化 + 关于页升级 ── */
+
+/* 文章正文：舒适阅读宽度 + 衬线正文 */
+.article-content {
+  max-width: 720px;
+}
+
+.article-content p {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 2.05;
+  color: #374151;
+  letter-spacing: 0.02em;
+}
+
+/* h2 装饰：左竖条 + 渐变标题 */
+.article-content h2 {
+  margin: 52px 0 16px;
+  padding: 6px 0 6px 20px;
+  font-size: 23px;
+  position: relative;
+  display: block;
+  background: linear-gradient(92deg, #0f172a 10%, #2563eb 55%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.article-content h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 6px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #2563eb, #7c3aed);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+}
+
+.article-content h3 {
+  margin: 30px 0 12px;
+  font-size: 18.5px;
+  color: var(--accent-deep);
+}
+
+/* 列表：自定义 marker */
+.article-content ul {
+  margin: 0 0 20px;
+  padding-left: 4px;
+  list-style: none;
+}
+
+.article-content ul li {
+  position: relative;
+  padding: 6px 0 6px 26px;
+  font-size: 16px;
+  line-height: 1.9;
+  color: #374151;
+}
+
+.article-content ul li::before {
+  content: "✦";
+  position: absolute;
+  left: 2px;
+  top: 7px;
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.article-content ol {
+  padding-left: 22px;
+  font-size: 16px;
+  line-height: 1.9;
+  color: #374151;
+}
+
+/* 引用块：主题色条 + 衬线 */
+.article-content blockquote {
+  margin: 34px 0;
+  padding: 22px 28px;
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--accent);
+  background: linear-gradient(150deg, rgba(37, 99, 235, 0.06), rgba(124, 58, 237, 0.06));
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 2;
+  color: var(--text);
+}
+
+/* callout：渐变 + 图标 */
+.callout {
+  position: relative;
+  padding: 20px 24px 20px 58px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.07), rgba(14, 165, 233, 0.07));
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.callout::before {
+  content: "💡";
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  font-size: 22px;
+}
+
+.callout strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--accent-deep);
+}
+
+/* 代码块：深色星空配色 */
+.article-content pre {
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #101b45, #1c2a6b);
+  border: 1px solid rgba(100, 255, 218, 0.14);
+  box-shadow: 0 12px 32px rgba(7, 13, 31, 0.18);
+  color: #dbeafe;
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+
+.article-content code {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--accent-deep);
+  border-radius: 5px;
+  padding: 2px 7px;
+}
+
+.article-content pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* 图片：圆角边框居中 */
+.article-content img {
+  display: block;
+  max-width: 100%;
+  margin: 26px auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+/* 文章底部导航 */
+.article-footer {
+  margin-top: 48px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.article-footer a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.article-footer a:hover {
+  text-decoration: underline;
+}
+
+/* 文章头部深空点缀（浅色内容页的星空透出即可，标题渐变保留） */
+
+/* 关于页：深空 hero */
+body[data-page="about"] .article {
+  background:
+    radial-gradient(900px 500px at 85% 6%, rgba(168, 85, 247, 0.3), transparent 60%),
+    radial-gradient(800px 460px at 8% 32%, rgba(56, 189, 248, 0.28), transparent 60%),
+    linear-gradient(180deg, #101b45 0%, #1e2a63 32%, #3b3a8c 48%, #e9edf9 76%, #e9f2fa 100%);
+  overflow: hidden;
+}
+
+body[data-page="about"] .article-header {
+  color: #e6f1ff;
+  padding: 96px 0 56px;
+}
+
+body[data-page="about"] .article-header .eyebrow {
+  color: var(--space-accent);
+  text-shadow: 0 0 18px rgba(100, 255, 218, 0.4);
+}
+
+body[data-page="about"] .article-header h1 {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.6vw, 3rem);
+  font-weight: 700;
+  color: #e6f1ff;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  text-shadow: 0 0 44px rgba(100, 255, 218, 0.22);
+}
+
+body[data-page="about"] .article-lead {
+  color: var(--space-muted);
+}
+
+/* 关于页：头像与统计 */
+.about-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  background: linear-gradient(135deg, #101b45, #312e81);
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  box-shadow: 0 10px 30px rgba(49, 46, 129, 0.35);
+  margin-bottom: 18px;
+}
+
+.about-head-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.about-head-text h2 {
+  margin: 0 0 8px;
+}
+
+.about-head-text .profile-panel-lead {
+  margin: 0 0 14px;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.about-stat {
+  padding: 18px 14px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(140deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.08));
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  text-align: center;
+}
+
+.about-stat strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 700;
+  background: var(--grad-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.about-stat span {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--subtle);
+}
+
+/* 研究兴趣标签云 */
+.interest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 30px;
+}
+
+.interest-tag {
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-deep);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.1));
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  transition: all 0.22s ease;
+}
+
+.interest-tag:hover {
+  transform: translateY(-2px) rotate(-1deg);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.16);
+}
+
+@media (max-width: 640px) {
+  .about-head-row {
+    flex-direction: column;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 关于页二维码卡 */
+.qr-card {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.qr-card img {
+  width: 180px;
+  height: 180px;
+  border-radius: 14px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.qr-card p {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.qr-card .qr-note {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--subtle);
+}
