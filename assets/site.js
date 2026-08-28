@@ -254,9 +254,28 @@ function initStarfield() {
     // 银河带整体缓慢摆动（"银河铺开"感）
     const bandShift = Math.sin(t / 4200) * 9
 
+    // 星座连线：亮星之间自动连线（星图效果）
+    const bright = stars.filter((s) => s.glow)
+    for (let i = 0; i < bright.length; i++) {
+      for (let j = i + 1; j < bright.length; j++) {
+        const dx = bright[i].x - bright[j].x
+        const dy = bright[i].y - bright[j].y
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        if (dist < 140) {
+          ctx.beginPath()
+          ctx.moveTo(bright[i].x, bright[i].y)
+          ctx.lineTo(bright[j].x, bright[j].y)
+          ctx.strokeStyle = `rgba(167, 139, 250, ${((1 - dist / 140) * 0.22).toFixed(3)})`
+          ctx.lineWidth = 0.6
+          ctx.stroke()
+        }
+      }
+    }
+
     for (const s of stars) {
       s.x += s.vx
       s.y += s.vy
+
       if (s.y < -6) {
         s.y = height + 6
         s.x = Math.random() * width
@@ -892,7 +911,9 @@ const TYPING_PHRASES = [
   "我在写生信分析代码：TCGA · GEO · 单细胞",
   "我在把 AI 装进医学科研工作流",
   "我在打磨 R 可视化：multiplot",
-  "我在公开写作：树鸡的生信代码",
+  "我在读医学博士：肿瘤与胃癌方向",
+  "我在探索 AI + 医疗的交叉可能",
+  "我在公众号持续公开写作",
 ]
 
 function initTypewriter() {
@@ -1169,3 +1190,46 @@ function initStarTrail() {
 initTilt()
 initParallax()
 initStarTrail()
+
+/* ───────────── 论文图表 lightbox（点击放大） ───────────── */
+
+function initLightbox() {
+  const figures = document.querySelectorAll(".pub-figure img")
+  if (!figures.length) return
+  const overlay = document.createElement("div")
+  overlay.className = "lightbox"
+  overlay.setAttribute("role", "dialog")
+  overlay.setAttribute("aria-label", "图表放大预览")
+  overlay.innerHTML =
+    '<button class="lightbox-close" aria-label="关闭">✕</button><img class="lightbox-img" alt="">'
+  document.body.appendChild(overlay)
+
+  const lbImg = overlay.querySelector(".lightbox-img")
+  const close = overlay.querySelector(".lightbox-close")
+
+  function open(img) {
+    lbImg.src = img.src
+    lbImg.alt = img.alt
+    overlay.classList.add("is-open")
+    document.body.style.overflow = "hidden"
+  }
+
+  function closeLb() {
+    overlay.classList.remove("is-open")
+    document.body.style.overflow = ""
+  }
+
+  figures.forEach((img) => {
+    img.style.cursor = "zoom-in"
+    img.addEventListener("click", () => open(img))
+  })
+  close.addEventListener("click", closeLb)
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeLb()
+  })
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLb()
+  })
+}
+
+initLightbox()
