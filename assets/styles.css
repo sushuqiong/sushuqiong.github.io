@@ -8991,3 +8991,142 @@ p, li {
     animation: none;
   }
 }
+
+/* ── 第四十一批：极光增强（第 4 层流动光带）+ 暗色模式补细节 ── */
+
+/* 极光第 4 层：垂直流动光带（波形上下漂移） */
+.aurora-4 {
+  width: 360px;
+  height: 640px;
+  top: -10%;
+  left: 58%;
+  background: linear-gradient(180deg,
+    rgba(100, 255, 218, 0.16) 0%,
+    rgba(167, 139, 250, 0.14) 32%,
+    rgba(56, 189, 248, 0.12) 62%,
+    transparent 100%);
+  filter: blur(46px);
+  animation: aurora-in 3s ease forwards 1.2s, aurora-wave 12s ease-in-out infinite 3.6s;
+}
+
+@keyframes aurora-wave {
+  0%, 100% {
+    transform: translateX(0) translateY(0) skewX(-8deg) scaleY(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(60px) translateY(26px) skewX(4deg) scaleY(1.22);
+    opacity: 0.85;
+  }
+}
+
+/* 极光整体更鲜活：微调现有层饱和度 */
+.aurora-1 {
+  filter: saturate(1.15) blur(70px);
+}
+
+.aurora-2 {
+  filter: saturate(1.1) blur(66px);
+}
+
+.aurora-3 {
+  filter: saturate(1.2) blur(74px);
+}
+
+/* ── 暗色模式补细节 ── */
+
+/* 公鸡气泡 */
+html[data-theme="dark"] .rooster-bubble {
+  background: rgba(16, 27, 69, 0.95);
+  color: #e6f1ff;
+  border: 1px solid rgba(100, 255, 218, 0.35);
+  box-shadow: 0 8px 24px rgba(7, 13, 31, 0.5);
+}
+
+/* hero 便签（树鸡在线） */
+html[data-theme="dark"] .hero-badge {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #fde68a;
+}
+
+/* wechat 筛选胶囊 */
+html[data-theme="dark"] .filter-chip {
+  background: rgba(22, 34, 74, 0.9);
+  border-color: rgba(100, 255, 218, 0.14);
+  color: rgba(226, 232, 255, 0.78);
+}
+
+html[data-theme="dark"] .filter-chip.is-active {
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* wechat 弹窗 */
+html[data-theme="dark"] .dialog-card {
+  background: linear-gradient(165deg, rgba(16, 27, 69, 0.98), rgba(24, 36, 86, 0.98));
+  border-color: rgba(100, 255, 218, 0.18);
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] .dialog-card h3,
+html[data-theme="dark"] .dialog-card .dialog-title {
+  color: #e6f1ff;
+}
+
+/* 关于页 profile 卡 */
+html[data-theme="dark"] .profile-panel {
+  background: rgba(22, 34, 74, 0.92);
+  border-color: rgba(100, 255, 218, 0.12);
+  color: #e6f1ff;
+}
+
+/* hero 公开标签 */
+html[data-theme="dark"] .tag-chip,
+html[data-theme="dark"] .public-tags .tag-chip {
+  background: rgba(100, 255, 218, 0.1);
+  border-color: rgba(100, 255, 218, 0.22);
+  color: rgba(226, 232, 255, 0.8);
+}
+
+/* 音乐卡深色玻璃 */
+html[data-theme="dark"] .music-card {
+  background: linear-gradient(160deg, rgba(22, 34, 74, 0.92), rgba(18, 28, 62, 0.88));
+  border-color: rgba(100, 255, 218, 0.12);
+}
+
+html[data-theme="dark"] .music-card .music-title {
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] .music-card .music-artist {
+  color: rgba(226, 232, 255, 0.6);
+}
+
+/* 文章 footer 胶囊 */
+html[data-theme="dark"] .article-footer a {
+  background: rgba(124, 58, 237, 0.14);
+  border-color: rgba(124, 58, 237, 0.3);
+  color: rgba(226, 232, 255, 0.85);
+}
+
+/* wechat 页 track-overview */
+html[data-theme="dark"] .track-overview,
+html[data-theme="dark"] .lane-mini {
+  background: rgba(22, 34, 74, 0.9);
+  border-color: rgba(100, 255, 218, 0.12);
+}
+
+/* 歌词面板 */
+html[data-theme="dark"] .lyrics-panel {
+  background: rgba(12, 22, 52, 0.96);
+  border-color: rgba(100, 255, 218, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-4 {
+    animation: none;
+    opacity: 0.5;
+  }
+}
