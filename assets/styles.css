@@ -6304,3 +6304,75 @@ body[data-page="404"] {
   from { opacity: 0.5; }
   to { opacity: 1; }
 }
+
+/* ── 第二十一批：唱臂 + 拖尾增强 + 打字机光标 ── */
+
+/* 黑胶唱臂 */
+.music-dock {
+  position: relative;
+}
+
+.tonearm {
+  position: absolute;
+  top: -42px;
+  left: 2px;
+  width: 58px;
+  height: 80px;
+  pointer-events: none;
+  transform-origin: 92% 8%;
+  transform: rotate(40deg);
+  transition: transform 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
+  z-index: 4;
+}
+
+.music-dock.is-playing .tonearm {
+  transform: rotate(9deg);
+  animation: tonearm-wobble 0.55s ease-in-out infinite;
+}
+
+@keyframes tonearm-wobble {
+  0%, 100% { transform: rotate(9deg); }
+  50% { transform: rotate(6.5deg); }
+}
+
+/* 星空拖尾：发光粒子 + 缩放淡出 */
+.trail-star {
+  position: fixed;
+  z-index: 250;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: trail-bloom 0.95s ease-out forwards;
+}
+
+@keyframes trail-bloom {
+  0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0.95; }
+  55% { transform: translate(-50%, -50%) scale(1.35); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(0.15); opacity: 0; }
+}
+
+/* 十字光斑拖尾 */
+.trail-star.trail-cross {
+  border-radius: 999px;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: trail-cross-fade 0.95s ease-out forwards;
+}
+
+@keyframes trail-cross-fade {
+  0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) rotate(45deg); opacity: 0; }
+}
+
+/* 打字机光标 */
+.manifesto-line.typing::after {
+  content: "|";
+  display: inline-block;
+  margin-left: 3px;
+  font-weight: 400;
+  color: #d97706;
+  animation: caret-blink 0.85s step-end infinite;
+}
+
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

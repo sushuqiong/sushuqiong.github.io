@@ -1281,21 +1281,32 @@ function initParallax() {
 function initStarTrail() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
   if (window.matchMedia("(hover: none)").matches) return
-  const colors = ["#64ffda", "#a78bfa", "#93c5fd", "#fde68a", "#f9a8d4"]
+  const colors = ["#64ffda", "#a78bfa", "#93c5fd", "#fde68a", "#f9a8d4", "#fbbf24", "#38bdf8"]
   let last = 0
   document.addEventListener(
     "mousemove",
     (e) => {
       const now = Date.now()
-      if (now - last < 70) return
+      if (now - last < 46) return
       last = now
       const star = document.createElement("span")
       star.className = "trail-star"
+      const size = 7 + Math.random() * 9
       star.style.left = `${e.clientX}px`
       star.style.top = `${e.clientY}px`
+      star.style.width = `${size}px`
+      star.style.height = `${size}px`
       star.style.background = colors[Math.floor(Math.random() * colors.length)]
+      star.style.boxShadow = `0 0 ${size * 0.9}px ${colors[Math.floor(Math.random() * colors.length)]}`
+      star.style.animationDelay = `${Math.random() * 0.12}s`
+      // 十字光斑（15% 概率）
+      if (Math.random() < 0.15) {
+        star.classList.add("trail-cross")
+        star.style.width = `${size * 2.4}px`
+        star.style.height = `${size * 0.5}px`
+      }
       document.body.appendChild(star)
-      setTimeout(() => star.remove(), 700)
+      setTimeout(() => star.remove(), 950)
     },
     { passive: true },
   )
@@ -1602,6 +1613,14 @@ function initMusicPlayer() {
   const dock = document.createElement("div")
   dock.className = "music-dock"
   dock.innerHTML = `
+    <div class="tonearm" aria-hidden="true">
+      <svg viewBox="0 0 64 84" class="tonearm-svg">
+        <circle cx="58" cy="5" r="5" fill="#0a192f" stroke="#64ffda" stroke-width="1.5"/>
+        <path d="M58 5 L12 68" stroke="#64748b" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M5 64 L21 72 L9 80 Z" fill="#334155"/>
+        <circle cx="12" cy="68" r="3.5" fill="#f59e0b"/>
+      </svg>
+    </div>
     <div class="music-dock-inner">
       <span class="music-cover-rot"><img data-music-cover alt="歌曲封面"></span>
       <div class="music-now">
@@ -1786,35 +1805,90 @@ function initCountUp() {
 
 initCountUp()
 
-/* ───────────── 宣言逐行浮现 ───────────── */
+/* ───────────── 宣言逐行浮现（打字机式逐字） ───────────── */
 
 function initManifesto() {
-  const lines = document.querySelectorAll(".manifesto-line")
+  const section = document.querySelector(".manifesto")
+  const lines = Array.from(document.querySelectorAll(".manifesto-line"))
   if (!lines.length) return
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  if (reduced) {
+    lines.forEach((l) => l.classList.add("is-in"))
+    return
+  }
+
+  // 保存纯文本并清空（打字机逐字输出）
+  const texts = lines.map((l) => l.textContent)
+  lines.forEach((l) => {
+    l.textContent = ""
+    l.classList.add("is-in")
+  })
+
+  const KEYWORDS = ["社会幸福", "大胆探索", "幸福", "恩赐"]
+
+  function highlight(text) {
+    // 占位符防嵌套（社会幸福 含 幸福）
+    let t = text
+    const ph = (s) => `\u0000${s}\u0001`
+    t = t.replaceAll("社会幸福", ph("社会幸福"))
+    t = t.replaceAll("大胆探索", ph("大胆探索"))
+    t = t.replaceAll("幸福", ph("幸福"))
+    t = t.replaceAll("恩赐", ph("恩赐"))
+    return t.replace(/\u0000([^\u0001]+)\u0001/g, '<span class="m-key">$1</span>')
+  }
+
+  let li = 0
+  let ci = 0
+  let started = false
+
+  function typeNext() {
+    if (li >= lines.length) {
+      finish()
+      return
+    }
+    const line = lines[li]
+    const text = texts[li]
+    line.classList.add("typing")
+    if (ci < text.length) {
+      line.textContent += text[ci]
+      ci += 1
+      setTimeout(typeNext, 88 + Math.random() * 70)
+    } else {
+      line.classList.remove("typing")
+      li += 1
+      ci = 0
+      setTimeout(typeNext, 360)
+    }
+  }
+
+  function finish() {
+    lines.forEach((l, i) => {
+      l.innerHTML = highlight(texts[i])
+    })
+  }
+
+  function start() {
+    if (started) return
+    started = true
+    typeNext()
+  }
+
   const io = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target
-          const delay = Array.from(lines).indexOf(el) * 0.22
-          el.style.animationDelay = `${delay}s`
-          el.classList.add("is-in")
-          io.unobserve(el)
-        }
-      })
+      if (entries.some((e) => e.isIntersecting)) start()
     },
-    { threshold: 0.6 },
+    { threshold: 0.4 },
   )
-  lines.forEach((line) => io.observe(line))
-
-  // 兜底：3.5s 后仍未触发则强制显示（防 IO 失效）
+  io.observe(section)
+  // 兜底：3s 内未触发则直接完成
   setTimeout(() => {
-    lines.forEach((line) => {
-      if (!line.classList.contains("is-in")) {
-        line.classList.add("is-in")
-      }
-    })
-  }, 3500)
+    if (!started) {
+      lines.forEach((l, i) => {
+        l.innerHTML = highlight(texts[i])
+      })
+    }
+  }, 3200)
 }
 
 initManifesto()
