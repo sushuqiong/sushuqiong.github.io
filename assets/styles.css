@@ -9674,3 +9674,176 @@ html[data-theme="dark"] .wechat-card:hover h3 {
     animation: none;
   }
 }
+
+/* ── 第四十七批：Road 路线卡细化 + 页脚增强 ── */
+
+/* 路线卡：里程碑编号拟物 */
+.road-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #7c3aed;
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
+}
+
+.road-step:hover .road-index {
+  color: #fff;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.45);
+  transform: scale(1.1) rotate(-4deg);
+}
+
+/* 图标悬浮 + hover 弹跳 */
+.road-icon {
+  display: inline-block;
+  font-size: 30px;
+  animation: road-icon-float 4s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.34, 1.6, 0.64, 1);
+}
+
+.road-step:nth-child(2n) .road-icon { animation-delay: -1.4s; }
+.road-step:nth-child(3n) .road-icon { animation-delay: -2.6s; }
+
+@keyframes road-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.road-step:hover .road-icon {
+  animation: none;
+  transform: scale(1.28) rotate(-8deg);
+}
+
+/* 卡片 hover：渐变边框光带 + 右向延伸线 */
+.road-step {
+  position: relative;
+}
+
+.road-step::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 28%;
+  bottom: 28%;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.65), transparent);
+  opacity: 0;
+  transform: scaleY(0.4);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.road-step:hover::after {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* 卡片渐变描边 */
+.road-step:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.96), rgba(246, 245, 255, 0.92)) padding-box,
+    linear-gradient(135deg, rgba(100, 255, 218, 0.5), rgba(124, 58, 237, 0.55), rgba(244, 114, 182, 0.45)) border-box;
+  border: 1px solid transparent;
+}
+
+/* ── 页脚增强 ── */
+
+/* 页脚顶部光带 */
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.55), rgba(124, 58, 237, 0.55), transparent);
+  box-shadow: 0 0 14px rgba(100, 255, 218, 0.25);
+}
+
+.site-footer {
+  position: relative;
+}
+
+/* 页脚链接 hover 上浮发光 */
+.site-footer .footer-links a {
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.site-footer .footer-links a:hover {
+  color: #64ffda;
+  transform: translateY(-2px);
+  text-shadow: 0 0 14px rgba(100, 255, 218, 0.5);
+}
+
+/* 页脚社交行 */
+.footer-social {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(230, 241, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12.5px;
+  color: rgba(230, 241, 255, 0.75);
+  transition: all 0.25s ease;
+}
+
+.footer-social a:hover {
+  border-color: rgba(100, 255, 218, 0.4);
+  background: rgba(100, 255, 218, 0.08);
+  color: #64ffda;
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .road-icon {
+    animation: none;
+  }
+
+  .road-step:hover .road-icon {
+    transform: none;
+  }
+}
+
+/* Road 卡 dark 适配 */
+html[data-theme="dark"] .road-step:hover {
+  background:
+    linear-gradient(165deg, rgba(22, 34, 74, 0.96), rgba(30, 41, 88, 0.94)) padding-box,
+    linear-gradient(135deg, rgba(100, 255, 218, 0.55), rgba(124, 58, 237, 0.6), rgba(244, 114, 182, 0.5)) border-box;
+  border: 1px solid transparent;
+}
+
+html[data-theme="dark"] .road-step:hover h3 {
+  color: #e6f1ff;
+}
+
+/* 页脚布局微调 */
+.site-footer-inner {
+  align-items: flex-start;
+}
+
+.footer-social {
+  flex-wrap: wrap;
+}

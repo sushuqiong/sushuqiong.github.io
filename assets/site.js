@@ -89,6 +89,11 @@ if (footer) {
           <a href="/projects/">项目</a>
           <a href="/about/">关于</a>
         </div>
+        <div class="footer-social">
+          <a href="https://github.com/sushuqiong" target="_blank" rel="noopener noreferrer" aria-label="GitHub">🐙 GitHub</a>
+          <a href="/wechat.html" aria-label="公众号">📱 公众号</a>
+          <a href="/#music" aria-label="灵感电台">🎧 电台</a>
+        </div>
         <p class="footer-copy">© <span data-year></span> sushuqiong · Research Workbench <span class="footer-rooster" aria-hidden="true">🐔</span></p>
       </div>
     </footer>
