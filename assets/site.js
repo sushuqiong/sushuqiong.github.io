@@ -1,6 +1,7 @@
 const navItems = [
   { href: "/", label: "首页" },
   { href: "/skills.html", label: "Skills" },
+  { href: "/skill.html", label: "Skill" },
   { href: "/wechat.html", label: "公众号" },
   { href: "/archives/", label: "归档" },
   { href: "/projects/", label: "项目" },

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本站构建 Skill · sushuqiong</title>
+  <meta name="description" content="Deep-Space Personal Website skill：本网站从 v1 到 v45 的完整构建过程、设计定论、动效体系与踩坑记录，供复现与参考。">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css?v46">
+  <script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body data-page="skill">
+  <a class="skip-link" href="#content">跳到内容</a>
+  <div data-shell></div>
+  <main id="content" class="page">
+    <section class="hero hero-command" style="min-height: 46vh;">
+      <canvas class="hero-canvas" id="starfield" aria-hidden="true"></canvas>
+      <div class="aurora aurora-1" aria-hidden="true"></div>
+      <div class="aurora aurora-2" aria-hidden="true"></div>
+      <div class="aurora aurora-3" aria-hidden="true"></div>
+      <div class="aurora aurora-4" aria-hidden="true"></div>
+      <div class="container hero-grid" style="padding-top: 70px;">
+        <div class="hero-copy">
+          <p class="scene-sign">DEEP-SPACE Research Lab</p>
+          <p class="eyebrow">Skill · 可复现资产</p>
+          <h1>本站构建全过程沉淀</h1>
+          <p style="max-width: 560px; color: rgba(226,232,255,.85); margin-top: 12px;">从 v1 到 v45 的设计思路、动效体系、音乐播放器、主题切换与性能优化，全部写成一份可复现的 skill，发布在 GitHub 供参考。</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="container" style="padding: 46px 0 10px;">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Deep-Space Personal Website</p>
+          <h2>这个 Skill 是什么</h2>
+          <p>一份完整的网站构建指南：别人 clone 仓库 + 读这份 SKILL.md，就能复现或继续迭代这个"深空实验室"。</p>
+        </div>
+      </div>
+
+      <div class="feature-grid" style="margin-top: 26px;">
+        <article class="feature-tile" style="grid-column: span 1;">
+          <span class="road-icon" aria-hidden="true">📐</span>
+          <h3>设计定论</h3>
+          <p>内容区明亮 + 风景背景融入、宣言区黎明配色、区块渐变过渡、多色关键词——全部是用户多轮纠偏后的最终定论。</p>
+        </article>
+        <article class="feature-tile">
+          <span class="road-icon" aria-hidden="true">🎧</span>
+          <h3>音乐与吉祥物</h3>
+          <p>黑胶播放器（6 首真实 mp3 + 官方歌词 + 唱臂频谱）、公鸡 DJ 打碟机——全站签名记忆点。</p>
+        </article>
+        <article class="feature-tile">
+          <span class="road-icon" aria-hidden="true">⚙️</span>
+          <h3>工程机制</h3>
+          <p>版本号缓存、FOUC 防护、giscus 主题同步、WebP 压缩、零 CLS——GitHub Pages 环境下的最佳实践。</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 30px 0 10px;">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">How to Reproduce</p>
+          <h2>复现步骤</h2>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 20px;">
+        <div class="figure-panel">
+          <div class="figure-title"><h2>快速开始</h2></div>
+          <p>克隆仓库 → 本地预览 → 修改 → 按 skill 内的流程 bump 版本号并推送。</p>
+          <pre><code>git clone https://github.com/sushuqiong/sushuqiong.github.io.git
+cd sushuqiong.github.io
+python -m http.server 8777   # 打开 http://127.0.0.1:8777
+# 完整步骤与踩坑记录见 SKILL.md</code></pre>
+          <p style="margin-top: 14px;">完整 skill 文档：</p>
+          <p>
+            <a class="button button-primary" href="https://github.com/sushuqiong/sushuqiong.github.io/blob/main/skills/personal-website-craft/SKILL.md" target="_blank" rel="noopener noreferrer" style="margin-right: 10px;">📄 查看 SKILL.md</a>
+            <a class="button" href="https://raw.githubusercontent.com/sushuqiong/sushuqiong.github.io/main/skills/personal-website-craft/SKILL.md" target="_blank" rel="noopener noreferrer">⬇️ 下载原始文件</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 30px 0 60px;">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Contents</p>
+          <h2>Skill 覆盖的内容</h2>
+        </div>
+      </div>
+      <div class="list-rows" style="margin-top: 20px;">
+        <div class="wechat-compact">
+          <ul>
+            <li><span class="wc-title">🎨 设计定论</span><span class="wc-date">内容区明亮、风景融入、渐变过渡、多色层次</span></li>
+            <li><span class="wc-title">📦 核心模块</span><span class="wc-date">版本号机制、音乐播放器、公鸡 DJ、宣言区、主题切换、动效体系、搜索、评论区</span></li>
+            <li><span class="wc-title">⚡ 性能清单</span><span class="wc-date">gzip / WebP / 零 CLS / defer / 零外部字体</span></li>
+            <li><span class="wc-title">🔒 隐私红线</span><span class="wc-date">公开页不出现私人邮箱、手机号、住址、后台入口</span></li>
+            <li><span class="wc-title">🔄 验证部署</span><span class="wc-date">node --check、Edge 截图、子代理 vision、CDN 缓存绕过验证</span></li>
+            <li><span class="wc-title">🚧 踩坑记录</span><span class="wc-date">宣言文字消失、tilt 失效、截图空白、CDN 旧版、图片误删</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div data-footer></div>
+  <script type="module" src="/assets/site.js?v46"></script>
+</body>
+</html>
