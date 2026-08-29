@@ -146,7 +146,7 @@ function initStarfield() {
   }
 
   function createStars() {
-    const count = Math.min(300, Math.floor((width * height) / 4200))
+    const count = Math.min(430, Math.floor((width * height) / 3600))
     const bandCount = Math.floor(count * 0.42) // 银河带粒子
     stars = []
     // 银河光带：沿对角线密集分布，暖白为主，缓慢流动
@@ -272,6 +272,23 @@ function initStarfield() {
       }
     }
 
+    // 亮星与鼠标连线（交互感）
+    if (mouseX > 0 && mouseY > 0) {
+      for (const s of bright) {
+        const ddx = s.x - mouseX
+        const ddy = s.y - mouseY
+        const dist = Math.sqrt(ddx * ddx + ddy * ddy)
+        if (dist < 210) {
+          ctx.beginPath()
+          ctx.moveTo(s.x, s.y)
+          ctx.lineTo(mouseX, mouseY)
+          ctx.strokeStyle = `rgba(100, 255, 218, ${((1 - dist / 210) * 0.32).toFixed(3)})`
+          ctx.lineWidth = 0.8
+          ctx.stroke()
+        }
+      }
+    }
+
     for (const s of stars) {
       s.x += s.vx
       s.y += s.vy
@@ -285,8 +302,13 @@ function initStarfield() {
       s.tw += s.ts
 
       const alpha = 0.3 + Math.abs(Math.sin(s.tw)) * 0.65
-      const drawX = s.x + px * s.r + (s.band ? (s.bandT - 0.5) * bandShift : 0)
-      const drawY = s.y + py * s.r
+      // 鼠标轻微排斥（涟漪）
+      const mdx = s.x - mouseX
+      const mdy = s.y - mouseY
+      const mdist = Math.sqrt(mdx * mdx + mdy * mdy)
+      const repel = mdist < 130 && mdist > 0.1 ? (130 - mdist) / 130 : 0
+      const drawX = s.x + px * s.r + (s.band ? (s.bandT - 0.5) * bandShift : 0) + (mdx / mdist) * repel * 10
+      const drawY = s.y + py * s.r + (mdy / mdist) * repel * 10
       const [r, g, b] = s.color
 
       ctx.beginPath()
@@ -884,6 +906,34 @@ function initReactions() {
 }
 
 initReactions()
+
+/* ───────────── 相关阅读推荐（文章页） ───────────── */
+
+function initRelatedPosts() {
+  const content = document.querySelector(".article-content")
+  const footer = document.querySelector(".article-footer")
+  if (!content || !footer) return
+  const ALL = [
+    { title: "GitHub Pages 网站搭建记录", url: "/posts/github-pages/", desc: "从零到上线：个人网站的搭建思路、结构与迭代记录" },
+    { title: "隐私与数据声明", url: "/posts/privacy/", desc: "网站隐私策略：公开内容、数据边界与安全说明" },
+    { title: "站点架构说明", url: "/posts/site-architecture/", desc: "本网站的技术架构：文件组织、样式与脚本设计" },
+  ]
+  const current = location.pathname
+  const others = ALL.filter((p) => current !== p.url)
+  if (others.length < 1) return
+  const wrap = document.createElement("div")
+  wrap.className = "related-posts"
+  wrap.innerHTML =
+    '<span class="related-label">📚 继续阅读</span><div class="related-grid">' +
+    others
+      .slice(0, 2)
+      .map((p) => `<a href="${p.url}"><strong>${p.title}</strong><span>${p.desc}</span></a>`)
+      .join("") +
+    "</div>"
+  footer.before(wrap)
+}
+
+initRelatedPosts()
 
 initHeaderScroll()
 initStarfield()

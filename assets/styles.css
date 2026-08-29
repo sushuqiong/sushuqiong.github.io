@@ -8360,3 +8360,134 @@ html[data-theme="dark"] .toc-side a.is-active {
     translate: none !important;
   }
 }
+
+/* ── 第三十六批：Hero 粒子增强 + 文章页 huyenchip 风格排版 ── */
+
+/* 文章头部信息卡（huyenchip 式：干净信息行） */
+.article-header .article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(230, 241, 255, 0.14);
+}
+
+.article-header .article-meta span {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: rgba(226, 232, 255, 0.72);
+}
+
+/* 文章引言（首段强调） */
+.article-content > p:first-of-type {
+  font-size: 1.06em;
+  color: #334155;
+  font-weight: 450;
+}
+
+html[data-theme="dark"] .article-content > p:first-of-type {
+  color: rgba(226, 232, 255, 0.92);
+}
+
+/* h2 编号感：更清晰的分隔 */
+.article-content h2 {
+  margin-top: 2.4em;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+  font-size: 1.55em;
+}
+
+/* 图片说明 */
+.article-content figure {
+  margin: 1.8em 0;
+}
+
+.article-content figcaption {
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--subtle);
+  text-align: center;
+}
+
+/* 正文现代排版：段首不缩进、段距呼吸 */
+.article-content p {
+  text-indent: 0;
+  margin-bottom: 1.25em;
+}
+
+/* 列表紧凑 */
+.article-content ul,
+.article-content ol {
+  margin: 1em 0 1.4em;
+  padding-left: 1.5em;
+}
+
+.article-content li {
+  margin-bottom: 0.45em;
+  line-height: 1.9;
+}
+
+/* 相关阅读卡 */
+.related-posts {
+  margin-top: 44px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+}
+
+.related-posts .related-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #7c3aed;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.related-grid a {
+  display: block;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--border);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.related-grid a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.14);
+  border-color: rgba(124, 58, 237, 0.35);
+}
+
+.related-grid strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.related-grid span {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .related-grid a {
+  background: rgba(22, 34, 74, 0.9);
+  border-color: rgba(100, 255, 218, 0.12);
+}
+
+html[data-theme="dark"] .related-grid strong {
+  color: #e6f1ff;
+}
