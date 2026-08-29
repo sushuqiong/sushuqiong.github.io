@@ -4905,3 +4905,247 @@ body {
   border-radius: 50%;
   object-fit: cover;
 }
+
+/* ── 第十五批：背景柔和过渡 + 子页统一深空 + 宣言动感 + 黑胶唱片 ── */
+
+/* 浅色区：统一贯穿渐变（柔和过渡，不再硬切） */
+main#content.page {
+  background:
+    radial-gradient(1000px 560px at 85% 12%, rgba(124, 58, 237, 0.07), transparent 62%),
+    radial-gradient(900px 520px at 10% 40%, rgba(56, 189, 248, 0.07), transparent 62%),
+    radial-gradient(800px 460px at 80% 62%, rgba(244, 114, 182, 0.06), transparent 62%),
+    radial-gradient(700px 400px at 15% 85%, rgba(251, 146, 60, 0.06), transparent 62%),
+    linear-gradient(180deg,
+      #ecebf9 0%,
+      #e7f0ee 16%,
+      #e0e6f9 34%,
+      #dedcf8 52%,
+      #eadfe9 68%,
+      #f5e9ef 84%,
+      #eef0fa 100%);
+}
+
+/* 浅色 section：清掉各自背景，交给 main 贯穿渐变 */
+#road,
+#music,
+#publications,
+#skills-hub,
+#notes {
+  background: transparent;
+}
+
+/* 深色 band（宣言/公众号）与浅色区的柔和过渡 */
+.manifesto {
+  box-shadow: 0 30px 60px rgba(16, 27, 69, 0.28);
+}
+
+#wechat {
+  box-shadow: 0 -24px 60px rgba(16, 27, 69, 0.22);
+}
+
+/* 子页统一深空头部 */
+body[data-page="wechat"] .article-header,
+body[data-page="archives"] .article-header,
+body[data-page="projects"] .article-header,
+body[data-page="posts"] .article-header,
+body[data-page="pub"] .article-header,
+body[data-page="road"] .article-header {
+  color: #e6f1ff;
+  padding: 96px 0 56px;
+  background:
+    radial-gradient(800px 460px at 85% 6%, rgba(168, 85, 247, 0.28), transparent 60%),
+    radial-gradient(700px 420px at 8% 30%, rgba(56, 189, 248, 0.26), transparent 60%),
+    linear-gradient(180deg, #101b45 0%, #1e2a63 55%, #3b3a8c 100%);
+  border-radius: 0 0 32px 32px;
+}
+
+body[data-page="wechat"] .article-header .eyebrow,
+body[data-page="archives"] .article-header .eyebrow,
+body[data-page="projects"] .article-header .eyebrow,
+body[data-page="posts"] .article-header .eyebrow,
+body[data-page="pub"] .article-header .eyebrow,
+body[data-page="road"] .article-header .eyebrow {
+  color: var(--space-accent);
+  text-shadow: 0 0 18px rgba(100, 255, 218, 0.4);
+}
+
+body[data-page="wechat"] .article-header h1,
+body[data-page="archives"] .article-header h1,
+body[data-page="projects"] .article-header h1,
+body[data-page="posts"] .article-header h1,
+body[data-page="pub"] .article-header h1,
+body[data-page="road"] .article-header h1 {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 4.4vw, 2.9rem);
+  font-weight: 700;
+  color: #e6f1ff;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  text-shadow: 0 0 44px rgba(100, 255, 218, 0.22);
+}
+
+body[data-page="wechat"] .article-lead,
+body[data-page="archives"] .article-lead,
+body[data-page="projects"] .article-lead,
+body[data-page="posts"] .article-lead,
+body[data-page="pub"] .article-lead,
+body[data-page="road"] .article-lead {
+  color: var(--space-muted);
+}
+
+/* 子页 content 区相对定位（让星空可见） */
+body[data-page] .article {
+  position: relative;
+}
+
+/* ── 黑胶唱片造型（音乐播放器） ── */
+.music-cover-rot {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2a2a38, #0c0c12 70%);
+  border: 2px solid #1a1a24;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 0 3px #14141c;
+  overflow: hidden;
+}
+
+.music-cover-rot::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 5px);
+}
+
+.music-cover-rot img {
+  position: absolute;
+  inset: 20%;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  z-index: 1;
+}
+
+.music-cover-rot::after {
+  content: "";
+  position: absolute;
+  inset: 42%;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+  z-index: 2;
+}
+
+/* 歌曲卡片封面也黑胶化 */
+.music-cover {
+  position: relative;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 30%, #2a2a38, #0c0c12 70%) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 0 0 2px #14141c;
+  overflow: hidden;
+}
+
+.music-cover::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 4px);
+}
+
+.music-cover::after {
+  content: "";
+  position: absolute;
+  inset: 38%;
+  border-radius: 50%;
+  background: var(--song-color, #f59e0b);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--song-color) 70%, transparent);
+  z-index: 1;
+}
+
+.music-card:hover .music-cover {
+  animation: cover-spin 3s linear infinite;
+}
+
+.music-cover.is-spin {
+  animation: cover-spin 6s linear infinite;
+}
+
+/* 歌曲卡黑胶封面：专辑图嵌在中心 */
+.music-cover img {
+  position: absolute;
+  inset: 24%;
+  width: 52%;
+  height: 52%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
+
+/* ── 宣言区动感升级：云层 / 人群 / 灯火 / 光线 ── */
+
+/* 飘动的云层 */
+.manifesto-cloud {
+  position: absolute;
+  width: 320px;
+  height: 46px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(230, 241, 255, 0.2), transparent);
+  filter: blur(10px);
+  pointer-events: none;
+  animation: cloud-drift 26s ease-in-out infinite;
+}
+
+@keyframes cloud-drift {
+  0%, 100% { transform: translateX(-40px); opacity: 0.5; }
+  50% { transform: translateX(60px); opacity: 0.9; }
+}
+
+/* 太阳光线（旋转） */
+.manifesto-sun::before {
+  content: "";
+  position: absolute;
+  inset: -34px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(251, 191, 36, 0.12) 0deg 12deg, transparent 12deg 30deg);
+  animation: sun-rays 22s linear infinite;
+}
+
+@keyframes sun-rays {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 城市灯火闪烁 */
+.manifesto-skyline .flicker {
+  animation: window-flicker 3.4s ease-in-out infinite;
+}
+
+@keyframes window-flicker {
+  0%, 100% { opacity: 1; }
+  30% { opacity: 0.25; }
+  60% { opacity: 0.85; }
+}
+
+/* 星光闪烁点缀（宣言区） */
+.manifesto-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+  animation: m-twinkle 2.6s ease-in-out infinite;
+}
+
+@keyframes m-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.3); }
+}

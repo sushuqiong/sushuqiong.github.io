@@ -1532,7 +1532,7 @@ function initMusicPlayer() {
   grid.innerHTML = SONGS.map(
     (song) => `
     <button class="music-card" data-song="${song.id}" style="--song-color: ${song.color};" aria-label="播放《${song.title}》">
-      <span class="music-cover">${song.emoji}</span>
+      <span class="music-cover"><img src="${song.cover}" alt="${song.title} 封面" loading="lazy"></span>
       <span class="music-info">
         <strong>${song.title}</strong>
         <small>${song.artist} · ${song.year}</small>
