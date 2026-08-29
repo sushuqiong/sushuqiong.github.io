@@ -7496,3 +7496,233 @@ body[data-page="wechat"] .qr-card {
     bottom: 76px;
   }
 }
+
+/* ── 第三十批：阅读进度条 + 主题切换 + 表情反应 ── */
+
+/* 阅读进度条 */
+.read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 320;
+  background: linear-gradient(90deg, #64ffda, #7c3aed, #f472b6);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.6);
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(18deg) scale(1.1);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25);
+}
+
+body[data-page="home"] .site-header:not(.is-scrolled) .theme-toggle {
+  border-color: rgba(100, 255, 218, 0.3);
+  background: rgba(10, 18, 38, 0.45);
+}
+
+/* ── 暗色主题（变量覆盖） ── */
+html[data-theme="dark"] body {
+  background:
+    url("/assets/backgrounds/milkyway.jpg") fixed center / cover no-repeat,
+    #0d1730;
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] main#content.page {
+  background: transparent;
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] #road,
+html[data-theme="dark"] #music,
+html[data-theme="dark"] #publications,
+html[data-theme="dark"] #skills-hub,
+html[data-theme="dark"] #wechat,
+html[data-theme="dark"] #notes {
+  background: linear-gradient(180deg, rgba(13, 23, 48, 0.78), rgba(13, 23, 48, 0.6));
+}
+
+html[data-theme="dark"] .section-head h2 {
+  background: linear-gradient(92deg, #a5b4fc, #f0abfc 55%, #fda4af);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html[data-theme="dark"] .section-head p {
+  color: rgba(226, 232, 255, 0.72);
+}
+
+html[data-theme="dark"] .eyebrow {
+  color: #64ffda;
+}
+
+html[data-theme="dark"] .pub-row,
+html[data-theme="dark"] .road-step,
+html[data-theme="dark"] .feature-tile,
+html[data-theme="dark"] .note-card,
+html[data-theme="dark"] .music-card,
+html[data-theme="dark"] .track-panel,
+html[data-theme="dark"] .row,
+html[data-theme="dark"] .post-card,
+html[data-theme="dark"] .project-card {
+  background: rgba(22, 34, 74, 0.9);
+  border-color: rgba(100, 255, 218, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .pub-row h3,
+html[data-theme="dark"] .road-step h3,
+html[data-theme="dark"] .feature-tile h3,
+html[data-theme="dark"] .note-card h3,
+html[data-theme="dark"] .music-info strong {
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] .road-step p,
+html[data-theme="dark"] .feature-tile p,
+html[data-theme="dark"] .note-card p,
+html[data-theme="dark"] .music-info em,
+html[data-theme="dark"] .music-info small,
+html[data-theme="dark"] .pub-row .post-meta {
+  color: rgba(226, 232, 255, 0.66);
+}
+
+html[data-theme="dark"] .pub-row--ctarc { background: linear-gradient(120deg, rgba(49, 46, 129, 0.95), rgba(30, 41, 88, 0.9)); }
+html[data-theme="dark"] .pub-row--sci { background: linear-gradient(120deg, rgba(76, 29, 149, 0.95), rgba(30, 41, 88, 0.9)); }
+html[data-theme="dark"] .pub-row--f1000 { background: linear-gradient(120deg, rgba(120, 53, 15, 0.95), rgba(30, 41, 88, 0.9)); }
+html[data-theme="dark"] .pub-row--review { background: linear-gradient(120deg, rgba(8, 47, 73, 0.95), rgba(30, 41, 88, 0.9)); }
+html[data-theme="dark"] .pub-row--chemo { background: linear-gradient(120deg, rgba(136, 19, 55, 0.95), rgba(30, 41, 88, 0.9)); }
+
+html[data-theme="dark"] #wechat .list-rows {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(230, 241, 255, 0.1);
+}
+
+html[data-theme="dark"] .article-content p,
+html[data-theme="dark"] .article-content li {
+  color: rgba(226, 232, 255, 0.86);
+}
+
+html[data-theme="dark"] .article-content h2,
+html[data-theme="dark"] .article-content h3 {
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] .article-toc {
+  background: rgba(20, 32, 70, 0.6);
+  border-color: rgba(100, 255, 218, 0.12);
+}
+
+html[data-theme="dark"] .article-toc a {
+  color: rgba(226, 232, 255, 0.75);
+}
+
+html[data-theme="dark"] .site-header {
+  background: rgba(10, 18, 38, 0.8);
+  border-bottom-color: rgba(100, 255, 218, 0.1);
+}
+
+html[data-theme="dark"] .site-footer {
+  background: rgba(7, 13, 31, 0.9);
+}
+
+html[data-theme="dark"] .back-top,
+html[data-theme="dark"] .search-fab {
+  background: rgba(16, 27, 69, 0.85);
+  border-color: rgba(100, 255, 218, 0.2);
+}
+
+/* ── 表情反应条 ── */
+.reactions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 34px 0 8px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: linear-gradient(150deg, rgba(124, 58, 237, 0.07), rgba(37, 99, 235, 0.05));
+  border: 1px solid rgba(124, 58, 237, 0.12);
+}
+
+.reactions-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-right: 6px;
+}
+
+.react-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.react-btn:hover {
+  transform: translateY(-3px);
+  border-color: rgba(124, 58, 237, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.18);
+}
+
+.react-btn.is-pop {
+  animation: react-pop 0.4s cubic-bezier(0.34, 1.6, 0.64, 1);
+}
+
+@keyframes react-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.28) rotate(-6deg); }
+  100% { transform: scale(1); }
+}
+
+.react-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--subtle);
+}
+
+html[data-theme="dark"] .react-btn {
+  background: rgba(30, 42, 90, 0.85);
+  border-color: rgba(100, 255, 218, 0.16);
+  color: rgba(226, 232, 255, 0.8);
+}
+
+html[data-theme="dark"] .react-btn:hover {
+  background: rgba(40, 56, 120, 0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .react-btn.is-pop {
+    animation: none;
+  }
+}

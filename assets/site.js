@@ -619,6 +619,108 @@ function initToc() {
 
 initToc()
 
+/* ───────────── 文章阅读进度条 ───────────── */
+
+function initReadProgress() {
+  const article = document.querySelector(".article-content")
+  if (!article) return
+  const bar = document.createElement("div")
+  bar.className = "read-progress"
+  bar.setAttribute("aria-hidden", "true")
+  document.body.appendChild(bar)
+  window.addEventListener(
+    "scroll",
+    () => {
+      const rect = article.getBoundingClientRect()
+      const total = rect.height - window.innerHeight
+      const pct = total > 0 ? Math.min(Math.max(-rect.top / total, 0), 1) : 0
+      bar.style.width = `${(pct * 100).toFixed(1)}%`
+    },
+    { passive: true },
+  )
+}
+
+initReadProgress()
+
+/* ───────────── 暗色 / 亮色主题切换 ───────────── */
+
+function initThemeToggle() {
+  const header = document.querySelector(".site-header-inner")
+  if (!header) return
+  const btn = document.createElement("button")
+  btn.className = "theme-toggle"
+  btn.setAttribute("aria-label", "切换暗色/亮色主题")
+  const saved = (() => {
+    try {
+      return localStorage.getItem("theme")
+    } catch (e) {
+      return null
+    }
+  })()
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme
+    btn.textContent = theme === "dark" ? "☀️" : "🌙"
+    btn.title = theme === "dark" ? "切换到亮色" : "切换到暗色"
+  }
+  apply(saved === "dark" ? "dark" : "light")
+  btn.addEventListener("click", () => {
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark"
+    apply(next)
+    try {
+      localStorage.setItem("theme", next)
+    } catch (e) {
+      /* ignore */
+    }
+  })
+  header.appendChild(btn)
+}
+
+initThemeToggle()
+
+/* ───────────── 文章表情反应 ───────────── */
+
+function initReactions() {
+  const footer = document.querySelector(".article-footer")
+  const article = document.querySelector(".article-content")
+  const host = footer || (article && article.parentElement)
+  if (!host) return
+  const key = "reactions_" + (location.pathname || "page").replace(/\//g, "_")
+  let counts = {}
+  try {
+    counts = JSON.parse(localStorage.getItem(key) || "{}")
+  } catch (e) {
+    counts = {}
+  }
+  const box = document.createElement("div")
+  box.className = "reactions"
+  const EMOJIS = ["❤️", "👍", "🌟", "🔥", "🎉"]
+  box.innerHTML =
+    '<span class="reactions-label">这篇文章怎么样？</span>' +
+    EMOJIS.map(
+      (emo) =>
+        `<button class="react-btn" aria-label="${emo}"><span class="react-emo">${emo}</span><span class="react-count">${counts[emo] || 0}</span></button>`,
+    ).join("")
+  EMOJIS.forEach((emo) => {
+    const btn = box.querySelectorAll(".react-btn")[EMOJIS.indexOf(emo)]
+    btn.addEventListener("click", () => {
+      counts[emo] = (counts[emo] || 0) + 1
+      try {
+        localStorage.setItem(key, JSON.stringify(counts))
+      } catch (e) {
+        /* ignore */
+      }
+      btn.querySelector(".react-count").textContent = counts[emo]
+      btn.classList.remove("is-pop")
+      void btn.offsetWidth
+      btn.classList.add("is-pop")
+    })
+  })
+  if (footer) footer.before(box)
+  else host.insertBefore(box, article.nextSibling)
+}
+
+initReactions()
+
 initHeaderScroll()
 initStarfield()
 initReveal()
@@ -1872,7 +1974,115 @@ const SONGS = [
       "座中泣下谁最多？ 江州司马青衫湿，青衫湿。",
       "江州司马青衫湿。"
     ]
+  },
+
+  {
+    "id": "cijiumen",
+    "title": "辞九门回忆",
+    "artist": "解忧草 · 冰幽",
+    "year": "2019",
+    "emoji": "🏯",
+    "color": "#f59e0b",
+    "desc": "古风戏腔 · 一曲定重楼",
+    "src": "/assets/music/cijiumen.mp3",
+    "cover": "/assets/music/covers/cijiumen.jpg",
+    "lyrics": [
+      "一曲定重楼",
+      "一眼半生筹",
+      "看的全都是那诡谲云涌",
+      "入得此门不回首",
+      "无需宣之于口",
+      "我对案再拜那风雨瓢泼的残陋",
+      "再聚首",
+      "戏子多秋",
+      "可怜一处情深旧",
+      "满座衣冠皆老朽",
+      "黄泉故事无止休",
+      "戏无骨难左右",
+      "换过一折又重头",
+      "只道最是人间不能留",
+      "误闯天家",
+      "劝余放下手中砂",
+      "张口欲唱声却哑",
+      "粉面披衣叫个假",
+      "怜余来安座下",
+      "不敢沾染佛前茶",
+      "只作凡人赴雪月风花",
+      "绕过胭脂楼",
+      "打散结发扣",
+      "唱的全都是那情深不寿",
+      "入得此门不回首",
+      "无需宣之于口",
+      "我对镜遮掩那风雨瓢泼的残陋",
+      "碑已旧",
+      "戏子多秋",
+      "可怜一处情深旧",
+      "满座衣冠皆老朽",
+      "黄泉故事无止休",
+      "戏无骨难左右",
+      "换过一折又重头",
+      "只道最是人间不能留",
+      "误闯天家",
+      "劝余放下手中砂",
+      "送那人御街打马",
+      "才子佳人断佳话",
+      "怜余来苦咽下",
+      "求不得佛前茶",
+      "只留三寸土种二月花"
+    ]
+  },
+  {
+    "id": "mowenguiqi",
+    "title": "莫问归期",
+    "artist": "蒋雪儿",
+    "year": "2020",
+    "emoji": "🌙",
+    "color": "#8b5cf6",
+    "desc": "古风 · 藏进心口的刺",
+    "src": "/assets/music/mowenguiqi.mp3",
+    "cover": "/assets/music/covers/mowenguiqi.jpg",
+    "lyrics": [
+      "藏进心口的刺",
+      "不枉寻也如此",
+      "沉默有时最后因你放肆",
+      "浓墨难沾心事",
+      "寒夜怎寄相思",
+      "沉默有时念想有时",
+      "谁诀别相思成疾莫问天涯",
+      "也莫问归期",
+      "怎奈何无人了解",
+      "情断之时冷暖自知",
+      "谁诀别相思成疾莫问天涯",
+      "也莫问归期",
+      "怎奈何无人了解",
+      "我心思",
+      "藏进心口的刺",
+      "不枉寻也如此",
+      "沉默有时最后因你放肆",
+      "浓墨难沾心事",
+      "寒夜怎寄相思",
+      "沉默有时念想有时",
+      "谁诀别相思成疾莫问天涯",
+      "也莫问归期",
+      "怎奈何无人了解",
+      "情断之时冷暖自知",
+      "谁诀别相思成疾莫问天涯",
+      "也莫问归期",
+      "怎奈何无人了解",
+      "我心思",
+      "谁诀别相思成疾莫问天涯",
+      "也莫问归期",
+      "怎奈何无人了解",
+      "情断之时冷暖自知",
+      "谁诀别相思成疾莫问天涯",
+      "也莫问归期",
+      "怎奈何无人了解",
+      "我心思",
+      "键盘 : 谭侃侃",
+      "合声 : 刘涛、金天、张子薇"
+    ]
   }
+
 ]
 
 function initMusicPlayer() {
