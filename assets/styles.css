@@ -9847,3 +9847,100 @@ html[data-theme="dark"] .road-step:hover h3 {
 .footer-social {
   flex-wrap: wrap;
 }
+
+/* ── 第四十七批：本站构建 Skill 卡 + 代码块语言徽标 ── */
+
+/* skills 页：本站构建 Skill 卡 */
+.site-skill-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 18px 0 6px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: linear-gradient(150deg, rgba(124, 58, 237, 0.08), rgba(37, 99, 235, 0.06));
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.site-skill-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(124, 58, 237, 0.2);
+  border-color: rgba(124, 58, 237, 0.45);
+  background: linear-gradient(150deg, rgba(124, 58, 237, 0.12), rgba(37, 99, 235, 0.09));
+}
+
+.site-skill-card .road-icon {
+  font-size: 30px;
+  margin: 0;
+}
+
+.site-skill-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.site-skill-card-body strong {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.site-skill-card-body span {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.site-skill-card-arrow {
+  font-size: 20px;
+  color: #7c3aed;
+  transition: transform 0.3s ease;
+}
+
+.site-skill-card:hover .site-skill-card-arrow {
+  transform: translateX(6px);
+}
+
+html[data-theme="dark"] .site-skill-card {
+  background: rgba(30, 42, 90, 0.7);
+  border-color: rgba(100, 255, 218, 0.18);
+}
+
+html[data-theme="dark"] .site-skill-card-body strong {
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] .site-skill-card:hover {
+  border-color: rgba(100, 255, 218, 0.4);
+  background: rgba(34, 48, 104, 0.85);
+}
+
+/* 文章代码块语言徽标 */
+.code-lang-badge {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  z-index: 2;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64ffda;
+  background: rgba(16, 27, 69, 0.65);
+  border: 1px solid rgba(100, 255, 218, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.article-content pre:hover .code-lang-badge {
+  opacity: 1;
+}

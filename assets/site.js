@@ -899,6 +899,17 @@ function initCopyCode() {
       }, 1600)
     })
   })
+
+  // 代码块语言徽标（从 class 提取 language-*）
+  pres.forEach((pre) => {
+    const cls = pre.className || ""
+    const m = cls.match(/language-([\w+-]+)/)
+    if (!m) return
+    const badge = document.createElement("span")
+    badge.className = "code-lang-badge"
+    badge.textContent = m[1]
+    pre.appendChild(badge)
+  })
 }
 
 initCopyCode()
