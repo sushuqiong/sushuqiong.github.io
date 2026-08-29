@@ -5,7 +5,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 
 # Deep-Space Personal Website（深空实验室个人网站）
 
-纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v45+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
+纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v49+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
 
 ## 触发场景
 
@@ -35,7 +35,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 ## 核心模块实现要点
 
 ### 版本号缓存机制（最重要！）
-- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v45）
+- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v49）
 - 每次改 CSS/JS 必须批量 bump（python 脚本遍历 .html 替换 `?vN`→`?vN+1`）
 - 不 bump 用户浏览器缓存看不到新效果（用户曾两次抱怨"没改"）
 - GitHub Pages CDN 边缘缓存：push 后 5-15 分钟同步，验证用 `?cb=$RANDOM` 绕过
@@ -98,10 +98,12 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 
 - **宣言文字消失**：JS 清空 DOM 再打字，链路卡住文字永空 → 改为文字静态 HTML，JS 只增强
 - **tilt 3D 失效**：staggered 入场用 `transform: translateY` 覆盖 tilt 的 perspective transform → 改用 `translate` 独立属性
-- **整页截图空白**：reveal 动画 opacity:0 未触发 → @media print + prefers-reduced-motion 强制显示
+- **整页截图空白**：reveal 动画 opacity:0 未触发（IO 未触发时区块永久透明）→ ① @media print + prefers-reduced-motion 强制显示 ② **initReveal 加 2s 超时兜底**（2s 内未触发 IO 强制全部 is-visible/is-in）——此修复解决"用户截图/慢滚动看到大片空白"
+- **子页 hero 图片异常**：8 个子页差异化风景背景被后加的 `background: transparent` 规则覆盖（CSS 顺序后者赢）→ 统一在文件末尾重新定义各页背景（图 + 顶部深蓝遮罩 + 底部亮色渐变），并在暗色主题加深为星野
 - **CDN 旧版**：Edge 截图/用户看到旧版但 curl 新 → CDN 边缘缓存，等 5-15 分钟或带参访问
 - **图片误删**：批量删未引用图前先 grep 引用（hongzhaoyuan.jpg 曾被误删，git checkout 恢复）
 - **翻牌卡片反引号**：patch 替换 template literal 残留反引号导致语法错误
+- **公鸡耳机双边不协调**：正面视角双耳罩像平贴 → SVG 改单边侧戴（头带弧线 + 单耳罩）
 
 ## 复现步骤
 
@@ -118,7 +120,7 @@ for r, d, fs in os.walk("."):
         if f.endswith(".html"):
             p = os.path.join(r, f)
             h = open(p, encoding="utf-8").read()
-            h2 = h.replace("?v45", "?v46")
+            h2 = h.replace("?v49", "?v50")
             if h2 != h: open(p, "w", encoding="utf-8").write(h2)
 PY
 git add -A && git commit -m "update" && git push

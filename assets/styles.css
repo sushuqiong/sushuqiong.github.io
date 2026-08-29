@@ -10044,3 +10044,54 @@ body[data-page="skill"] .article-header .eyebrow {
 body[data-page="skill"] .hero-copy h1::after {
   display: block;
 }
+
+/* ── 第四十九批：子页 hero 视差 + 文章页风景透出 ── */
+
+/* 子页 hero 背景视差（桌面 hover 设备：背景固定、内容滚动） */
+@media (hover: hover) and (pointer: fine) {
+  body[data-page="skills"] .article,
+  body[data-page="wechat"] .article,
+  body[data-page="archives"] .article,
+  body[data-page="projects"] .article,
+  body[data-page="posts"] .article,
+  body[data-page="pub"] .article,
+  body[data-page="road"] .article,
+  body[data-page="about"] .article,
+  body[data-page="skill"] .article {
+    background-attachment: fixed;
+  }
+}
+
+/* 文章页内容区：风景淡淡透出 */
+body[data-page="posts"] .article-content {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.93), rgba(250, 250, 255, 0.9)),
+    url("/assets/backgrounds/lake.webp") center top / cover no-repeat;
+  border-radius: 22px;
+  padding: 34px 40px;
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  box-shadow: 0 14px 44px rgba(15, 23, 42, 0.07);
+}
+
+html[data-theme="dark"] body[data-page="posts"] .article-content {
+  background:
+    linear-gradient(180deg, rgba(16, 27, 69, 0.92), rgba(13, 23, 48, 0.9)),
+    url("/assets/backgrounds/lake.webp") center top / cover no-repeat;
+  border-color: rgba(100, 255, 218, 0.12);
+}
+
+/* 文章内容区内文字/块保持各自底色（避免透出干扰） */
+body[data-page="posts"] .article-content pre {
+  background: #0a1228;
+}
+
+html[data-theme="dark"] body[data-page="posts"] .article-content blockquote {
+  background: rgba(20, 32, 70, 0.7);
+}
+
+@media (max-width: 640px) {
+  body[data-page="posts"] .article-content {
+    padding: 22px 18px;
+  }
+}

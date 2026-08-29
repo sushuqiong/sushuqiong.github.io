@@ -385,6 +385,18 @@ function initReveal() {
     { threshold: 0.08, rootMargin: "0px 0px -48px 0px" },
   )
   targets.forEach((el) => io.observe(el))
+
+  // 兜底：2s 内未触发 IO 则强制全部显示（防截图/慢滚动/异常导致空白）
+  setTimeout(() => {
+    targets.forEach((el) => {
+      if (!el.classList.contains("is-visible")) {
+        el.classList.add("is-visible")
+        el.querySelectorAll(".road-step, .pub-row, .feature-tile, .music-card, .note-card, .lane-mini").forEach((kid) =>
+          kid.classList.add("is-in"),
+        )
+      }
+    })
+  }, 2000)
 }
 
 /* ───────────── 全站加载动画 ───────────── */
@@ -1593,13 +1605,11 @@ function renderRooster() {
         <!-- 金色羽毛点缀 -->
         <path d="M60 40 Q66 36 72 40 Q66 42 60 40 Z" fill="#fbbf24" opacity="0.6"/>
       </g>
-      <!-- DJ 耳机 -->
+      <!-- DJ 耳机（单边侧戴视角） -->
       <g class="dj-headphones">
-        <path d="M57 30 Q55 16 66 14 Q77 16 75 30 L75 34 L70 34 L70 27 Q70 20 66 20 Q62 20 62 27 L62 34 L57 34 Z" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
-        <circle cx="57" cy="34" r="4.5" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
-        <circle cx="75" cy="34" r="4.5" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
-        <circle cx="57" cy="34" r="1.8" fill="#fbbf24"/>
-        <circle cx="75" cy="34" r="1.8" fill="#fbbf24"/>
+        <path d="M66 14 Q60 20 58 27 L58 34 L63 34 L63 27 Q63 20 66 20 Z" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
+        <circle cx="58" cy="34" r="4.5" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
+        <circle cx="58" cy="34" r="1.8" fill="#fbbf24"/>
       </g>
       <ellipse cx="48" cy="89" rx="22" ry="3" fill="rgba(7, 13, 31, 0.16)"/>
     </svg>
