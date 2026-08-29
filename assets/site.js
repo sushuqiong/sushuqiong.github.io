@@ -1605,6 +1605,19 @@ function renderRooster() {
         <!-- 金色羽毛点缀 -->
         <path d="M60 40 Q66 36 72 40 Q66 42 60 40 Z" fill="#fbbf24" opacity="0.6"/>
       </g>
+      <!-- DJ 墨镜 -->
+      <g class="rooster-glasses">
+        <path d="M57 30 L59 26.5 L75 26.5 L77 30 Q77 34.5 72.5 34.5 L61.5 34.5 Q57 34.5 57 30 Z" fill="#0f172a"/>
+        <path d="M57 29.5 L51.5 26" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M77 29.5 L82.5 26" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M61.5 30.5 L66 30.5" stroke="rgba(255, 255, 255, 0.55)" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M70 30.5 L73.5 30.5" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.6" stroke-linecap="round"/>
+      </g>
+      <!-- 金色链子 -->
+      <g class="rooster-chain">
+        <path d="M37 50 Q44 60 51 50" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="44" cy="57" r="3.4" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
+      </g>
       <!-- DJ 耳机（单边侧戴视角） -->
       <g class="dj-headphones">
         <path d="M66 14 Q60 20 58 27 L58 34 L63 34 L63 27 Q63 20 66 20 Z" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>

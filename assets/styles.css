@@ -10095,3 +10095,89 @@ html[data-theme="dark"] body[data-page="posts"] .article-content blockquote {
     padding: 22px 18px;
   }
 }
+
+/* ── 第五十批：公鸡配饰动效 + hero 面板扫描线深化 ── */
+
+/* 墨镜反光：hover 时扫过 */
+.rooster-glasses path:nth-child(4) {
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.rooster:hover .rooster-glasses path:nth-child(4),
+.rooster.is-dancing .rooster-glasses path:nth-child(4) {
+  opacity: 1;
+  animation: glass-glint 1.8s ease-in-out infinite;
+}
+
+.rooster:hover .rooster-glasses path:nth-child(5),
+.rooster.is-dancing .rooster-glasses path:nth-child(5) {
+  animation: glass-glint 1.8s ease-in-out infinite 0.3s;
+}
+
+@keyframes glass-glint {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
+/* 金链微光 */
+.rooster-chain circle {
+  animation: chain-glow 2.2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes chain-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4)); }
+  50% { filter: drop-shadow(0 0 9px rgba(251, 191, 36, 0.9)); }
+}
+
+/* hero 面板扫描线（上下扫动） */
+.signal-panel::after {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.55), transparent);
+  box-shadow: 0 0 12px rgba(100, 255, 218, 0.35);
+  animation: panel-scan 5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes panel-scan {
+  0% { top: 6%; opacity: 0; }
+  10% { opacity: 0.9; }
+  88% { opacity: 0.9; }
+  100% { top: 90%; opacity: 0; }
+}
+
+/* 面板顶部发光边框 */
+.signal-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.6), rgba(167, 139, 250, 0.6), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rooster-glasses path {
+    animation: none !important;
+  }
+
+  .rooster-chain circle {
+    animation: none;
+  }
+
+  .signal-panel::after {
+    animation: none;
+    display: none;
+  }
+}
