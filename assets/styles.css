@@ -9531,3 +9531,146 @@ html[data-theme="dark"] .metric-grid > div {
     animation: none;
   }
 }
+
+/* ── 第四十六批：宣言文字光效 + 公众号卡细化 ── */
+
+/* 宣言文字：呼吸发光 + hover 提亮 */
+.manifesto-line {
+  animation: manifesto-glow 3.8s ease-in-out infinite;
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+.manifesto-line:nth-child(2n) {
+  animation-delay: -1.2s;
+}
+
+.manifesto-line:nth-child(3n) {
+  animation-delay: -2.4s;
+}
+
+@keyframes manifesto-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 14px rgba(251, 191, 36, 0.32)) drop-shadow(0 3px 5px rgba(7, 13, 31, 0.55));
+  }
+  50% {
+    filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.65)) drop-shadow(0 0 52px rgba(124, 58, 237, 0.22)) drop-shadow(0 3px 5px rgba(7, 13, 31, 0.55));
+  }
+}
+
+.manifesto-line:hover {
+  filter: drop-shadow(0 0 34px rgba(251, 191, 36, 0.85)) drop-shadow(0 0 60px rgba(124, 58, 237, 0.3));
+  transform: scale(1.015);
+}
+
+/* 宣言眉题光效 */
+.manifesto-inner .eyebrow {
+  position: relative;
+  letter-spacing: 0.42em;
+  color: #fde68a;
+  text-shadow: 0 0 16px rgba(251, 191, 36, 0.6);
+  animation: eyebrow-pulse 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes eyebrow-pulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
+  50% { text-shadow: 0 0 22px rgba(251, 191, 36, 0.85), 0 0 38px rgba(167, 139, 250, 0.35); }
+}
+
+/* 公众号卡片细化 */
+.wechat-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* 卡片 hover 光斑 */
+.wechat-card::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.14), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.wechat-card:hover::after {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* 标题 hover 渐变流动 */
+.wechat-card h3 {
+  background: linear-gradient(90deg, #1e293b 0%, #1e293b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-size: 200% auto;
+  transition: background 0.4s ease;
+}
+
+.wechat-card:hover h3 {
+  background: linear-gradient(90deg, #1d4ed8 0%, #7c3aed 45%, #db2777 85%, #1d4ed8 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: wc-title-flow 3s linear infinite;
+}
+
+@keyframes wc-title-flow {
+  to { background-position: 200% center; }
+}
+
+/* rank 发光 */
+.wechat-card:hover .rank {
+  color: #f472b6;
+  text-shadow: 0 0 14px rgba(244, 114, 182, 0.7);
+}
+
+.rank {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* 卡片边框光晕 */
+.wechat-card:hover {
+  border-color: rgba(244, 114, 182, 0.35);
+  box-shadow: 0 16px 44px rgba(15, 23, 42, 0.14), 0 0 30px rgba(244, 114, 182, 0.12);
+  transform: translateY(-5px);
+}
+
+html[data-theme="dark"] .wechat-card h3 {
+  background: linear-gradient(90deg, #e6f1ff 0%, #e6f1ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html[data-theme="dark"] .wechat-card:hover h3 {
+  background: linear-gradient(90deg, #93c5fd 0%, #d8b4fe 45%, #f9a8d4 85%, #93c5fd 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: wc-title-flow 3s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-line {
+    animation: none;
+  }
+
+  .manifesto-line:hover {
+    transform: none;
+  }
+
+  .wechat-card:hover h3 {
+    animation: none;
+  }
+}
