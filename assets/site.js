@@ -342,18 +342,57 @@ function initReveal() {
       for (const entry of entries) {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible")
+          // 内部卡片 staggered 浮现
+          const kids = entry.target.querySelectorAll(
+            ".road-step, .pub-row, .feature-tile, .music-card, .note-card, .lane-mini",
+          )
+          kids.forEach((kid, i) => {
+            kid.style.setProperty("--stagger", `${i * 0.07}s`)
+            kid.classList.add("is-in")
+          })
           io.unobserve(entry.target)
         }
       }
     },
-    { threshold: 0.1, rootMargin: "0px 0px -48px 0px" },
+    { threshold: 0.08, rootMargin: "0px 0px -48px 0px" },
   )
   targets.forEach((el) => io.observe(el))
+}
+
+/* ───────────── 全站加载动画 ───────────── */
+
+function initPageLoader() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (sessionStorage.getItem("loader_shown")) return
+  try {
+    sessionStorage.setItem("loader_shown", "1")
+  } catch (e) {
+    /* 忽略 */
+  }
+  const loader = document.createElement("div")
+  loader.className = "page-loader"
+  loader.setAttribute("aria-hidden", "true")
+  loader.innerHTML = `
+    <div class="loader-ring"></div>
+    <div class="loader-logo">🐔</div>
+    <p class="loader-name">DEEP-SPACE LAB</p>
+    <p class="loader-sub">sushuqiong · 深空实验室</p>
+  `
+  document.body.appendChild(loader)
+
+  function hide() {
+    loader.classList.add("is-done")
+    setTimeout(() => loader.remove(), 650)
+  }
+
+  window.addEventListener("load", () => setTimeout(hide, 900))
+  setTimeout(hide, 3200) // 兜底
 }
 
 initHeaderScroll()
 initStarfield()
 initReveal()
+initPageLoader()
 
 /* ───────────── 数据加载与渲染（保留原功能） ───────────── */
 

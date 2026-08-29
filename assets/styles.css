@@ -5928,3 +5928,187 @@ body[data-page="about"] {
   background: radial-gradient(circle, rgba(255, 244, 210, 0.95), rgba(251, 191, 36, 0.5) 55%, transparent 72%);
   box-shadow: 0 0 90px rgba(251, 191, 36, 0.65);
 }
+
+/* ── 第十九批：加载动画 + 卡片 staggered + 子页 hero 差异化 ── */
+
+/* 全站加载动画 */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background:
+    radial-gradient(900px 520px at 70% 20%, rgba(124, 58, 237, 0.25), transparent 60%),
+    radial-gradient(700px 420px at 20% 85%, rgba(37, 99, 235, 0.28), transparent 60%),
+    linear-gradient(165deg, #070d1f, #0d1b36 70%);
+  opacity: 1;
+  transition: opacity 0.55s ease;
+}
+
+.page-loader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-ring {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #64ffda;
+  border-right-color: #a78bfa;
+  animation: loader-spin 1.2s linear infinite;
+}
+
+.loader-ring::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-bottom-color: #fbbf24;
+  animation: loader-spin 0.9s linear infinite reverse;
+}
+
+@keyframes loader-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loader-logo {
+  position: relative;
+  z-index: 1;
+  font-size: 54px;
+  animation: loader-bounce 1.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 22px rgba(251, 191, 36, 0.5));
+}
+
+@keyframes loader-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.08); }
+}
+
+.loader-name {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #e6f1ff;
+  text-shadow: 0 0 26px rgba(100, 255, 218, 0.5);
+}
+
+.loader-sub {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(230, 241, 255, 0.6);
+}
+
+/* 卡片 staggered 入场 */
+.road-step,
+.pub-row,
+.feature-tile,
+.music-card,
+.note-card,
+.lane-mini {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.5s ease var(--stagger, 0s), transform 0.5s ease var(--stagger, 0s), box-shadow 0.3s ease, border-color 0.2s ease;
+}
+
+.reveal.is-visible .road-step.is-in,
+.reveal.is-visible .pub-row.is-in,
+.reveal.is-visible .feature-tile.is-in,
+.reveal.is-visible .music-card.is-in,
+.reveal.is-visible .note-card.is-in,
+.reveal.is-visible .lane-mini.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 无 JS 时保证可见 */
+.reveal-ready .road-step,
+.reveal-ready .pub-row,
+.reveal-ready .feature-tile,
+.reveal-ready .music-card,
+.reveal-ready .note-card,
+.reveal-ready .lane-mini {
+  opacity: 1;
+  transform: none;
+}
+
+/* 子页 hero：风景图差异化（保留深色遮罩保证白字可读） */
+body[data-page="wechat"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/city-sunrise.jpg") center / cover no-repeat;
+}
+
+body[data-page="archives"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/mountains.jpg") center 40% / cover no-repeat;
+}
+
+body[data-page="projects"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/forest.jpg") center / cover no-repeat;
+}
+
+body[data-page="posts"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/lake.jpg") center / cover no-repeat;
+}
+
+body[data-page="road"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/sunrise.jpg") center / cover no-repeat;
+}
+
+body[data-page="pub"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/nebula.jpg") center / cover no-repeat;
+}
+
+body[data-page="skills"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/milkyway.jpg") center 30% / cover no-repeat;
+}
+
+body[data-page="about"] .article-header {
+  background:
+    linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
+    url("/assets/backgrounds/lake.jpg") center / cover no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader {
+    display: none;
+  }
+
+  .road-step,
+  .pub-row,
+  .feature-tile,
+  .music-card,
+  .note-card,
+  .lane-mini {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
