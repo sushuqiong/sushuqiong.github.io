@@ -9426,3 +9426,108 @@ html[data-theme="dark"] .metric-grid > div {
     height: 160px;
   }
 }
+
+/* ── 第四十五批：文章头图 hover 微动效 + 英雄区标题光效 ── */
+
+/* 文章头图：hover 微动效 */
+.article-hero {
+  transition: box-shadow 0.4s ease;
+}
+
+.article-hero img {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+}
+
+.article-hero:hover img {
+  transform: scale(1.06);
+  filter: saturate(1.15) brightness(1.05);
+}
+
+/* 头图光带扫过 */
+.article-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.22) 50%, transparent 58%);
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.article-hero:hover::before {
+  opacity: 1;
+  animation: hero-shine 1.2s ease forwards;
+}
+
+@keyframes hero-shine {
+  from { background-position: 130% 0; }
+  to { background-position: -60% 0; }
+}
+
+/* 头图标签 hover 上浮 */
+.article-hero:hover .article-hero-tag {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(7, 13, 31, 0.4), 0 0 16px rgba(100, 255, 218, 0.2);
+}
+
+.article-hero-tag {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 英雄区标题光效：呼吸发光 */
+.hero-title-line {
+  animation: title-shift 8s linear infinite, title-breathe 3.4s ease-in-out infinite;
+}
+
+.hero-title-accent {
+  animation: title-shift 7s linear infinite reverse, title-breathe 4.2s ease-in-out infinite 0.6s;
+}
+
+@keyframes title-breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(100, 255, 218, 0.25)) drop-shadow(0 2px 6px rgba(7, 13, 31, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 26px rgba(100, 255, 218, 0.6)) drop-shadow(0 0 46px rgba(124, 58, 237, 0.3)) drop-shadow(0 2px 6px rgba(7, 13, 31, 0.4));
+  }
+}
+
+/* 标题下方光晕线 */
+.hero-copy h1::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 3px;
+  margin-top: 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #64ffda, #a78bfa, #38bdf8);
+  box-shadow: 0 0 18px rgba(100, 255, 218, 0.55);
+  animation: h1-line-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes h1-line-pulse {
+  0%, 100% { opacity: 0.55; box-shadow: 0 0 10px rgba(100, 255, 218, 0.35); }
+  50% { opacity: 1; box-shadow: 0 0 22px rgba(100, 255, 218, 0.75); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-hero:hover img {
+    transform: none;
+  }
+
+  .article-hero::before {
+    display: none;
+  }
+
+  .hero-title-line,
+  .hero-title-accent {
+    animation: none;
+  }
+
+  .hero-copy h1::after {
+    animation: none;
+  }
+}
