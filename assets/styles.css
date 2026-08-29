@@ -8491,3 +8491,199 @@ html[data-theme="dark"] .related-grid a {
 html[data-theme="dark"] .related-grid strong {
   color: #e6f1ff;
 }
+
+/* ── 第三十七批：公鸡 DJ 记忆点（打碟机底座 + 常驻耳机）+ 音乐区转盘 ── */
+
+/* 耳机常驻（DJ 造型） */
+.rooster .dj-headphones {
+  display: block;
+}
+
+/* 打碟机底座 */
+.rooster .dj-deck {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translateX(-50%);
+  width: 104px;
+  height: 30px;
+  border-radius: 12px 12px 8px 8px;
+  background: linear-gradient(180deg, #1e1e2a, #0c0c14);
+  border: 1px solid rgba(100, 255, 218, 0.22);
+  box-shadow: 0 8px 22px rgba(7, 13, 31, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  z-index: -1;
+}
+
+.rooster .dj-turntable {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle, rgba(100, 255, 218, 0.14) 0 1.5px, transparent 1.5px 3.5px),
+    radial-gradient(circle at 40% 35%, #2c2c3a, #101018 70%);
+  border: 1.5px solid rgba(100, 255, 218, 0.5);
+  animation: deck-spin 3.2s linear infinite;
+}
+
+.rooster .dj-turntable::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: #64ffda;
+  box-shadow: 0 0 8px rgba(100, 255, 218, 0.8);
+}
+
+.rooster .dj-fader {
+  position: absolute;
+  left: 46px;
+  top: 7px;
+  width: 4px;
+  height: 16px;
+  border-radius: 4px;
+  background: rgba(100, 255, 218, 0.2);
+}
+
+.rooster .dj-fader i {
+  position: absolute;
+  left: -3px;
+  top: 2px;
+  width: 10px;
+  height: 6px;
+  border-radius: 3px;
+  background: #fbbf24;
+  animation: fader-slide 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes fader-slide {
+  from { top: 2px; }
+  to { top: 8px; }
+}
+
+.rooster .dj-pad {
+  position: absolute;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  background: rgba(167, 139, 250, 0.35);
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  animation: pad-blink 1.1s ease-in-out infinite;
+}
+
+.rooster .dj-pad-1 { right: 22px; }
+.rooster .dj-pad-2 { right: 8px; animation-delay: -0.55s; }
+
+@keyframes pad-blink {
+  0%, 100% { background: rgba(167, 139, 250, 0.25); }
+  50% { background: rgba(167, 139, 250, 0.7); }
+}
+
+@keyframes deck-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 播放时转盘加速 + 公鸡整体光晕 */
+body.music-playing .rooster {
+  filter: drop-shadow(0 0 24px rgba(100, 255, 218, 0.45)) drop-shadow(0 8px 18px rgba(7, 13, 31, 0.35));
+}
+
+body.music-playing .rooster .dj-turntable {
+  animation-duration: 1.4s;
+}
+
+.rooster:hover .dj-turntable {
+  animation-duration: 1.6s;
+}
+
+/* 音乐区：双转盘混音台装饰 */
+.music-deck {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-content: center;
+  padding: 26px 0 4px;
+  opacity: 0.85;
+}
+
+.music-deck .deck-platter {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle, rgba(20, 25, 45, 0.25) 0 2px, transparent 2px 5px),
+    radial-gradient(circle at 40% 35%, #242436, #0c0c16 70%);
+  border: 3px solid rgba(124, 58, 237, 0.3);
+  box-shadow: 0 10px 26px rgba(7, 13, 31, 0.3);
+  animation: deck-spin 8s linear infinite;
+}
+
+.music-deck .deck-platter::after {
+  content: "";
+  position: absolute;
+  inset: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #64ffda, #a78bfa);
+  box-shadow: 0 0 14px rgba(100, 255, 218, 0.6);
+}
+
+.music-deck .deck-platter:nth-child(2) {
+  animation-direction: reverse;
+  animation-duration: 10s;
+  border-color: rgba(100, 255, 218, 0.3);
+}
+
+.music-deck .deck-mixer {
+  width: 56px;
+  height: 18px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #1e1e2a, #101018);
+  border: 1px solid rgba(100, 255, 218, 0.25);
+  position: relative;
+}
+
+.music-deck .deck-mixer::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  width: 4px;
+  height: 6px;
+  border-radius: 2px;
+  background: #fbbf24;
+  animation: fader-slide 1.4s ease-in-out infinite alternate;
+}
+
+.music-deck .deck-mixer::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  width: 4px;
+  height: 6px;
+  border-radius: 2px;
+  background: #f472b6;
+  animation: fader-slide 1.1s ease-in-out infinite alternate-reverse;
+}
+
+body.music-playing .music-deck .deck-platter {
+  animation-duration: 2.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rooster .dj-turntable,
+  .rooster .dj-fader i,
+  .rooster .dj-pad,
+  .music-deck .deck-platter,
+  .music-deck .deck-mixer::before,
+  .music-deck .deck-mixer::after {
+    animation: none !important;
+  }
+}

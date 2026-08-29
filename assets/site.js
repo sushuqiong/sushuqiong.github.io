@@ -1317,7 +1317,7 @@ initWechatCompact()
 
 /* ───────────── 小公鸡吉祥物 ───────────── */
 
-const ROOSTER_PHRASES = ["咕咕！", "咯咯哒！", "今天也要加油鸭~", "看，有人来了！", "咕～"]
+const ROOSTER_PHRASES = ["咕咕！", "咯咯哒！", "今天也要加油鸭~", "看，有人来了！", "咕～", "🎧 想听哪首？点我！", "🎚️ 打个碟再走？", "🎵 深空电台 24h 营业", "🐔 DJ 树鸡在线", "👋 欢迎来深空实验室"]
 
 function renderRooster() {
   const wrapper = document.querySelector(".rooster")
@@ -1393,6 +1393,12 @@ function renderRooster() {
       </g>
       <ellipse cx="48" cy="89" rx="22" ry="3" fill="rgba(7, 13, 31, 0.16)"/>
     </svg>
+    <div class="dj-deck" aria-hidden="true">
+      <span class="dj-turntable"></span>
+      <span class="dj-fader"><i></i></span>
+      <span class="dj-pad dj-pad-1"></span>
+      <span class="dj-pad dj-pad-2"></span>
+    </div>
   `
   document.body.appendChild(rooster)
 
@@ -2399,6 +2405,12 @@ function initMusicPlayer() {
   if (musicSection) {
     musicSection.classList.add("has-band-eq")
     musicSection.appendChild(bandEq)
+    // 双转盘混音台装饰（记忆点）
+    const deck = document.createElement("div")
+    deck.className = "music-deck"
+    deck.setAttribute("aria-hidden", "true")
+    deck.innerHTML = '<span class="deck-platter"></span><span class="deck-mixer"></span><span class="deck-platter"></span>'
+    musicSection.insertBefore(deck, musicSection.firstChild)
   }
 
   const audio = new Audio()
