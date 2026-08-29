@@ -98,6 +98,20 @@
       </section>
 
       <section class="manifesto" id="manifesto" aria-label="个人宣言">
+        <div class="manifesto-sky">
+          <span class="manifesto-sun" aria-hidden="true"></span>
+          <svg class="manifesto-planet" viewBox="0 0 60 60" aria-hidden="true">
+            <circle cx="30" cy="30" r="16" fill="rgba(251,191,36,0.35)"/>
+            <ellipse cx="30" cy="30" rx="30" ry="7" fill="none" stroke="rgba(251,191,36,0.3)" stroke-width="1.5" transform="rotate(-18 30 30)"/>
+          </svg>
+          <svg class="manifesto-ship" viewBox="0 0 90 34" aria-hidden="true">
+            <ellipse cx="45" cy="20" rx="30" ry="9" fill="rgba(230,241,255,0.7)"/>
+            <path d="M34 11 Q45 2 56 11 Z" fill="rgba(230,241,255,0.55)"/>
+            <circle cx="34" cy="20" r="2.5" fill="rgba(251,191,36,0.8)"/>
+            <circle cx="45" cy="21" r="2.5" fill="rgba(100,255,218,0.8)"/>
+            <circle cx="56" cy="20" r="2.5" fill="rgba(167,139,250,0.8)"/>
+          </svg>
+        </div>
         <span class="m-deco" style="top: 14%; left: 8%;">🪐</span>
         <span class="m-deco" style="top: 22%; right: 10%; animation-delay: 1.4s;">✨</span>
         <span class="m-deco" style="bottom: 30%; left: 14%; animation-delay: 2.6s;">🚀</span>
@@ -111,6 +125,54 @@
           <p class="manifesto-line">为社会幸福奉献心力。</p>
           <span class="manifesto-sign">—— 写在深空实验室</span>
         </div>
+        <svg class="manifesto-skyline" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+          <!-- 远景浅色建筑层 -->
+          <g fill="rgba(230,241,255,0.1)">
+            <rect x="0" y="140" width="90" height="80"/><rect x="110" y="120" width="70" height="100"/>
+            <rect x="210" y="150" width="110" height="70"/><rect x="360" y="130" width="80" height="90"/>
+            <rect x="480" y="155" width="100" height="65"/><rect x="620" y="125" width="90" height="95"/>
+            <rect x="760" y="145" width="70" height="75"/><rect x="880" y="120" width="100" height="100"/>
+            <rect x="1030" y="150" width="80" height="70"/><rect x="1160" y="130" width="110" height="90"/>
+            <rect x="1310" y="145" width="90" height="75"/>
+          </g>
+          <!-- 中景：东方明珠塔 -->
+          <g transform="translate(240,20)">
+            <path d="M60 200 L80 120 L100 200 Z" fill="rgba(13,27,54,0.42)"/>
+            <circle cx="80" cy="112" r="12" fill="rgba(13,27,54,0.5)"/>
+            <circle cx="80" cy="80" r="22" fill="rgba(13,27,54,0.55)"/>
+            <line x1="80" y1="58" x2="80" y2="8" stroke="rgba(13,27,54,0.5)" stroke-width="3"/>
+            <line x1="80" y1="8" x2="92" y2="14" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
+          </g>
+          <!-- 中景：埃菲尔铁塔（加粗加深） -->
+          <g transform="translate(1040,10)">
+            <path d="M40 210 L60 60 L80 210 Z" fill="none" stroke="rgba(13,27,54,0.6)" stroke-width="6"/>
+            <line x1="45" y1="185" x2="75" y2="185" stroke="rgba(13,27,54,0.6)" stroke-width="4"/>
+            <line x1="42" y1="160" x2="78" y2="160" stroke="rgba(13,27,54,0.6)" stroke-width="3"/>
+            <line x1="48" y1="130" x2="72" y2="130" stroke="rgba(13,27,54,0.6)" stroke-width="2.5"/>
+            <rect x="56" y="42" width="8" height="22" fill="rgba(13,27,54,0.65)"/>
+            <line x1="60" y1="42" x2="60" y2="12" stroke="rgba(251,191,36,0.7)" stroke-width="2.5"/>
+          </g>
+          <!-- 中景高楼 -->
+          <g fill="rgba(13,27,54,0.38)">
+            <rect x="330" y="100" width="44" height="120"/>
+            <rect x="380" y="80" width="30" height="140"/>
+            <rect x="700" y="95" width="40" height="125"/>
+            <rect x="750" y="70" width="32" height="150"/>
+            <rect x="560" y="110" width="52" height="110"/>
+          </g>
+          <!-- 前景深色城市 -->
+          <g fill="rgba(7,13,31,0.72)">
+            <rect x="0" y="175" width="70" height="45"/><rect x="80" y="185" width="55" height="35"/>
+            <rect x="145" y="165" width="40" height="55"/><rect x="195" y="190" width="60" height="30"/>
+            <rect x="300" y="180" width="50" height="40"/><rect x="420" y="170" width="42" height="50"/>
+            <rect x="470" y="192" width="70" height="28"/><rect x="600" y="175" width="48" height="45"/>
+            <rect x="660" y="188" width="58" height="32"/><rect x="820" y="172" width="44" height="48"/>
+            <rect x="880" y="188" width="66" height="32"/><rect x="960" y="178" width="40" height="42"/>
+            <rect x="1120" y="182" width="52" height="38"/><rect x="1190" y="168" width="38" height="52"/>
+            <rect x="1250" y="190" width="70" height="30"/><rect x="1340" y="178" width="48" height="42"/>
+            <rect x="1400" y="186" width="40" height="34"/>
+          </g>
+        </svg>
       </section>
 
       <section class="section music-band reveal" id="music">
@@ -182,7 +244,7 @@
       </section>
 
       <section class="section reveal" id="skills-hub">
-        <div class="container">
+        <div class="container"><span class="floating-deco" style="top: -10px; left: 6%;" aria-hidden="true">📊</span>
           <div class="section-head">
             <div>
               <p class="eyebrow">Skills Hub</p>
@@ -262,7 +324,7 @@
       </section>
 
       <section class="section section-band reveal" id="wechat">
-        <div class="container split">
+        <div class="container split"><span class="floating-deco" style="top: -10px; left: 5%;" aria-hidden="true">📱</span>
           <div>
             <div class="section-head">
               <div>
@@ -297,7 +359,7 @@
         <div class="container">
           <div class="section-head">
             <div>
-              <p class="eyebrow">Recent Notes</p>
+              <p class="eyebrow">Recent Notes</p><span class="floating-deco" style="top: -12px; right: 8%;" aria-hidden="true">✍️</span>
               <h2>站点更新</h2>
             </div>
             <a class="section-link" href="/archives/">归档</a>

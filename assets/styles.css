@@ -4198,19 +4198,65 @@ body[data-page="about"] .article-lead {
   pointer-events: none;
 }
 
-/* 城市天际线剪影（SVG 背景） */
-.manifesto::after {
-  content: "";
+/* 城市天际线剪影（内联 SVG：三层建筑 + 东方明珠 + 埃菲尔） */
+.manifesto-skyline {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 150px;
+  width: 100%;
+  height: 190px;
   pointer-events: none;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 150' preserveAspectRatio='none'%3E%3Cpath fill='rgba(7,13,31,0.55)' d='M0 150 L0 110 L60 110 L60 70 L100 70 L100 95 L150 95 L150 50 L200 50 L200 90 L260 90 L260 120 L330 120 L330 60 L380 60 L380 30 L420 30 L420 80 L500 80 L500 110 L560 110 L560 55 L610 55 L610 90 L680 90 L680 40 L720 40 L720 75 L790 75 L790 110 L860 110 L860 65 L910 65 L910 45 L950 45 L950 100 L1020 100 L1020 130 L1090 130 L1090 70 L1140 70 L1140 105 L1200 105 L1200 50 L1250 50 L1250 90 L1310 90 L1310 115 L1370 115 L1370 80 L1440 80 L1440 150 Z'/%3E%3C/svg%3E")
-    no-repeat bottom center / 100% 100%;
-  opacity: 0.85;
+}
+
+/* 天空元素：太阳 / 行星 / 飞船 */
+.manifesto-sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.manifesto-sun {
+  position: absolute;
+  right: 12%;
+  top: 26%;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(253, 224, 71, 0.85), rgba(251, 146, 60, 0.45) 55%, transparent 72%);
+  box-shadow: 0 0 70px rgba(251, 191, 36, 0.5);
+  animation: sun-breathe 6s ease-in-out infinite;
+}
+
+@keyframes sun-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.manifesto-planet {
+  position: absolute;
+  left: 9%;
+  top: 30%;
+  width: 74px;
+  height: 74px;
+  animation: m-float 9s ease-in-out infinite;
+}
+
+.manifesto-ship {
+  position: absolute;
+  left: 32%;
+  top: 16%;
+  width: 66px;
+  height: 26px;
+  animation: ship-fly 16s ease-in-out infinite;
+}
+
+@keyframes ship-fly {
+  0%, 100% { transform: translate(0, 0) rotate(2deg); }
+  25% { transform: translate(24px, -14px) rotate(-2deg); }
+  50% { transform: translate(48px, -4px) rotate(1deg); }
+  75% { transform: translate(18px, 8px) rotate(-1deg); }
 }
 
 /* 星际装饰 */
@@ -4642,4 +4688,98 @@ body.music-playing::after {
   .music-lyrics-btn {
     display: none;
   }
+}
+
+/* ── 第十二批：内容区下半部分背景增强 ── */
+
+/* 内容区延续日出暖光（金色光晕 + 更多层次） */
+body {
+  background:
+    radial-gradient(900px 520px at 12% 12%, rgba(168, 85, 247, 0.12), transparent 62%),
+    radial-gradient(1000px 600px at 88% 28%, rgba(56, 189, 248, 0.12), transparent 62%),
+    radial-gradient(820px 520px at 45% 62%, rgba(244, 114, 182, 0.09), transparent 62%),
+    radial-gradient(720px 440px at 15% 92%, rgba(100, 255, 218, 0.08), transparent 62%),
+    radial-gradient(1100px 640px at 50% 8%, rgba(251, 191, 36, 0.1), transparent 62%),
+    linear-gradient(180deg, #e9edf9 0%, #f1eef9 42%, #e9f2fa 100%);
+}
+
+/* 公众号深色 band：加星空点缀 */
+.section-band {
+  position: relative;
+  padding-bottom: 72px;
+}
+
+#wechat {
+  background:
+    radial-gradient(900px 500px at 85% 10%, rgba(168, 85, 247, 0.08), transparent 62%),
+    radial-gradient(800px 460px at 10% 90%, rgba(56, 189, 248, 0.08), transparent 62%);
+}
+
+/* 站点更新区加淡青 tint */
+.section:has(.note-card) {
+  background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.04) 40%, transparent);
+}
+
+/* 区块间的分隔发光线 */
+.section + .section::before {
+  content: "";
+  display: block;
+  max-width: 760px;
+  margin: 0 auto 64px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.18), transparent);
+}
+
+/* 各 section 漂浮装饰元素增强 */
+#skills-hub .floating-deco,
+#wechat .floating-deco,
+.section:has(.note-card) .floating-deco {
+  opacity: 0.09;
+  font-size: 56px;
+}
+
+/* 音乐区背景乐符氛围 */
+.music-band {
+  background:
+    radial-gradient(900px 500px at 85% 10%, rgba(168, 85, 247, 0.08), transparent 62%),
+    radial-gradient(800px 460px at 10% 90%, rgba(251, 191, 36, 0.06), transparent 62%),
+    radial-gradient(700px 400px at 55% 50%, rgba(56, 189, 248, 0.05), transparent 62%);
+}
+
+/* 卡片 hover 光晕增强 */
+.feature-tile:hover,
+.note-card:hover,
+.music-card:hover {
+  box-shadow: 0 18px 46px rgba(124, 58, 237, 0.14), 0 0 0 1px rgba(124, 58, 237, 0.08);
+}
+
+/* ── 第十三批：宣言金色强化 + Skills 区背景 ── */
+
+/* 宣言文字：金色渐变 + 强发光 */
+.manifesto-line {
+  background: linear-gradient(180deg, #fef08a 0%, #fbbf24 55%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(251, 191, 36, 0.55)) drop-shadow(0 2px 6px rgba(7, 13, 31, 0.5));
+}
+
+/* Skills 区背景：紫蓝渐变 tint */
+#skills-hub {
+  background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.05) 15%, rgba(56, 189, 248, 0.05) 85%, transparent);
+  padding-bottom: 96px;
+}
+
+#skills-hub .floating-deco {
+  opacity: 0.12;
+}
+
+/* 站点更新 note 卡 hover 动效 */
+.note-card {
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.note-card:hover {
+  transform: translateY(-4px);
 }
