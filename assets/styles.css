@@ -6579,7 +6579,42 @@ body[data-page="home"] .site-header {
 
 /* ── 第二十三批：宣言区按原图重做（上暗下亮 + 无衬线金色发光大字） ── */
 
-/* 宣言主文字：无衬线现代字体 + 金色发光（覆盖旧定义） */
+/* 宣言关键词：原图多色（金主文 + 红/蓝/紫关键词交替） */
+.m-key {
+  background: linear-gradient(92deg, #ef4444 0%, #f97316 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.45));
+  animation: key-glow 2.4s ease-in-out infinite;
+}
+
+.manifesto-line .m-key:nth-of-type(2n) {
+  background: linear-gradient(92deg, #3b82f6 0%, #06b6d4 55%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(59, 130, 246, 0.45));
+}
+
+.manifesto-line .m-key:nth-of-type(3n) {
+  background: linear-gradient(92deg, #a855f7 0%, #d946ef 55%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(168, 85, 247, 0.45));
+}
+
+@keyframes key-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.35)) drop-shadow(0 0 8px rgba(59, 130, 246, 0.3)); }
+  50% { filter: drop-shadow(0 0 18px rgba(239, 68, 68, 0.6)) drop-shadow(0 0 18px rgba(59, 130, 246, 0.5)); }
+}
+
+/* 宣言主文字：无衬线现代字体 + 金色发光（覆盖旧定义）
+   默认 opacity:1 —— 不依赖 JS 显示，防止文字消失 */
 .manifesto-line {
   margin: 0 0 12px;
   font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "HarmonyOS Sans SC", sans-serif;
@@ -6593,8 +6628,8 @@ body[data-page="home"] .site-header {
   -webkit-text-fill-color: transparent;
   color: transparent;
   filter: drop-shadow(0 0 24px rgba(251, 191, 36, 0.6)) drop-shadow(0 3px 5px rgba(7, 13, 31, 0.65));
-  opacity: 0;
-  transform: translateY(18px);
+  opacity: 1;
+  transform: none;
 }
 
 .manifesto-line.is-in {
@@ -6733,4 +6768,227 @@ h1, h2, h3, h4 {
 .aurora {
   will-change: translate;
   transition: translate 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── 第二十五批：动态字母 + 区块 hero 化 + 渐变过渡 + 公众号美化 ── */
+
+/* 动态字母：每字独立金色渐变（支持波浪点亮） */
+.manifesto-line {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: transparent;
+}
+
+.manifesto-line .char {
+  display: inline-block;
+  background: linear-gradient(180deg, #fff3c4 0%, #fcd34d 38%, #f59e0b 78%, #d97706 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.32));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.manifesto-line .char.lit {
+  background: linear-gradient(180deg, #ffffff 0%, #fde68a 40%, #fbbf24 75%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 22px rgba(251, 191, 36, 0.85));
+  transform: translateY(-3px);
+}
+
+/* 区块 hero 化：大标题 + 发光下划线 + 顶部光斑 */
+.section-head {
+  position: relative;
+  padding: 30px 0 14px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  position: relative;
+}
+
+.section-head h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 68px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #64ffda, #7c3aed, #f472b6);
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.55);
+}
+
+/* 各区块顶部光斑（hero 式光效） */
+#road::before,
+#music::before,
+#publications::before,
+#skills-hub::before,
+#wechat::before,
+#notes::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(780px, 92%);
+  height: 230px;
+  background: radial-gradient(closest-side, rgba(124, 58, 237, 0.12), transparent 72%);
+  pointer-events: none;
+}
+
+/* 区块边缘柔和融合（渐变过渡：上下压暗） */
+#road,
+#music,
+#publications,
+#skills-hub,
+#wechat,
+#notes {
+  box-shadow:
+    inset 0 34px 46px -34px rgba(14, 26, 68, 0.28),
+    inset 0 -34px 46px -34px rgba(14, 26, 68, 0.28);
+}
+
+/* 公众号首页区美化 */
+#wechat .list-rows {
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+#wechat .wechat-compact li {
+  transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+#wechat .wechat-compact li:hover {
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.06), transparent);
+  padding-left: 10px;
+}
+
+/* 公众号子页深度美化 */
+body[data-page="wechat"] .figure-panel {
+  border-radius: 22px;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.96), rgba(243, 244, 252, 0.94));
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.07);
+}
+
+body[data-page="wechat"] .figure-panel h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(92deg, #1d4ed8, #7c3aed 60%, #db2777);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+body[data-page="wechat"] .list-rows {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+body[data-page="wechat"] .wechat-compact li {
+  transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+body[data-page="wechat"] .wechat-compact li:hover {
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.06), transparent);
+  padding-left: 10px;
+}
+
+body[data-page="wechat"] .wechat-compact .wc-title {
+  font-weight: 600;
+}
+
+body[data-page="wechat"] .qr-card {
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(240, 244, 255, 0.94));
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-line .char.lit {
+    transform: none;
+  }
+}
+
+/* ── 第二十六批：宣言文字永可见（父级渐变恢复）+ 多色关键词 + 流光动态 ── */
+
+/* 文字父级金色渐变恢复（覆盖批25 background:none）—— 文字始终可见 */
+.manifesto-line {
+  background: linear-gradient(180deg, #fff3c4 0%, #fcd34d 38%, #f59e0b 78%, #d97706 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 24px rgba(251, 191, 36, 0.6)) drop-shadow(0 3px 5px rgba(7, 13, 31, 0.65));
+  position: relative;
+  opacity: 1;
+  transform: none;
+}
+
+/* 动态流光：光带循环扫过文字 */
+.manifesto-line::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.7) 50%, transparent 65%);
+  background-size: 300% 100%;
+  animation: line-shine 5.5s ease-in-out infinite;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes line-shine {
+  0%, 55%, 100% { background-position: 135% 0; }
+  80% { background-position: -35% 0; }
+}
+
+/* 关键词多色（红 / 蓝 / 紫，参照原图） */
+.m-key.m-red {
+  background: linear-gradient(92deg, #ef4444 0%, #f97316 55%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.5));
+}
+
+.m-key.m-blue {
+  background: linear-gradient(92deg, #3b82f6 0%, #06b6d4 55%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(59, 130, 246, 0.5));
+}
+
+.m-key.m-purple {
+  background: linear-gradient(92deg, #a855f7 0%, #d946ef 55%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(168, 85, 247, 0.5));
+}
+
+/* 关键词呼吸发光 */
+.manifesto-line .m-key {
+  animation: key-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes key-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.35)) drop-shadow(0 0 8px rgba(59, 130, 246, 0.3)); }
+  50% { filter: drop-shadow(0 0 18px rgba(239, 68, 68, 0.65)) drop-shadow(0 0 18px rgba(59, 130, 246, 0.5)); }
 }

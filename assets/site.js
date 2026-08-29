@@ -1867,26 +1867,14 @@ function initCountUp() {
 
 initCountUp()
 
-/* ───────────── 宣言逐行浮现（打字机式逐字） ───────────── */
+/* ───────────── 宣言逐行浮现（文字始终可见，关键词高亮 + 动态流光） ───────────── */
 
 function initManifesto() {
   const section = document.querySelector(".manifesto")
   const lines = Array.from(document.querySelectorAll(".manifesto-line"))
   if (!lines.length) return
 
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  if (reduced) {
-    lines.forEach((l) => l.classList.add("is-in"))
-    return
-  }
-
-  // 保存纯文本并清空（打字机逐字输出）
-  const texts = lines.map((l) => l.textContent)
-  lines.forEach((l) => {
-    l.textContent = ""
-    l.classList.add("is-in")
-  })
-
+  // 文字默认就在 HTML 里（静态可见）；此处仅做关键词高亮包装 + 渐入动画
   const KEYWORDS = ["社会幸福", "大胆探索", "幸福", "恩赐"]
 
   function highlight(text) {
@@ -1900,57 +1888,28 @@ function initManifesto() {
     return t.replace(/\u0000([^\u0001]+)\u0001/g, '<span class="m-key">$1</span>')
   }
 
-  let li = 0
-  let ci = 0
-  let started = false
-
-  function typeNext() {
-    if (li >= lines.length) {
-      finish()
-      return
+  // 关键词高亮（HTML 已有 span，仅兜底重新包装）
+  lines.forEach((l, i) => {
+    if (!l.querySelector(".m-key")) {
+      l.innerHTML = highlight(l.textContent)
     }
-    const line = lines[li]
-    const text = texts[li]
-    line.classList.add("typing")
-    if (ci < text.length) {
-      line.textContent += text[ci]
-      ci += 1
-      setTimeout(typeNext, 46 + Math.random() * 36)
-    } else {
-      line.classList.remove("typing")
-      li += 1
-      ci = 0
-      setTimeout(typeNext, 240)
-    }
-  }
+  })
 
-  function finish() {
-    lines.forEach((l, i) => {
-      l.innerHTML = highlight(texts[i])
-    })
-  }
-
-  function start() {
-    if (started) return
-    started = true
-    typeNext()
-  }
-
+  // 渐入动画（IO 触发，防 JS 挂掉时文字仍可见——默认 opacity:1）
   const io = new IntersectionObserver(
     (entries) => {
-      if (entries.some((e) => e.isIntersecting)) start()
+      if (entries.some((e) => e.isIntersecting)) {
+        lines.forEach((l) => l.classList.add("is-in"))
+        io.disconnect()
+      }
     },
-    { threshold: 0.4 },
+    { threshold: 0.3 },
   )
   io.observe(section)
-  // 兜底：3s 内未触发则直接完成
+  // 兜底：1.2s 后强制渐入完成
   setTimeout(() => {
-    if (!started) {
-      lines.forEach((l, i) => {
-        l.innerHTML = highlight(texts[i])
-      })
-    }
-  }, 3200)
+    lines.forEach((l) => l.classList.add("is-in"))
+  }, 1200)
 }
 
 initManifesto()
