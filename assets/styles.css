@@ -8907,3 +8907,87 @@ p, li {
     transform: none;
   }
 }
+
+/* ── 第四十批：炫酷增强（Hero 3D + 按钮流光 + 卡片呼吸光环） ── */
+
+/* hero-panel 3D 视差过渡 */
+.hero-panel {
+  transition: transform 0.18s ease-out, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.hero-copy {
+  transition: translate 0.18s ease-out;
+  will-change: translate;
+}
+
+/* 按钮流光：hover 光带扫过 */
+.hero-actions .btn,
+.btn-primary,
+.hero-actions a[class*="btn"] {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-actions .btn::after,
+.btn-primary::after,
+.hero-actions a[class*="btn"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-actions .btn:hover::after,
+.btn-primary:hover::after,
+.hero-actions a[class*="btn"]:hover::after {
+  left: 115%;
+}
+
+/* 卡片彩色呼吸光环（hover） */
+.pub-row:hover,
+.feature-tile:hover {
+  box-shadow:
+    0 0 0 1px rgba(100, 255, 218, 0.22),
+    0 0 34px rgba(124, 58, 237, 0.16),
+    0 0 64px rgba(56, 189, 248, 0.08),
+    0 14px 40px rgba(15, 23, 42, 0.14);
+  animation: card-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes card-breathe {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(100, 255, 218, 0.22),
+      0 0 30px rgba(124, 58, 237, 0.14),
+      0 0 54px rgba(56, 189, 248, 0.07),
+      0 14px 40px rgba(15, 23, 42, 0.14);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(100, 255, 218, 0.34),
+      0 0 46px rgba(124, 58, 237, 0.24),
+      0 0 86px rgba(56, 189, 248, 0.14),
+      0 14px 40px rgba(15, 23, 42, 0.14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-panel,
+  .hero-copy {
+    transition: none;
+  }
+
+  .pub-row:hover,
+  .feature-tile:hover {
+    animation: none;
+  }
+}

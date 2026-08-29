@@ -519,6 +519,46 @@ function initCustomCursor() {
 
 initCustomCursor()
 
+/* ───────────── Hero 3D 微视差（面板跟随鼠标倾斜 + 文案位移） ───────────── */
+
+function initHero3D() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (window.matchMedia("(hover: none)").matches) return
+  const panel = document.querySelector(".hero-panel")
+  const copy = document.querySelector(".hero-copy")
+  if (!panel && !copy) return
+  let raf = null
+  window.addEventListener(
+    "mousemove",
+    (e) => {
+      if (!raf) {
+        raf = requestAnimationFrame(() => {
+          raf = null
+          const nx = e.clientX / window.innerWidth - 0.5
+          const ny = e.clientY / window.innerHeight - 0.5
+          if (panel) {
+            panel.style.transform = `perspective(900px) rotateY(${(nx * 5).toFixed(2)}deg) rotateX(${(-ny * 5).toFixed(2)}deg) translateZ(8px)`
+          }
+          if (copy) {
+            copy.style.translate = `${(nx * 8).toFixed(1)}px ${(ny * 5).toFixed(1)}px`
+          }
+        })
+      }
+    },
+    { passive: true },
+  )
+  window.addEventListener(
+    "mouseleave",
+    () => {
+      if (panel) panel.style.transform = ""
+      if (copy) copy.style.translate = ""
+    },
+    { passive: true },
+  )
+}
+
+initHero3D()
+
 /* ───────────── Hero 关键词轮换（打字机换词循环） ───────────── */
 
 function initTitleRotator() {
