@@ -933,6 +933,18 @@ function initThemeToggle() {
   })
   header.appendChild(btn)
 
+  // 未手动选择时：跟随系统暗色变化
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    const manual = (() => {
+      try {
+        return localStorage.getItem("theme")
+      } catch (err) {
+        return null
+      }
+    })()
+    if (!manual) apply(e.matches ? "dark" : "light")
+  })
+
   // giscus 评论区主题跟随（observer 只建一次）
   const giscusObserver = new MutationObserver(() => {
     syncGiscus(document.documentElement.dataset.theme)
@@ -1027,6 +1039,73 @@ function initRelatedPosts() {
 }
 
 initRelatedPosts()
+
+/* ───────────── 文章搜索高亮（?q= 关键词 + 正文高亮） ───────────── */
+
+function initArticleHighlight() {
+  const article = document.querySelector(".article-content")
+  if (!article) return
+  const params = new URLSearchParams(location.search)
+  const q = (params.get("q") || "").trim()
+  if (!q) return
+  const walker = document.createTreeWalker(article, NodeFilter.SHOW_TEXT)
+  const nodes = []
+  while (walker.nextNode()) nodes.push(walker.currentNode)
+  let first = null
+  nodes.forEach((node) => {
+    if (!node.textContent.toLowerCase().includes(q.toLowerCase())) return
+    const frag = document.createDocumentFragment()
+    const lower = node.textContent.toLowerCase()
+    const needle = q.toLowerCase()
+    let last = 0
+    let idx = lower.indexOf(needle)
+    while (idx !== -1) {
+      frag.appendChild(document.createTextNode(node.textContent.slice(last, idx)))
+      const mark = document.createElement("mark")
+      mark.className = "search-hit"
+      mark.textContent = node.textContent.slice(idx, idx + q.length)
+      if (!first) first = mark
+      frag.appendChild(mark)
+      last = idx + q.length
+      idx = lower.indexOf(needle, last)
+    }
+    frag.appendChild(document.createTextNode(node.textContent.slice(last)))
+    node.replaceWith(frag)
+  })
+  if (first) {
+    first.scrollIntoView({ behavior: "smooth", block: "center" })
+    first.classList.add("is-flash")
+  }
+}
+
+initArticleHighlight()
+
+/* ───────────── 评论区引导横幅 ───────────── */
+
+function initCommentsCta() {
+  const giscus = document.querySelector(".giscus")
+  const giscusWrap = document.querySelector(".giscus-wrap")
+  if (!giscus || !giscusWrap) return
+  if (document.querySelector(".comments-cta")) return
+  const cta = document.createElement("div")
+  cta.className = "comments-cta"
+  cta.innerHTML =
+    '<span class="comments-cta-emoji">💬</span>' +
+    '<span class="comments-cta-text">有想法？欢迎留言交流，每条留言都会存档在 GitHub Discussions</span>' +
+    '<button type="button" class="comments-cta-btn">写留言</button>'
+  const head = giscusWrap.querySelector(".giscus-section-head")
+  if (head) head.after(cta)
+  else giscusWrap.insertBefore(cta, giscus)
+  cta.querySelector(".comments-cta-btn").addEventListener("click", () => {
+    giscus.scrollIntoView({ behavior: "smooth", block: "start" })
+    setTimeout(() => {
+      const input = giscus.querySelector("textarea, input")
+      if (input) input.focus()
+    }, 900)
+  })
+}
+
+initCommentsCta()
 
 initHeaderScroll()
 initStarfield()

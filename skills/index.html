@@ -6,7 +6,15 @@
     <meta http-equiv="refresh" content="0; url=/skills.html">
     <meta name="robots" content="noindex">
     <title>Skills · sushuqiong</title>
-  </head>
+  <script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+</head>
   <body>
     <script>
       location.replace("/skills.html" + location.search + location.hash)

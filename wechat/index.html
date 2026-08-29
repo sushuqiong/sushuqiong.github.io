@@ -6,7 +6,15 @@
     <meta http-equiv="refresh" content="0; url=/wechat.html">
     <meta name="robots" content="noindex">
     <title>公众号精选 · sushuqiong</title>
-  </head>
+  <script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+</head>
   <body>
     <script>
       location.replace("/wechat.html" + location.search + location.hash)

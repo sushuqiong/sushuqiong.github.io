@@ -7,8 +7,16 @@
     <meta name="theme-color" content="#0a1226">
     <title>sushuqiong · 医学研究，代码与 AI 的公开工作台</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/assets/styles.css?v39">
-  </head>
+    <link rel="stylesheet" href="/assets/styles.css?v40">
+  <script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+</head>
   <body data-page="home">
     <a class="skip-link" href="#content">跳到内容</a>
     <div data-shell></div>
@@ -434,6 +442,6 @@
       </section>
     </main>
     <div data-footer></div>
-    <script type="module" src="/assets/site.js?v39"></script>
+    <script type="module" src="/assets/site.js?v40"></script>
   </body>
 </html>
