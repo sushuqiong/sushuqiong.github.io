@@ -661,6 +661,7 @@ function initThemeToggle() {
     document.documentElement.dataset.theme = theme
     btn.textContent = theme === "dark" ? "☀️" : "🌙"
     btn.title = theme === "dark" ? "切换到亮色" : "切换到暗色"
+    syncGiscus(theme)
   }
   apply(saved === "dark" ? "dark" : "light")
   btn.addEventListener("click", () => {
@@ -673,6 +674,26 @@ function initThemeToggle() {
     }
   })
   header.appendChild(btn)
+
+  // giscus 评论区主题跟随（observer 只建一次）
+  const giscusObserver = new MutationObserver(() => {
+    syncGiscus(document.documentElement.dataset.theme)
+  })
+  giscusObserver.observe(document.body, { childList: true, subtree: true })
+
+  function syncGiscus(theme) {
+    const themeName = theme === "dark" ? "dark" : "light"
+    document.querySelectorAll("iframe.giscus-frame").forEach((frame) => {
+      try {
+        frame.contentWindow.postMessage(
+          { giscus: { setConfig: { theme: themeName } } },
+          "https://giscus.app",
+        )
+      } catch (e) {
+        /* ignore */
+      }
+    })
+  }
 }
 
 initThemeToggle()

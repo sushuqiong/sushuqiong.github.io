@@ -7726,3 +7726,217 @@ html[data-theme="dark"] .react-btn:hover {
     animation: none;
   }
 }
+
+/* ── 第三十一批：音乐区 3×2 + giscus 深度集成 + 暗色打磨 ── */
+
+/* 音乐区 3×2 布局（6 张卡整齐两行） */
+.music-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.music-card {
+  padding: 20px;
+}
+
+.music-cover {
+  width: 58px;
+  height: 58px;
+}
+
+/* giscus 评论区卡片化 */
+.giscus-wrap {
+  position: relative;
+  margin-top: 20px;
+}
+
+.giscus-wrap .container {
+  padding: 34px 34px 40px;
+  border-radius: 26px;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.9), rgba(243, 244, 252, 0.86));
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  box-shadow: 0 14px 44px rgba(15, 23, 42, 0.07);
+}
+
+.giscus {
+  margin-top: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.giscus iframe {
+  border: 0;
+  width: 100%;
+}
+
+/* giscus 暗色 */
+html[data-theme="dark"] .giscus-wrap .container {
+  background: linear-gradient(150deg, rgba(20, 32, 70, 0.92), rgba(16, 27, 69, 0.9));
+  border-color: rgba(100, 255, 218, 0.12);
+}
+
+html[data-theme="dark"] .giscus {
+  background: #0d1730;
+}
+
+/* ── 暗色主题打磨细节 ── */
+
+/* 音乐区卡片细节 */
+html[data-theme="dark"] .music-cover {
+  background: radial-gradient(circle at 35% 30%, #2a2a38, #0c0c12 70%) !important;
+}
+
+html[data-theme="dark"] .music-play {
+  background: rgba(100, 255, 218, 0.1);
+  border-color: rgba(100, 255, 218, 0.3);
+}
+
+/* 关于页/子页卡片 */
+html[data-theme="dark"] body[data-page] .figure-panel,
+html[data-theme="dark"] body[data-page] .list-rows,
+html[data-theme="dark"] body[data-page] .meta-list,
+html[data-theme="dark"] body[data-page] .timeline-item,
+html[data-theme="dark"] body[data-page] .qr-card,
+html[data-theme="dark"] body[data-page] .track-summary {
+  background: rgba(22, 34, 74, 0.92);
+  border-color: rgba(100, 255, 218, 0.12);
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] body[data-page] .figure-panel h2,
+html[data-theme="dark"] body[data-page] .figure-panel h3,
+html[data-theme="dark"] body[data-page] .meta-key,
+html[data-theme="dark"] body[data-page] .timeline-item h3,
+html[data-theme="dark"] body[data-page] .qr-card p {
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] body[data-page] .meta-value,
+html[data-theme="dark"] body[data-page] .timeline-item p,
+html[data-theme="dark"] body[data-page] .qr-card .qr-note {
+  color: rgba(226, 232, 255, 0.68);
+}
+
+/* 文章内容细节 */
+html[data-theme="dark"] .article-content blockquote {
+  background: linear-gradient(150deg, rgba(100, 255, 218, 0.06), rgba(124, 58, 237, 0.08));
+  color: rgba(226, 232, 255, 0.88);
+  border-image: linear-gradient(180deg, #64ffda, #a78bfa, #f472b6) 1;
+}
+
+html[data-theme="dark"] .article-content blockquote::before {
+  color: rgba(100, 255, 218, 0.3);
+}
+
+html[data-theme="dark"] .article-content code {
+  background: rgba(100, 255, 218, 0.1);
+  color: #a7f3d0;
+}
+
+html[data-theme="dark"] .article-content pre {
+  background: #0a1228;
+  border-color: rgba(100, 255, 218, 0.15);
+}
+
+html[data-theme="dark"] .article-content img {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .article-content ul li::marker {
+  color: #a78bfa;
+}
+
+html[data-theme="dark"] .article-content ol li::marker {
+  color: #64ffda;
+}
+
+/* 导航链接 */
+html[data-theme="dark"] .nav a {
+  color: rgba(226, 232, 255, 0.78);
+}
+
+html[data-theme="dark"] .nav a:hover {
+  color: #64ffda;
+  background: rgba(100, 255, 218, 0.08);
+}
+
+html[data-theme="dark"] .nav a[aria-current="page"] {
+  color: #64ffda;
+  background: rgba(100, 255, 218, 0.1);
+}
+
+/* 路线/技能细节 */
+html[data-theme="dark"] .lane-mini strong {
+  color: #e6f1ff;
+}
+
+html[data-theme="dark"] .lane-mini span {
+  color: rgba(226, 232, 255, 0.6);
+}
+
+html[data-theme="dark"] .track-stack,
+html[data-theme="dark"] .track-overview {
+  color: rgba(226, 232, 255, 0.8);
+}
+
+html[data-theme="dark"] .track-summary-kicker {
+  color: #64ffda;
+}
+
+/* hero 面板暗色 */
+html[data-theme="dark"] .hero-panel {
+  background: rgba(16, 27, 69, 0.72);
+  border-color: rgba(100, 255, 218, 0.14);
+}
+
+html[data-theme="dark"] .hero-panel .meta-key {
+  color: rgba(226, 232, 255, 0.6);
+}
+
+html[data-theme="dark"] .hero-panel .meta-value {
+  color: #e6f1ff;
+}
+
+/* 分隔/边框 */
+html[data-theme="dark"] .section + .section::before {
+  background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.18), transparent);
+}
+
+html[data-theme="dark"] .floating-deco {
+  opacity: 0.2;
+}
+
+/* 公众号区暗色细节 */
+html[data-theme="dark"] #wechat .wc-title {
+  color: rgba(226, 232, 255, 0.9);
+}
+
+html[data-theme="dark"] #wechat .wc-date {
+  color: rgba(226, 232, 255, 0.45);
+}
+
+/* 表格暗色 */
+html[data-theme="dark"] table,
+html[data-theme="dark"] .table-wrap {
+  color: rgba(226, 232, 255, 0.85);
+}
+
+html[data-theme="dark"] th {
+  color: #e6f1ff;
+}
+
+@media (max-width: 960px) {
+  .music-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .music-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .giscus-wrap .container {
+    padding: 22px 18px 26px;
+  }
+}
