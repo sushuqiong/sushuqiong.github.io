@@ -1652,6 +1652,9 @@ function renderRooster() {
   // 连点 3 次触发舞蹈模式
   let clickCount = 0
   let danceTimer = null
+  // 摘墨镜彩蛋计数
+  let glassesCount = 0
+  let glassesTimer = null
 
   function dance() {
     rooster.classList.add("is-dancing")
@@ -1671,6 +1674,9 @@ function renderRooster() {
       clickCount = 0
       dance()
     }
+    // 摘墨镜彩蛋：每 5 次点击触发
+    glassesCount = (glassesCount + 1) % 5
+    if (glassesCount === 0) removeGlasses()
     // DJ 模式：戴上耳机并触发音乐播放（音乐播放器监听 dj-play）
     rooster.classList.remove("is-dj")
     void rooster.offsetWidth
@@ -1680,6 +1686,18 @@ function renderRooster() {
     bubble.textContent = "🎧 开播！"
     bubble.classList.add("is-show")
     setTimeout(() => bubble.classList.remove("is-show"), 1800)
+  }
+
+  // 摘墨镜彩蛋：墨镜掉落、亮眼发光，几秒后戴回
+  function removeGlasses() {
+    rooster.classList.add("is-no-glasses")
+    bubble.textContent = "😎 墨镜摘了，看看我的眼睛！"
+    bubble.classList.add("is-show")
+    clearTimeout(glassesTimer)
+    glassesTimer = setTimeout(() => {
+      rooster.classList.remove("is-no-glasses")
+      bubble.classList.remove("is-show")
+    }, 4200)
   }
 
   rooster.addEventListener("click", interact)
