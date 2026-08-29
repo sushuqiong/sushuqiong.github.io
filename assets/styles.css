@@ -9944,3 +9944,103 @@ html[data-theme="dark"] .site-skill-card:hover {
 .article-content pre:hover .code-lang-badge {
   opacity: 1;
 }
+
+/* ── 第四十八批：修复子页 hero 差异化风景背景（被 transparent 覆盖） ── */
+
+body[data-page="skills"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/milkyway.webp") center 22% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="wechat"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/city-sunrise.webp") center 26% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="archives"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/mountains.webp") center 30% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="projects"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/forest.webp") center 28% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="posts"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/lake.webp") center 28% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="pub"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/nebula.webp") center 24% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="road"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/sunrise.webp") center 30% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="about"] .article {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 50, 0.82) 0%, rgba(13, 23, 48, 0.6) 32%, rgba(233, 240, 251, 0.92) 68%, #eef1fa 100%),
+    url("/assets/backgrounds/lake.webp") center 26% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+/* 子页 hero 文字在深色顶部保持浅色 */
+body[data-page] .article-header .eyebrow {
+  color: #64ffda;
+}
+
+body[data-page] .article-header h1 {
+  color: #f8fafc;
+  text-shadow: 0 2px 10px rgba(7, 13, 31, 0.45);
+}
+
+body[data-page] .article-lead {
+  color: rgba(226, 232, 255, 0.88);
+}
+
+/* 暗色主题：子页 hero 顶部遮罩加深 */
+html[data-theme="dark"] body[data-page] .article {
+  background:
+    linear-gradient(180deg, rgba(7, 13, 31, 0.88) 0%, rgba(9, 16, 38, 0.7) 36%, rgba(13, 23, 48, 0.96) 100%),
+    url("/assets/backgrounds/milkyway.webp") center 22% / cover no-repeat;
+}
+
+/* skill 页：深空化强化（星云 + 深蓝遮罩 + 内容区亮化） */
+body[data-page="skill"] .article {
+  background:
+    linear-gradient(180deg, rgba(7, 13, 31, 0.86) 0%, rgba(13, 23, 48, 0.66) 34%, rgba(233, 240, 251, 0.93) 70%, #eef1fa 100%),
+    url("/assets/backgrounds/nebula.webp") center 20% / cover no-repeat;
+  color: #e6f1ff;
+}
+
+body[data-page="skill"] .article-header h1 {
+  color: #f8fafc;
+  text-shadow: 0 0 26px rgba(100, 255, 218, 0.4), 0 2px 10px rgba(7, 13, 31, 0.5);
+}
+
+body[data-page="skill"] .article-header .eyebrow {
+  color: #64ffda;
+}
+
+body[data-page="skill"] .hero-copy h1::after {
+  display: block;
+}
