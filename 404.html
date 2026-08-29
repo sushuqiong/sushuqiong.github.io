@@ -6,60 +6,24 @@
     <meta name="theme-color" content="#2563eb">
     <title>页面未找到 · sushuqiong</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/assets/styles.css?v18">
+    <link rel="stylesheet" href="/assets/styles.css?v19">
   </head>
-  <body data-page="home">
+    <body data-page="404">
     <a class="skip-link" href="#content">跳到内容</a>
     <canvas class="hero-canvas" id="starfield" aria-hidden="true"></canvas>
-
     <div data-shell></div>
     <main id="content" class="page">
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">404</p>
-            <h1>页面没找到</h1>
-            <p>可能是链接写错了，或者这个页面还没有创建。你可以先回到首页，继续看文章、项目或者关于页。</p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="/">回到首页</a>
-              <a class="button" href="/posts/">看看文章</a>
-            </div>
-          </div>
-          <aside class="hero-panel">
-            <p class="eyebrow">导航</p>
-            <ul class="meta-list">
-              <li class="meta-item">
-                <span class="meta-key">首页</span>
-                <span class="meta-value"><a href="/">返回站点入口</a></span>
-              </li>
-              <li class="meta-item">
-                <span class="meta-key">Skills</span>
-                <span class="meta-value"><a href="/skills.html">查看公开 skills</a></span>
-              </li>
-              <li class="meta-item">
-                <span class="meta-key">公众号</span>
-                <span class="meta-value"><a href="/wechat.html">查看精选推文</a></span>
-              </li>
-              <li class="meta-item">
-                <span class="meta-key">关于</span>
-                <span class="meta-value"><a href="/about/">查看公开边界</a></span>
-              </li>
-            </ul>
-          </aside>
-        </div>
+      <section class="error-page">
+        <div class="error-stars" aria-hidden="true"></div>
+        <div class="error-rooster" aria-hidden="true">🐔</div>
+        <h1>404 · 页面走丢啦</h1>
+        <p>这只树鸡翻遍了整个深空实验室，也没找到这个页面。</p>
+        <p>它可能是被路过的飞船带走了，或者从来没有存在过。</p>
+        <p>别急，回首页看看吧——好内容都在那儿等着你。</p>
+        <a class="error-btn" href="/">🚀 返回首页</a>
+        <p style="margin-top: 34px; font-size: 13px; opacity: 0.6;">咕咕咕……（翻译：这只鸡表示很抱歉）</p>
       </section>
     </main>
-    <div data-footer></div>
-    <script>
-      const redirects = {
-        "/skills/": "/skills.html",
-        "/skills/index.html": "/skills.html",
-        "/wechat/": "/wechat.html",
-        "/wechat/index.html": "/wechat.html",
-      }
-      const target = redirects[location.pathname]
-      if (target) location.replace(target + location.search + location.hash)
-    </script>
-    <script type="module" src="/assets/site.js?v18"></script>
+    <script src="/assets/site.js?v19"></script>
   </body>
 </html>

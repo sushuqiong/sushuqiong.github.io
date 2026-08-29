@@ -812,6 +812,14 @@ function renderRooster() {
         <!-- 金色羽毛点缀 -->
         <path d="M60 40 Q66 36 72 40 Q66 42 60 40 Z" fill="#fbbf24" opacity="0.6"/>
       </g>
+      <!-- DJ 耳机 -->
+      <g class="dj-headphones">
+        <path d="M57 30 Q55 16 66 14 Q77 16 75 30 L75 34 L70 34 L70 27 Q70 20 66 20 Q62 20 62 27 L62 34 L57 34 Z" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
+        <circle cx="57" cy="34" r="4.5" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
+        <circle cx="75" cy="34" r="4.5" fill="#7c3aed" stroke="#5b21b6" stroke-width="1"/>
+        <circle cx="57" cy="34" r="1.8" fill="#fbbf24"/>
+        <circle cx="75" cy="34" r="1.8" fill="#fbbf24"/>
+      </g>
       <ellipse cx="48" cy="89" rx="22" ry="3" fill="rgba(7, 13, 31, 0.16)"/>
     </svg>
   `
@@ -853,6 +861,15 @@ function renderRooster() {
       clickCount = 0
       dance()
     }
+    // DJ 模式：戴上耳机并触发音乐播放（音乐播放器监听 dj-play）
+    rooster.classList.remove("is-dj")
+    void rooster.offsetWidth
+    rooster.classList.add("is-dj")
+    setTimeout(() => rooster.classList.remove("is-dj"), 3600)
+    document.dispatchEvent(new CustomEvent("dj-play"))
+    bubble.textContent = "🎧 开播！"
+    bubble.classList.add("is-show")
+    setTimeout(() => bubble.classList.remove("is-show"), 1800)
   }
 
   rooster.addEventListener("click", interact)
@@ -1712,9 +1729,62 @@ function initMusicPlayer() {
   })
 
   lyricsBtn.addEventListener("click", () => (lyricsOpen ? closeLyrics() : openLyrics()))
+
+  // 公鸡 DJ：点击公鸡播放音乐
+  document.addEventListener("dj-play", () => {
+    dock.classList.add("is-visible")
+    if (!audio.src || audio.paused || !audio.currentTime) {
+      loadSong(current, true)
+    } else {
+      audio.play().catch(() => {})
+      setPlaying(true)
+    }
+    // 音乐区卡片滚动到视野
+    const musicSection = document.querySelector("#music")
+    if (musicSection) musicSection.scrollIntoView({ behavior: "smooth", block: "center" })
+  })
 }
 
 initMusicPlayer()
+
+/* ───────────── 数字滚动动画 ───────────── */
+
+function initCountUp() {
+  const items = document.querySelectorAll("[data-count]")
+  if (!items.length) return
+  const fmt = (el, val) => {
+    const decimals = parseInt(el.dataset.decimals || "0", 10)
+    const suffix = el.dataset.suffix || ""
+    return val.toFixed(decimals) + suffix
+  }
+  const run = (el) => {
+    const target = parseFloat(el.dataset.count)
+    const dur = 1100
+    const start = performance.now()
+    function tick(now) {
+      const t = Math.min((now - start) / dur, 1)
+      const ease = 1 - Math.pow(1 - t, 3)
+      el.textContent = fmt(el, target * ease)
+      if (t < 1) requestAnimationFrame(tick)
+      else el.textContent = fmt(el, target)
+    }
+    requestAnimationFrame(tick)
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          run(entry.target)
+          io.unobserve(entry.target)
+        }
+      }
+    },
+    { threshold: 0.5 },
+  )
+  items.forEach((el) => io.observe(el))
+}
+
+initCountUp()
 
 /* ───────────── 宣言逐行浮现 ───────────── */
 
