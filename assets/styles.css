@@ -8207,3 +8207,156 @@ html[data-theme="dark"] .toc-side a.is-active {
     display: none;
   }
 }
+
+/* ── 第三十五批：黎明宣言背景 + 装饰放大 + 区块渐变过渡 + reveal 修复 ── */
+
+/* 宣言区：黎明背景（太阳即将升起的水面码头，蓝→橙渐变） */
+.manifesto {
+  background:
+    linear-gradient(180deg,
+      rgba(10, 20, 50, 0.8) 0%,
+      rgba(20, 35, 80, 0.55) 22%,
+      rgba(70, 55, 90, 0.28) 42%,
+      rgba(160, 100, 60, 0.12) 62%,
+      rgba(240, 170, 100, 0.08) 80%),
+    url("/assets/backgrounds/dawn.webp") center 42% / cover no-repeat,
+    linear-gradient(180deg, #0b1638 0%, #22305f 38%, #a45c34 78%, #e8a45c 100%);
+}
+
+/* 宣言装饰放大加深（保证可见） */
+.manifesto-planet {
+  width: 110px;
+  height: 110px;
+  left: 7%;
+  top: 22%;
+}
+
+.manifesto-planet circle {
+  fill: rgba(139, 92, 246, 0.65) !important;
+}
+
+.manifesto-ship {
+  width: 120px;
+  height: 44px;
+  left: 24%;
+  top: 9%;
+}
+
+.manifesto-ship ellipse {
+  fill: rgba(30, 58, 138, 0.9) !important;
+}
+
+.manifesto-ship path {
+  fill: rgba(30, 58, 138, 0.75) !important;
+}
+
+.manifesto-ship circle {
+  r: 3;
+}
+
+.manifesto-bird {
+  width: 52px;
+  height: 24px;
+}
+
+.manifesto-bird path {
+  stroke-width: 2.2;
+}
+
+/* 灯火放大变亮 */
+.manifesto-skyline .flicker {
+  r: 2.4;
+}
+
+.manifesto-skyline g circle {
+  r: 2.4;
+}
+
+/* 人群剪影放大加深（SVG 内 circle r 通过 CSS 不支持，改用整体微放大 + 提高 SVG 不透明度） */
+.manifesto-skyline {
+  opacity: 0.95;
+}
+
+/* 区块渐变过渡带（柔和融合） */
+/* hero → road：road 顶部从深空蓝渐变到浅色 */
+#road::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 110px;
+  background: linear-gradient(180deg, rgba(16, 27, 69, 0.55), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* road → 宣言：宣言顶部从浅色渐变到深色 */
+.manifesto::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(238, 240, 251, 0.9), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 宣言 → 音乐：音乐区顶部从黎明橙渐变到浅色 */
+#music::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(232, 164, 92, 0.5), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 更新区 → 页脚：notes 底部渐变到页脚深蓝 */
+#notes::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 130px;
+  background: linear-gradient(180deg, transparent, rgba(10, 18, 38, 0.72));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* reveal 修复：打印 + 减弱动效时强制显示所有区块（防截图/异常场景空白） */
+@media print {
+  .reveal,
+  .reveal .road-step,
+  .reveal .pub-row,
+  .reveal .feature-tile,
+  .reveal .music-card,
+  .reveal .note-card,
+  .reveal .lane-mini,
+  .manifesto-line {
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal .road-step,
+  .reveal .pub-row,
+  .reveal .feature-tile,
+  .reveal .music-card,
+  .reveal .note-card,
+  .reveal .lane-mini,
+  .manifesto-line {
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+  }
+}
