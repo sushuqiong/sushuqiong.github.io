@@ -4177,24 +4177,24 @@ body[data-page="about"] .article-lead {
   100% { transform: rotate(360deg) scale(1); }
 }
 
-/* ── 个人宣言区 ── */
+/* ── 个人宣言区：参照原图（明亮日出天空 + 地标 + 科幻元素） ── */
 .manifesto {
   position: relative;
   overflow: hidden;
   padding: 110px 0 120px;
   color: #fef3c7;
   background:
-    radial-gradient(900px 520px at 78% 18%, rgba(251, 191, 36, 0.16), transparent 62%),
-    radial-gradient(800px 460px at 18% 82%, rgba(168, 85, 247, 0.18), transparent 62%),
-    linear-gradient(180deg, #101b45 0%, #1e2a63 45%, #3b3a8c 100%);
+    url("/assets/backgrounds/sunrise.jpg") center 35% / cover no-repeat,
+    linear-gradient(180deg, #4a7bd8 0%, #7ea8e8 35%, #f0b85c 72%, #f7a64a 100%);
+  box-shadow: 0 20px 60px rgba(10, 18, 38, 0.25);
 }
 
-/* 渐变天空（蓝→橙日出） */
+/* 渐变天空（蓝→橙日出，保持图可见） */
 .manifesto::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(16, 27, 69, 0) 30%, rgba(251, 146, 60, 0.18) 68%, rgba(251, 191, 36, 0.24) 100%);
+  background: linear-gradient(180deg, rgba(74, 123, 216, 0.25) 0%, rgba(126, 168, 232, 0.12) 40%, rgba(240, 184, 92, 0.1) 100%);
   pointer-events: none;
 }
 
@@ -5491,4 +5491,320 @@ body[data-page] .wechat-more-note {
 /* 首页公众号深色列表统一 */
 #wechat .wechat-compact .wc-title {
   color: rgba(230, 241, 255, 0.88);
+}
+
+/* ── 第十七批：内容区恢复明亮 + 风景图横幅（方向修正） ── */
+
+/* 首页 main：恢复明亮贯穿渐变 */
+main#content.page {
+  background:
+    radial-gradient(1000px 560px at 85% 10%, rgba(124, 58, 237, 0.09), transparent 62%),
+    radial-gradient(900px 520px at 10% 40%, rgba(56, 189, 248, 0.08), transparent 62%),
+    radial-gradient(800px 460px at 80% 62%, rgba(244, 114, 182, 0.06), transparent 62%),
+    linear-gradient(180deg,
+      #eef0fb 0%,
+      #e9f1f0 14%,
+      #e3e8fa 30%,
+      #e2e0f8 46%,
+      #eae2ec 62%,
+      #f7ebf0 80%,
+      #eef0fa 100%);
+  color: var(--text);
+}
+
+/* 浅色 section 恢复明亮（覆盖深色化） */
+#road,
+#music,
+#publications,
+#skills-hub,
+#notes {
+  background: transparent;
+}
+
+/* 首页 section-head 文字恢复深色（覆盖浅色化） */
+#road .section-head h2,
+#music .section-head h2,
+#publications .section-head h2,
+#skills-hub .section-head h2,
+#notes .section-head h2 {
+  background: var(--grad-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+#road .section-head p,
+#music .section-head p,
+#publications .section-head p,
+#skills-hub .section-head p,
+#notes .section-head p {
+  color: var(--muted);
+}
+
+#road .eyebrow,
+#music .eyebrow,
+#publications .eyebrow,
+#skills-hub .eyebrow,
+#notes .eyebrow {
+  color: var(--accent);
+  text-shadow: none;
+}
+
+/* 卡片恢复浅色（覆盖深色强化） */
+.pub-row,
+.road-step,
+.feature-tile,
+.note-card,
+.track-panel,
+.row,
+.post-card,
+.project-card,
+.music-card {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 公众号区恢复明亮 */
+#wechat {
+  background: transparent;
+  color: var(--text);
+  box-shadow: none;
+}
+
+#wechat .section-head h2 {
+  background: var(--grad-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+#wechat .section-head p,
+#wechat .wechat-more-note {
+  color: var(--muted);
+}
+
+#wechat .wc-title {
+  color: var(--text);
+}
+
+#wechat .wc-date {
+  color: var(--subtle);
+}
+
+#wechat .list-rows {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 8px 20px;
+}
+
+/* 子页：恢复明亮内容区（覆盖深色化） */
+body[data-page="wechat"] .article,
+body[data-page="archives"] .article,
+body[data-page="projects"] .article,
+body[data-page="posts"] .article,
+body[data-page="pub"] .article,
+body[data-page="road"] .article,
+body[data-page="skills"] .article,
+body[data-page="about"] .article {
+  background: transparent;
+  color: var(--text);
+}
+
+body[data-page] .article-content p,
+body[data-page] .article-content li,
+body[data-page] .article-lead {
+  color: var(--muted);
+}
+
+body[data-page] .article-content h2,
+body[data-page] .article-content h3 {
+  color: var(--text);
+}
+
+body[data-page] .article-content h2::before {
+  background: var(--grad-cta);
+}
+
+body[data-page] .article-content blockquote {
+  background: linear-gradient(150deg, rgba(37, 99, 235, 0.06), rgba(124, 58, 237, 0.06));
+  color: var(--text);
+  border-left-color: var(--accent);
+}
+
+body[data-page] .article-content a {
+  color: var(--accent);
+  border-bottom-color: rgba(37, 99, 235, 0.3);
+}
+
+body[data-page] .article-content code {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--accent-deep);
+}
+
+body[data-page] .article-meta,
+body[data-page] .post-meta {
+  color: var(--subtle);
+}
+
+body[data-page] .article-footer {
+  border-top-color: var(--border);
+}
+
+body[data-page] .article-footer a {
+  color: var(--accent);
+}
+
+/* 子页卡片恢复浅色（覆盖深色玻璃） */
+body[data-page] .figure-panel,
+body[data-page] .list-rows,
+body[data-page] .meta-list,
+body[data-page] .timeline-item,
+body[data-page] .note-card,
+body[data-page] .qr-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+body[data-page] .figure-panel h2,
+body[data-page] .figure-panel h3,
+body[data-page] .timeline-item h3,
+body[data-page] .meta-key,
+body[data-page] .qr-card p {
+  color: var(--text);
+}
+
+body[data-page] .meta-value,
+body[data-page] .timeline-item p,
+body[data-page] .qr-card .qr-note {
+  color: var(--muted);
+}
+
+body[data-page] .figure-panel .eyebrow {
+  color: var(--accent);
+  text-shadow: none;
+}
+
+body[data-page] .timeline-item time {
+  color: var(--accent);
+}
+
+body[data-page] .track-overview,
+body[data-page] .track-stack {
+  color: var(--text);
+}
+
+body[data-page] .wechat-more-note {
+  color: var(--subtle);
+}
+
+#wechat .wechat-compact .wc-title {
+  color: var(--text);
+}
+
+/* 子页 body 恢复浅色（覆盖深色星空打底，保留彩色 mesh） */
+body[data-page="wechat"],
+body[data-page="archives"],
+body[data-page="projects"],
+body[data-page="posts"],
+body[data-page="pub"],
+body[data-page="road"],
+body[data-page="skills"],
+body[data-page="about"] {
+  background:
+    radial-gradient(900px 520px at 12% 12%, rgba(168, 85, 247, 0.1), transparent 62%),
+    radial-gradient(1000px 600px at 88% 28%, rgba(56, 189, 248, 0.1), transparent 62%),
+    radial-gradient(820px 520px at 45% 62%, rgba(244, 114, 182, 0.08), transparent 62%),
+    linear-gradient(180deg, #eef0fb 0%, #f1eef9 42%, #e9f2fa 100%);
+}
+
+/* ── 风景图横幅（每个 section 顶部） ── */
+.section-scenery {
+  position: relative;
+  height: 210px;
+  border-radius: 26px;
+  margin-bottom: 46px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  box-shadow: 0 16px 44px rgba(7, 13, 31, 0.18);
+}
+
+.section-scenery::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 13, 31, 0.16), transparent 48%, rgba(255, 255, 255, 0.2));
+  pointer-events: none;
+}
+
+.section-scenery .scenery-tag {
+  position: absolute;
+  left: 22px;
+  bottom: 16px;
+  z-index: 1;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: rgba(7, 13, 31, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.scenery-mountains { background-image: url("/assets/backgrounds/mountains.jpg"); }
+.scenery-lake { background-image: url("/assets/backgrounds/lake.jpg"); }
+.scenery-city { background-image: url("/assets/backgrounds/city-sunrise.jpg"); }
+.scenery-forest { background-image: url("/assets/backgrounds/forest.jpg"); }
+.scenery-nebula { background-image: url("/assets/backgrounds/nebula.jpg"); }
+.scenery-sunrise { background-image: url("/assets/backgrounds/sunrise.jpg"); }
+.scenery-milkyway { background-image: url("/assets/backgrounds/milkyway.jpg"); }
+.scenery-night { background-image: url("/assets/backgrounds/city-night.jpg"); }
+
+/* 宣言区文字在明亮背景上：深金 + 深色描边保证可读 */
+.manifesto-line {
+  background: linear-gradient(180deg, #b45309 0%, #d97706 55%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.55)) drop-shadow(0 2px 4px rgba(7, 13, 31, 0.35));
+}
+
+.manifesto .eyebrow {
+  color: #7c2d12;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
+}
+
+.manifesto-sign {
+  color: rgba(90, 45, 10, 0.75);
+  border-top-color: rgba(180, 83, 9, 0.35);
+}
+
+/* 宣言区装饰在明亮背景上加深 */
+.manifesto-planet circle {
+  fill: rgba(180, 83, 9, 0.45);
+}
+
+.manifesto-ship ellipse {
+  fill: rgba(30, 58, 138, 0.55);
+}
+
+.manifesto-ship path {
+  fill: rgba(30, 58, 138, 0.4);
+}
+
+.manifesto-cloud {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+}
+
+.manifesto-star {
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
 }
