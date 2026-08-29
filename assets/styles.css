@@ -9217,3 +9217,91 @@ html[data-theme="dark"] .comments-cta-text {
     flex-wrap: wrap;
   }
 }
+
+/* ── 第四十三批：hero 便签拟物化（便利贴质感） ── */
+
+/* 纸张质感 + 自然阴影 */
+.sticky-note {
+  background: linear-gradient(160deg, #fefce8 0%, #fef08a 55%, #fde68a 100%);
+  border: 1px solid rgba(180, 140, 20, 0.14);
+  box-shadow:
+    0 2px 3px rgba(7, 13, 31, 0.1),
+    0 10px 22px rgba(7, 13, 31, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  letter-spacing: 0.06em;
+}
+
+/* 胶带 */
+.sticky-note::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1.5deg);
+  width: 54px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border-left: 1px dashed rgba(0, 0, 0, 0.06);
+  border-right: 1px dashed rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  border-radius: 1px;
+}
+
+/* 卷角 */
+.sticky-note::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(315deg, rgba(7, 13, 31, 0.18) 0 46%, transparent 46%);
+  border-bottom-right-radius: 4px;
+}
+
+/* hover 撕起 */
+.sticky-note:hover {
+  transform: rotate(0deg) scale(1.07) translateY(-4px);
+  box-shadow:
+    0 6px 10px rgba(7, 13, 31, 0.16),
+    0 26px 48px rgba(7, 13, 31, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* 不同颜色便签：卷角与胶带略适配 */
+.sticky-note--pink {
+  background: linear-gradient(160deg, #fdf2f8 0%, #fbcfe8 55%, #f9a8d4 100%);
+  border-color: rgba(190, 24, 93, 0.14);
+}
+
+.sticky-note--pink::after {
+  background: linear-gradient(315deg, rgba(190, 24, 93, 0.2) 0 46%, transparent 46%);
+}
+
+.sticky-note--teal {
+  background: linear-gradient(160deg, #f0fdfa 0%, #99f6e4 55%, #5eead4 100%);
+  border-color: rgba(15, 118, 110, 0.14);
+}
+
+.sticky-note--teal::after {
+  background: linear-gradient(315deg, rgba(15, 118, 110, 0.2) 0 46%, transparent 46%);
+}
+
+html[data-theme="dark"] .sticky-note {
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+html[data-theme="dark"] .sticky-note::before {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+html[data-theme="dark"] .sticky-note--yellow {
+  background: linear-gradient(160deg, #713f12 0%, #854d0e 55%, #a16207 100%);
+  color: #fef9c3;
+  border-color: rgba(253, 230, 138, 0.25);
+}
+
+html[data-theme="dark"] .sticky-note--yellow::after {
+  background: linear-gradient(315deg, rgba(0, 0, 0, 0.4) 0 46%, transparent 46%);
+}
