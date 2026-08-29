@@ -1786,6 +1786,39 @@ initTilt()
 initParallax()
 initStarTrail()
 
+/* ───────────── 区块滚动视差（各 section 内容随滚动轻微位移） ───────────── */
+
+function initSectionParallax() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (window.matchMedia("(hover: none)").matches) return
+  const containers = document.querySelectorAll(
+    "#road > .container, #music > .container, #publications > .container, #skills-hub > .container, #wechat > .container, #notes > .container",
+  )
+  if (!containers.length) return
+  let raf = null
+  function update() {
+    raf = null
+    const vh = window.innerHeight
+    containers.forEach((el) => {
+      const r = el.getBoundingClientRect()
+      const center = r.top + r.height / 2 - vh / 2
+      const speed = 0.05
+      const offset = Math.max(-22, Math.min(22, center * speed))
+      el.style.translate = `0 ${offset.toFixed(1)}px`
+    })
+  }
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    },
+    { passive: true },
+  )
+  update()
+}
+
+initSectionParallax()
+
 /* ───────────── 极光鼠标联动 ───────────── */
 
 function initAuroraMouse() {
@@ -1924,7 +1957,7 @@ const SONGS = [
     "color": "#10b981",
     "desc": "古风戏腔 · 醉游寒山的洒脱",
     "src": "/assets/music/youshanlian.mp3",
-    "cover": "/assets/music/covers/youshanlian.jpg",
+    "cover": "/assets/music/covers/youshanlian.webp",
     "lyrics": [
       "我醉提酒游寒山",
       "霜华满天",
@@ -1986,7 +2019,7 @@ const SONGS = [
     "color": "#60a5fa",
     "desc": "古风 · 春雪落满离人苑",
     "src": "/assets/music/chuntingxue.mp3",
-    "cover": "/assets/music/covers/chuntingxue.jpg",
+    "cover": "/assets/music/covers/chuntingxue.webp",
     "lyrics": [
       "庭中梨花谢又一年",
       "立清宵月华洒空阶",
@@ -2038,7 +2071,7 @@ const SONGS = [
     "color": "#a855f7",
     "desc": "古风吟唱 · 白居易长诗谱曲",
     "src": "/assets/music/pipaxing.mp3",
-    "cover": "/assets/music/covers/pipaxing.jpg",
+    "cover": "/assets/music/covers/pipaxing.webp",
     "lyrics": [
       "和音 : 奇然/沈谧仁",
       "琵琶 : 远坂麦芽",
@@ -2098,7 +2131,7 @@ const SONGS = [
     "color": "#f59e0b",
     "desc": "古风戏腔 · 一曲定重楼",
     "src": "/assets/music/cijiumen.mp3",
-    "cover": "/assets/music/covers/cijiumen.jpg",
+    "cover": "/assets/music/covers/cijiumen.webp",
     "lyrics": [
       "一曲定重楼",
       "一眼半生筹",
@@ -2153,7 +2186,7 @@ const SONGS = [
     "color": "#8b5cf6",
     "desc": "古风 · 藏进心口的刺",
     "src": "/assets/music/mowenguiqi.mp3",
-    "cover": "/assets/music/covers/mowenguiqi.jpg",
+    "cover": "/assets/music/covers/mowenguiqi.webp",
     "lyrics": [
       "藏进心口的刺",
       "不枉寻也如此",

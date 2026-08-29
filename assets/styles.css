@@ -4190,7 +4190,7 @@ body[data-page="about"] .article-lead {
       rgba(90, 70, 100, 0.3) 44%,
       rgba(217, 133, 60, 0.12) 62%,
       transparent 80%),
-    url("/assets/backgrounds/sunrise.jpg") center 40% / cover no-repeat,
+    url("/assets/backgrounds/sunrise.webp") center 40% / cover no-repeat,
     linear-gradient(180deg, #12204e 0%, #2a4a8f 38%, #e0853c 78%, #f7b05a 100%);
   box-shadow: 0 20px 60px rgba(10, 18, 38, 0.25);
 }
@@ -5317,7 +5317,7 @@ body[data-page="skills"] .article-header,
 body[data-page="about"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.78), rgba(16, 27, 69, 0.72)),
-    url("/assets/backgrounds/milkyway.jpg") center 30% / cover no-repeat;
+    url("/assets/backgrounds/milkyway.webp") center 30% / cover no-repeat;
   box-shadow: 0 10px 40px rgba(7, 13, 31, 0.35);
 }
 
@@ -5331,7 +5331,7 @@ body[data-page="road"],
 body[data-page="skills"],
 body[data-page="about"] {
   background:
-    url("/assets/backgrounds/milkyway.jpg") fixed center / cover no-repeat,
+    url("/assets/backgrounds/milkyway.webp") fixed center / cover no-repeat,
     #0d1730;
 }
 
@@ -5764,14 +5764,14 @@ body[data-page="about"] {
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.scenery-mountains { background-image: url("/assets/backgrounds/mountains.jpg"); }
-.scenery-lake { background-image: url("/assets/backgrounds/lake.jpg"); }
-.scenery-city { background-image: url("/assets/backgrounds/city-sunrise.jpg"); }
-.scenery-forest { background-image: url("/assets/backgrounds/forest.jpg"); }
-.scenery-nebula { background-image: url("/assets/backgrounds/nebula.jpg"); }
-.scenery-sunrise { background-image: url("/assets/backgrounds/sunrise.jpg"); }
-.scenery-milkyway { background-image: url("/assets/backgrounds/milkyway.jpg"); }
-.scenery-night { background-image: url("/assets/backgrounds/city-night.jpg"); }
+.scenery-mountains { background-image: url("/assets/backgrounds/mountains.webp"); }
+.scenery-lake { background-image: url("/assets/backgrounds/lake.webp"); }
+.scenery-city { background-image: url("/assets/backgrounds/city-sunrise.webp"); }
+.scenery-forest { background-image: url("/assets/backgrounds/forest.webp"); }
+.scenery-nebula { background-image: url("/assets/backgrounds/nebula.webp"); }
+.scenery-sunrise { background-image: url("/assets/backgrounds/sunrise.webp"); }
+.scenery-milkyway { background-image: url("/assets/backgrounds/milkyway.webp"); }
+.scenery-night { background-image: url("/assets/backgrounds/city-night.webp"); }
 
 /* 宣言区文字在明亮背景上：深金 + 深色描边保证可读 */
 .manifesto-line {
@@ -5821,37 +5821,37 @@ body[data-page="about"] {
 #road {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.72) 100%),
-    url("/assets/backgrounds/mountains.jpg") center 30% / cover no-repeat;
+    url("/assets/backgrounds/mountains.webp") center 30% / cover no-repeat;
 }
 
 #music {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.72) 100%),
-    url("/assets/backgrounds/lake.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/lake.webp") center / cover no-repeat;
 }
 
 #publications {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.65) 100%),
-    url("/assets/backgrounds/city-sunrise.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/city-sunrise.webp") center / cover no-repeat;
 }
 
 #skills-hub {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.72) 100%),
-    url("/assets/backgrounds/forest.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/forest.webp") center / cover no-repeat;
 }
 
 #wechat {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.72) 100%),
-    url("/assets/backgrounds/sunrise.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/sunrise.webp") center / cover no-repeat;
 }
 
 #notes {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.72) 100%),
-    url("/assets/backgrounds/forest.jpg") center 60% / cover no-repeat;
+    url("/assets/backgrounds/forest.webp") center 60% / cover no-repeat;
 }
 
 /* 公众号列表卡适配明亮背景 */
@@ -6058,49 +6058,49 @@ body[data-page="about"] {
 body[data-page="wechat"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/city-sunrise.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/city-sunrise.webp") center / cover no-repeat;
 }
 
 body[data-page="archives"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/mountains.jpg") center 40% / cover no-repeat;
+    url("/assets/backgrounds/mountains.webp") center 40% / cover no-repeat;
 }
 
 body[data-page="projects"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/forest.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/forest.webp") center / cover no-repeat;
 }
 
 body[data-page="posts"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/lake.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/lake.webp") center / cover no-repeat;
 }
 
 body[data-page="road"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/sunrise.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/sunrise.webp") center / cover no-repeat;
 }
 
 body[data-page="pub"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/nebula.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/nebula.webp") center / cover no-repeat;
 }
 
 body[data-page="skills"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/milkyway.jpg") center 30% / cover no-repeat;
+    url("/assets/backgrounds/milkyway.webp") center 30% / cover no-repeat;
 }
 
 body[data-page="about"] .article-header {
   background:
     linear-gradient(180deg, rgba(10, 18, 38, 0.8), rgba(16, 27, 69, 0.55) 55%, rgba(16, 27, 69, 0.25)),
-    url("/assets/backgrounds/lake.jpg") center / cover no-repeat;
+    url("/assets/backgrounds/lake.webp") center / cover no-repeat;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6207,19 +6207,19 @@ body[data-page="skills"],
 body[data-page="about"] {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.86) 100%),
-    url("/assets/backgrounds/lake.jpg") fixed center / cover no-repeat;
+    url("/assets/backgrounds/lake.webp") fixed center / cover no-repeat;
 }
 
 body[data-page="skills"] {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.86) 100%),
-    url("/assets/backgrounds/milkyway.jpg") fixed center 30% / cover no-repeat;
+    url("/assets/backgrounds/milkyway.webp") fixed center 30% / cover no-repeat;
 }
 
 body[data-page="pub"] {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.86) 100%),
-    url("/assets/backgrounds/nebula.jpg") fixed center / cover no-repeat;
+    url("/assets/backgrounds/nebula.webp") fixed center / cover no-repeat;
 }
 
 /* ── 404 页：大公鸡场景 ── */
@@ -7544,7 +7544,7 @@ body[data-page="home"] .site-header:not(.is-scrolled) .theme-toggle {
 /* ── 暗色主题（变量覆盖） ── */
 html[data-theme="dark"] body {
   background:
-    url("/assets/backgrounds/milkyway.jpg") fixed center / cover no-repeat,
+    url("/assets/backgrounds/milkyway.webp") fixed center / cover no-repeat,
     #0d1730;
   color: #e6f1ff;
 }
@@ -8048,5 +8048,60 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
   .custom-cursor,
   .custom-cursor-ring {
     display: none;
+  }
+}
+
+/* ── 第三十三批：区块滚动视差 + 标签云动画 + WebP 配套 ── */
+
+/* 区块滚动视差：内容容器轻微位移（桌面 hover 设备） */
+@media (hover: hover) and (pointer: fine) {
+  .parallax-block .container {
+    will-change: translate;
+    transition: translate 0.25s ease-out;
+  }
+}
+
+/* 标签云动画：漂浮 + hover 放大发光 */
+.interest-tag {
+  display: inline-block;
+  animation: tag-float 3.6s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.interest-tag:nth-child(2n) { animation-delay: -1.2s; }
+.interest-tag:nth-child(3n) { animation-delay: -2.1s; }
+.interest-tag:nth-child(4n) { animation-delay: -0.6s; }
+.interest-tag:nth-child(5n) { animation-delay: -2.8s; }
+
+@keyframes tag-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.interest-tag:hover {
+  animation-play-state: paused;
+  transform: translateY(-6px) scale(1.14) rotate(-2deg);
+  box-shadow: 0 10px 26px rgba(124, 58, 237, 0.28);
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+/* hero 公开标签同样漂浮 */
+.public-tags .tag-chip,
+.public-tags [class*="tag"] {
+  display: inline-block;
+  animation: tag-float 4s ease-in-out infinite;
+}
+
+.public-tags .tag-chip:nth-child(2n),
+.public-tags [class*="tag"]:nth-child(2n) { animation-delay: -1.6s; }
+.public-tags .tag-chip:nth-child(3n),
+.public-tags [class*="tag"]:nth-child(3n) { animation-delay: -0.9s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .interest-tag,
+  .public-tags .tag-chip,
+  .public-tags [class*="tag"] {
+    animation: none;
   }
 }
