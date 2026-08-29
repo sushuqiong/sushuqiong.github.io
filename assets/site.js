@@ -722,35 +722,56 @@ function renderRooster() {
     <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <linearGradient id="rooster-body" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#fdba74"/>
+          <stop offset="0" stop-color="#fde047"/>
+          <stop offset="0.45" stop-color="#fbbf24"/>
           <stop offset="1" stop-color="#f97316"/>
         </linearGradient>
         <linearGradient id="rooster-wing" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fb923c"/>
-          <stop offset="1" stop-color="#ea580c"/>
+          <stop offset="0" stop-color="#f97316"/>
+          <stop offset="1" stop-color="#dc2626"/>
+        </linearGradient>
+        <linearGradient id="rooster-head" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fbbf24"/>
+          <stop offset="1" stop-color="#f97316"/>
         </linearGradient>
       </defs>
+      <!-- 彩虹尾羽：红橙黄绿蓝紫 -->
       <g class="rooster-tail">
-        <path d="M26 50 Q10 44 6 28 Q18 36 26 42 Z" fill="#ef4444"/>
-        <path d="M26 52 Q8 52 4 40 Q16 46 26 48 Z" fill="#22c55e"/>
-        <path d="M26 54 Q10 58 8 50 Q18 52 26 52 Z" fill="#3b82f6"/>
+        <path d="M26 46 Q8 38 4 22 Q18 32 26 40 Z" fill="#ef4444"/>
+        <path d="M26 48 Q6 46 2 34 Q16 42 26 44 Z" fill="#f97316"/>
+        <path d="M26 50 Q8 54 6 46 Q18 48 26 48 Z" fill="#facc15"/>
+        <path d="M26 52 Q10 60 10 53 Q18 53 26 50 Z" fill="#22c55e"/>
+        <path d="M26 54 Q12 66 14 60 Q20 58 26 52 Z" fill="#3b82f6"/>
+        <path d="M26 56 Q14 72 18 65 Q22 61 26 54 Z" fill="#a855f7"/>
       </g>
-      <g stroke="#ea580c" stroke-width="3" stroke-linecap="round" fill="none">
+      <g stroke="#b45309" stroke-width="3" stroke-linecap="round" fill="none">
         <line x1="40" y1="74" x2="38" y2="85"/>
         <line x1="48" y1="74" x2="50" y2="85"/>
         <path d="M33 85 L38 85 L43 85"/>
         <path d="M45 85 L50 85 L55 85"/>
       </g>
       <ellipse class="rooster-body" cx="44" cy="54" rx="26" ry="22" fill="url(#rooster-body)"/>
-      <path class="rooster-wing" d="M36 46 Q24 42 28 30 Q38 34 42 44 Z" fill="url(#rooster-wing)" stroke="#c2410c" stroke-width="1.5"/>
+      <!-- 翅膀：橙红渐变 + 白色羽尖 -->
+      <g class="rooster-wing">
+        <path d="M36 46 Q24 42 28 30 Q38 34 42 44 Z" fill="url(#rooster-wing)" stroke="#b91c1c" stroke-width="1.5"/>
+        <path d="M30 36 Q34 32 36 38 Q32 40 30 36 Z" fill="#fef3c7"/>
+        <path d="M32 41 Q36 37 38 42 Q34 44 32 41 Z" fill="#fef3c7"/>
+      </g>
       <g class="rooster-head">
-        <circle cx="66" cy="34" r="13" fill="url(#rooster-body)"/>
-        <path d="M58 26 Q56 14 62 12 Q60 18 64 18 Q63 8 70 10 Q68 16 72 16 Q72 20 74 22 L74 26 Z" fill="#ef4444"/>
-        <path d="M77 34 L90 36 L77 40 Z" fill="#facc15" stroke="#d97706" stroke-width="1"/>
-        <ellipse cx="74" cy="44" rx="3.5" ry="5" fill="#ef4444"/>
-        <circle cx="68" cy="31" r="4" fill="#ffffff"/>
-        <circle cx="69" cy="31" r="2" fill="#1e293b"/>
-        <circle cx="69.8" cy="30.2" r="0.7" fill="#ffffff"/>
+        <circle cx="66" cy="34" r="13" fill="url(#rooster-head)"/>
+        <!-- 大红色鸡冠 -->
+        <path d="M58 26 Q56 14 62 12 Q60 18 64 18 Q63 8 70 10 Q68 16 72 16 Q72 20 74 22 L74 26 Z" fill="#dc2626"/>
+        <path d="M58 25 Q54 18 60 16 Q59 21 62 21 Q61 14 67 13 Q66 19 70 18 Q70 22 72 23 L72 25 Z" fill="#ef4444"/>
+        <!-- 金色嘴 -->
+        <path d="M77 34 L91 35 L77 40 Z" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+        <!-- 红色肉垂 -->
+        <ellipse cx="74" cy="44" rx="3.5" ry="5.5" fill="#dc2626"/>
+        <!-- 亮眼睛 -->
+        <circle cx="68" cy="31" r="4.2" fill="#ffffff"/>
+        <circle cx="69" cy="31" r="2.2" fill="#1e293b"/>
+        <circle cx="69.8" cy="30.2" r="0.8" fill="#ffffff"/>
+        <!-- 金色羽毛点缀 -->
+        <path d="M60 40 Q66 36 72 40 Q66 42 60 40 Z" fill="#fbbf24" opacity="0.6"/>
       </g>
       <ellipse cx="48" cy="89" rx="22" ry="3" fill="rgba(7, 13, 31, 0.16)"/>
     </svg>
@@ -771,11 +792,35 @@ function renderRooster() {
     setTimeout(() => bubble.classList.remove("is-show"), 1600)
   }
 
-  rooster.addEventListener("click", hop)
+  // 连点 3 次触发舞蹈模式
+  let clickCount = 0
+  let danceTimer = null
+
+  function dance() {
+    rooster.classList.add("is-dancing")
+    bubble.textContent = "🎶 跳舞时间！"
+    bubble.classList.add("is-show")
+    clearTimeout(danceTimer)
+    danceTimer = setTimeout(() => {
+      rooster.classList.remove("is-dancing")
+      bubble.classList.remove("is-show")
+    }, 5200)
+  }
+
+  function interact() {
+    hop()
+    clickCount += 1
+    if (clickCount >= 3) {
+      clickCount = 0
+      dance()
+    }
+  }
+
+  rooster.addEventListener("click", interact)
   rooster.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault()
-      hop()
+      interact()
     }
   })
 
@@ -789,6 +834,19 @@ function renderRooster() {
     }, 7000 + Math.random() * 5000)
   }
   scheduleWalk()
+
+  // 偶发旋转彩蛋（20–35 秒随机一次，不与舞蹈同时）
+  function scheduleSpin() {
+    setTimeout(() => {
+      if (!rooster.classList.contains("is-dancing")) {
+        rooster.classList.remove("is-spinning")
+        void rooster.offsetWidth
+        rooster.classList.add("is-spinning")
+      }
+      scheduleSpin()
+    }, 20000 + Math.random() * 15000)
+  }
+  scheduleSpin()
 }
 
 /* ───────────── 访客统计（不蒜子） ───────────── */
@@ -1233,3 +1291,276 @@ function initLightbox() {
 }
 
 initLightbox()
+
+/* ───────────── 灵感电台：音乐播放器 ───────────── */
+
+const SONGS = [
+  {
+    id: "hongzhaoyuan",
+    title: "红昭愿",
+    artist: "音阙诗听",
+    year: "2018",
+    emoji: "❤️",
+    color: "#ef4444",
+    desc: "国风电子 · 红颜将军的相思",
+    src: "/assets/music/hongzhaoyuan.mp3",
+    lyrics: [
+      "手中雕刻生花，刀锋千转蜿蜒成画",
+      "盛名功德塔，是桥畔某处人家",
+      "春风绕过发梢红纱，刺绣赠他",
+      "眉目刚烈拟作妆嫁，轰烈流沙枕上白发",
+      "杯中酒比划，年少风雅鲜衣怒马",
+      "也不过一刹那",
+      "——（歌词节选，全文以播放器为准）",
+    ],
+  },
+  {
+    id: "youshanlian",
+    title: "游山恋",
+    artist: "海伦",
+    year: "2020",
+    emoji: "⛰️",
+    color: "#10b981",
+    desc: "古风戏腔 · 醉游寒山的洒脱",
+    src: "/assets/music/youshanlian.mp3",
+    lyrics: [
+      "我醉提酒游寒山，霜华满天",
+      "一吸寒气冷风翻，酒未满",
+      "笑看红尘人世间，皆如云烟",
+      "一醉方休，梦回千年",
+      "风吹落叶散，往昔不堪言",
+      "我举杯问青天，醉里寻欢",
+      "——（歌词节选，全文以播放器为准）",
+    ],
+  },
+  {
+    id: "chuntingxue",
+    title: "春庭雪",
+    artist: "等什么君",
+    year: "2021",
+    emoji: "❄️",
+    color: "#60a5fa",
+    desc: "古风 · 春日庭院落雪的孤寂",
+    src: "/assets/music/chuntingxue.mp3",
+    lyrics: [
+      "庭中梨花谢又一年，立清宵，月华洒空阶",
+      "谁家笛声吹彻风雪，惊梦回，人已远",
+      "旧时庭院落春雪，故人踏雪去，未再还",
+      "——（歌词节选，全文以播放器为准）",
+    ],
+  },
+  {
+    id: "pipaxing",
+    title: "琵琶行",
+    artist: "奇然 · 沈谧仁",
+    year: "2017",
+    emoji: "🪕",
+    color: "#a855f7",
+    desc: "古风吟唱 · 白居易长诗谱曲",
+    src: "/assets/music/pipaxing.mp3",
+    lyrics: [
+      "浔阳江头夜送客，枫叶荻花秋瑟瑟",
+      "主人下马客在船，举酒欲饮无管弦",
+      "醉不成欢惨将别，别时茫茫江浸月",
+      "忽闻水上琵琶声，主人忘归客不发",
+      "寻声暗问弹者谁，琵琶声停欲语迟",
+      "移船相近邀相见，添酒回灯重开宴",
+      "千呼万唤始出来，犹抱琵琶半遮面",
+      "转轴拨弦三两声，未成曲调先有情",
+      "大弦嘈嘈如急雨，小弦切切如私语",
+      "嘈嘈切切错杂弹，大珠小珠落玉盘",
+      "别有幽愁暗恨生，此时无声胜有声",
+      "银瓶乍破水浆迸，铁骑突出刀枪鸣",
+      "曲终收拨当心画，四弦一声如裂帛",
+      "同是天涯沦落人，相逢何必曾相识",
+      "凄凄不似向前声，满座重闻皆掩泣",
+      "座中泣下谁最多，江州司马青衫湿",
+    ],
+  },
+]
+
+function initMusicPlayer() {
+  const grid = document.querySelector("[data-music-grid]")
+  if (!grid) return
+
+  // 渲染歌曲卡片
+  grid.innerHTML = SONGS.map(
+    (song) => `
+    <button class="music-card" data-song="${song.id}" style="--song-color: ${song.color};" aria-label="播放《${song.title}》">
+      <span class="music-cover">${song.emoji}</span>
+      <span class="music-info">
+        <strong>${song.title}</strong>
+        <small>${song.artist} · ${song.year}</small>
+        <em>${song.desc}</em>
+      </span>
+      <span class="music-play">▶</span>
+    </button>`,
+  ).join("")
+
+  // 播放器 dock
+  const dock = document.createElement("div")
+  dock.className = "music-dock"
+  dock.innerHTML = `
+    <div class="music-dock-inner">
+      <span class="music-cover-rot" data-music-cover>❤️</span>
+      <div class="music-now">
+        <strong data-music-title>红昭愿</strong>
+        <span data-music-artist>音阙诗听 · 2018</span>
+      </div>
+      <div class="music-controls">
+        <button class="music-btn" data-music-prev aria-label="上一首">⏮</button>
+        <button class="music-btn music-play-btn" data-music-toggle aria-label="播放/暂停">▶</button>
+        <button class="music-btn" data-music-next aria-label="下一首">⏭</button>
+      </div>
+      <div class="music-progress" data-music-progress><span></span></div>
+      <button class="music-lyrics-btn" data-music-lyrics aria-label="展开歌词">歌词</button>
+    </div>
+  `
+  document.body.appendChild(dock)
+
+  const lyricsPanel = document.createElement("div")
+  lyricsPanel.className = "music-lyrics-panel"
+  lyricsPanel.setAttribute("aria-label", "歌词面板")
+  document.body.appendChild(lyricsPanel)
+
+  const audio = new Audio()
+  audio.preload = "none"
+
+  let current = 0
+  let playing = false
+  let lyricsOpen = false
+
+  const cover = dock.querySelector("[data-music-cover]")
+  const title = dock.querySelector("[data-music-title]")
+  const artist = dock.querySelector("[data-music-artist]")
+  const toggle = dock.querySelector("[data-music-toggle]")
+  const progress = dock.querySelector("[data-music-progress] span")
+  const lyricsBtn = dock.querySelector("[data-music-lyrics]")
+
+  function loadSong(index, autoplay) {
+    current = (index + SONGS.length) % SONGS.length
+    const song = SONGS[current]
+    cover.textContent = song.emoji
+    cover.style.background = `linear-gradient(140deg, ${song.color}, #1e2a63)`
+    title.textContent = song.title
+    artist.textContent = `${song.artist} · ${song.year}`
+    audio.src = song.src
+    if (autoplay) {
+      audio.play().catch(() => {})
+    }
+    progress.style.width = "0%"
+    renderLyrics()
+    setPlaying(false)
+  }
+
+  function setPlaying(play) {
+    playing = play
+    toggle.textContent = play ? "⏸" : "▶"
+    dock.classList.toggle("is-playing", play)
+    document.body.classList.toggle("music-playing", play)
+    if (play) {
+      cover.classList.add("is-spin")
+    } else {
+      cover.classList.remove("is-spin")
+    }
+  }
+
+  function renderLyrics() {
+    const song = SONGS[current]
+    lyricsPanel.innerHTML = `
+      <div class="lyrics-head">
+        <strong>${song.title}</strong>
+        <span>${song.artist}</span>
+        <button class="lyrics-close" data-lyrics-close aria-label="收起歌词">✕</button>
+      </div>
+      <div class="lyrics-body">
+        ${song.lyrics.map((line) => `<p>${line}</p>`).join("")}
+      </div>
+    `
+    lyricsPanel.querySelector("[data-lyrics-close]").addEventListener("click", closeLyrics)
+  }
+
+  function openLyrics() {
+    lyricsOpen = true
+    lyricsPanel.classList.add("is-open")
+    lyricsBtn.classList.add("is-active")
+  }
+
+  function closeLyrics() {
+    lyricsOpen = false
+    lyricsPanel.classList.remove("is-open")
+    lyricsBtn.classList.remove("is-active")
+  }
+
+  grid.addEventListener("click", (e) => {
+    const card = e.target.closest("[data-song]")
+    if (!card) return
+    const idx = SONGS.findIndex((s) => s.id === card.dataset.song)
+    loadSong(idx, true)
+    dock.classList.add("is-visible")
+  })
+
+  toggle.addEventListener("click", () => {
+    if (playing) {
+      audio.pause()
+      setPlaying(false)
+    } else {
+      audio.play().catch(() => {
+        title.textContent = "音频待添加"
+        artist.textContent = "把 mp3 放入 assets/music/ 后自动生效"
+      })
+      setPlaying(true)
+    }
+  })
+
+  dock.querySelector("[data-music-prev]").addEventListener("click", () => loadSong(current - 1, true))
+  dock.querySelector("[data-music-next]").addEventListener("click", () => loadSong(current + 1, true))
+
+  audio.addEventListener("timeupdate", () => {
+    if (audio.duration) {
+      progress.style.width = `${(audio.currentTime / audio.duration) * 100}%`
+    }
+  })
+  audio.addEventListener("ended", () => loadSong(current + 1, true))
+  audio.addEventListener("error", () => {
+    title.textContent = "音频待添加"
+    artist.textContent = "把 mp3 放入 assets/music/ 后自动生效"
+  })
+
+  lyricsBtn.addEventListener("click", () => (lyricsOpen ? closeLyrics() : openLyrics()))
+}
+
+initMusicPlayer()
+
+/* ───────────── 宣言逐行浮现 ───────────── */
+
+function initManifesto() {
+  const lines = document.querySelectorAll(".manifesto-line")
+  if (!lines.length) return
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target
+          const delay = Array.from(lines).indexOf(el) * 0.22
+          el.style.animationDelay = `${delay}s`
+          el.classList.add("is-in")
+          io.unobserve(el)
+        }
+      })
+    },
+    { threshold: 0.6 },
+  )
+  lines.forEach((line) => io.observe(line))
+
+  // 兜底：3.5s 后仍未触发则强制显示（防 IO 失效）
+  setTimeout(() => {
+    lines.forEach((line) => {
+      if (!line.classList.contains("is-in")) {
+        line.classList.add("is-in")
+      }
+    })
+  }, 3500)
+}
+
+initManifesto()
