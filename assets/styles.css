@@ -8214,13 +8214,19 @@ html[data-theme="dark"] .toc-side a.is-active {
 .manifesto {
   background:
     linear-gradient(180deg,
-      rgba(10, 20, 50, 0.8) 0%,
-      rgba(20, 35, 80, 0.55) 22%,
-      rgba(70, 55, 90, 0.28) 42%,
-      rgba(160, 100, 60, 0.12) 62%,
-      rgba(240, 170, 100, 0.08) 80%),
-    url("/assets/backgrounds/dawn.webp") center 42% / cover no-repeat,
-    linear-gradient(180deg, #0b1638 0%, #22305f 38%, #a45c34 78%, #e8a45c 100%);
+      rgba(16, 30, 66, 0.62) 0%,
+      rgba(32, 46, 92, 0.42) 20%,
+      rgba(96, 70, 96, 0.22) 40%,
+      rgba(190, 118, 70, 0.14) 58%,
+      rgba(244, 178, 104, 0.12) 74%,
+      rgba(250, 200, 130, 0.14) 100%),
+    url("/assets/backgrounds/dawn.webp") center 40% / cover no-repeat,
+    linear-gradient(180deg, #16204a 0%, #2a3a74 30%, #a45c34 72%, #f0b060 100%);
+}
+
+/* 黎明亮度增强（橙光透出，不再是夜晚感） */
+.manifesto .manifesto-sky {
+  filter: brightness(1.12) saturate(1.08);
 }
 
 /* 宣言装饰放大加深（保证可见） */
