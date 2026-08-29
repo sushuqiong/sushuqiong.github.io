@@ -4783,3 +4783,125 @@ body {
 .note-card:hover {
   transform: translateY(-4px);
 }
+
+/* ── 第十四批：内容区彩色 band 大改造（告别白色呆板） ── */
+
+/* 学术成果：蓝紫银河 band */
+#publications {
+  background:
+    radial-gradient(1000px 560px at 85% 8%, rgba(124, 58, 237, 0.22), transparent 62%),
+    radial-gradient(900px 520px at 10% 92%, rgba(37, 99, 235, 0.2), transparent 62%),
+    radial-gradient(700px 400px at 55% 50%, rgba(100, 255, 218, 0.07), transparent 62%),
+    linear-gradient(180deg, #c7d6f7 0%, #cfc8f4 45%, #c2d8f7 100%);
+  padding-bottom: 96px;
+}
+
+#publications .section-head h2,
+#publications .pub-row h3 {
+  color: #1e293b;
+}
+
+/* 音乐区：青金暖调 band */
+#music {
+  background:
+    radial-gradient(900px 520px at 80% 15%, rgba(251, 191, 36, 0.14), transparent 62%),
+    radial-gradient(800px 460px at 12% 85%, rgba(16, 185, 129, 0.12), transparent 62%),
+    radial-gradient(700px 400px at 55% 45%, rgba(56, 189, 248, 0.08), transparent 62%),
+    linear-gradient(180deg, #e8f3f0 0%, #eef4ec 45%, #fdf3e2 100%);
+  padding-bottom: 96px;
+}
+
+/* Skills：紫青银河 band */
+#skills-hub {
+  background:
+    radial-gradient(1000px 560px at 85% 10%, rgba(56, 189, 248, 0.22), transparent 62%),
+    radial-gradient(900px 520px at 8% 88%, rgba(124, 58, 237, 0.2), transparent 62%),
+    linear-gradient(180deg, #d4d9fa 0%, #dad1f6 50%, #cfdcf9 100%);
+  padding-bottom: 96px;
+}
+
+/* 站点更新：暖橙粉 band */
+#notes {
+  background:
+    radial-gradient(900px 520px at 82% 15%, rgba(244, 114, 182, 0.13), transparent 62%),
+    radial-gradient(800px 460px at 12% 85%, rgba(251, 146, 60, 0.12), transparent 62%),
+    linear-gradient(180deg, #fbeef2 0%, #fdf3ea 50%, #f4eef8 100%);
+  padding-bottom: 88px;
+}
+
+/* 公众号深色 band：星空强化 */
+#wechat {
+  background:
+    radial-gradient(1000px 560px at 85% 10%, rgba(168, 85, 247, 0.16), transparent 62%),
+    radial-gradient(900px 520px at 10% 88%, rgba(56, 189, 248, 0.14), transparent 62%),
+    linear-gradient(180deg, #141f4a 0%, #1e2a63 55%, #2a2a78 100%);
+  color: #e6f1ff;
+}
+
+#wechat .section-head h2 {
+  color: #e6f1ff;
+}
+
+#wechat .section-head p {
+  color: rgba(230, 241, 255, 0.75);
+}
+
+#wechat .wechat-more-note {
+  color: rgba(230, 241, 255, 0.55);
+}
+
+#wechat .wc-title {
+  color: rgba(230, 241, 255, 0.85);
+}
+
+#wechat .wc-date {
+  color: rgba(230, 241, 255, 0.5);
+}
+
+#wechat .list-rows {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(230, 241, 255, 0.12);
+  border-radius: var(--radius-xl);
+  padding: 8px 20px;
+}
+
+/* The Road 区：浅紫过渡 */
+#road {
+  background:
+    radial-gradient(900px 520px at 85% 15%, rgba(139, 92, 246, 0.14), transparent 62%),
+    radial-gradient(800px 460px at 10% 85%, rgba(37, 99, 235, 0.1), transparent 62%),
+    linear-gradient(180deg, #e4e8f9 0%, #eee9f9 100%);
+  padding-bottom: 72px;
+}
+
+/* 区块过渡衔接柔和 */
+.section + .section::before {
+  max-width: 0;
+  margin: 0;
+}
+
+/* 内容区文字适配（彩色 band 上的 section-head） */
+#publications .section-head p,
+#music .section-head p,
+#skills-hub .section-head p,
+#notes .section-head p {
+  color: var(--muted);
+}
+
+#publications .section-head h2,
+#music .section-head h2,
+#skills-hub .section-head h2,
+#notes .section-head h2 {
+  background: var(--grad-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 封面图样式（音乐播放器） */
+.music-cover-rot img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
