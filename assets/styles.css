@@ -6376,3 +6376,197 @@ body[data-page="404"] {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+/* ── 第二十二批：导航毛玻璃加深 + hero 极光 + 音乐频谱 ── */
+
+/* 导航栏毛玻璃加深 */
+.site-header {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 8px 32px rgba(15, 23, 42, 0.06);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.08);
+}
+
+body[data-page="home"] .site-header {
+  background: rgba(10, 18, 38, 0.55);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid rgba(100, 255, 218, 0.12);
+}
+
+/* hero 极光（3 层流动光带） */
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(70px);
+  opacity: 0;
+  animation: aurora-in 2.4s ease forwards;
+}
+
+.aurora-1 {
+  width: 640px;
+  height: 420px;
+  top: 8%;
+  left: -8%;
+  background: radial-gradient(circle, rgba(100, 255, 218, 0.5), transparent 70%);
+  animation: aurora-in 2.4s ease forwards, aurora-drift-1 16s ease-in-out infinite 2.4s;
+}
+
+.aurora-2 {
+  width: 560px;
+  height: 380px;
+  top: 22%;
+  right: -6%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.55), transparent 70%);
+  animation: aurora-in 2.6s ease forwards 0.4s, aurora-drift-2 19s ease-in-out infinite 2.8s;
+}
+
+.aurora-3 {
+  width: 520px;
+  height: 360px;
+  top: 48%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.45), transparent 70%);
+  animation: aurora-in 2.8s ease forwards 0.8s, aurora-drift-3 22s ease-in-out infinite 3.2s;
+}
+
+@keyframes aurora-in {
+  to { opacity: 0.55; }
+}
+
+@keyframes aurora-drift-1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33% { transform: translate(60px, -30px) rotate(8deg) scale(1.12); }
+  66% { transform: translate(-40px, 24px) rotate(-6deg) scale(0.94); }
+}
+
+@keyframes aurora-drift-2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  40% { transform: translate(-70px, 34px) rotate(-10deg) scale(1.15); }
+  75% { transform: translate(46px, -22px) rotate(7deg) scale(0.92); }
+}
+
+@keyframes aurora-drift-3 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(50px, 40px) rotate(12deg) scale(1.2); }
+}
+
+/* ── 音乐频谱 ── */
+
+/* 播放器 dock 均衡器条 */
+.music-eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+  width: 22px;
+  margin-left: 2px;
+}
+
+.music-eq span {
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #64ffda, #38bdf8);
+  height: 30%;
+  animation: eq-bounce 0.9s ease-in-out infinite;
+}
+
+.music-eq span:nth-child(2) { animation-delay: 0.18s; }
+.music-eq span:nth-child(3) { animation-delay: 0.36s; }
+.music-eq span:nth-child(4) { animation-delay: 0.52s; }
+.music-eq span:nth-child(5) { animation-delay: 0.28s; }
+
+.music-dock:not(.is-playing) .music-eq span {
+  animation-play-state: paused;
+  height: 18%;
+}
+
+@keyframes eq-bounce {
+  0%, 100% { height: 22%; }
+  50% { height: 96%; }
+}
+
+/* 歌曲卡迷你频谱（当前播放的卡片） */
+.music-card .card-eq {
+  display: none;
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.music-card.is-playing .card-eq {
+  display: flex;
+}
+
+.music-card .card-eq span {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--song-color, #64ffda);
+  height: 30%;
+  animation: eq-bounce 0.8s ease-in-out infinite;
+}
+
+.music-card .card-eq span:nth-child(2) { animation-delay: 0.15s; }
+.music-card .card-eq span:nth-child(3) { animation-delay: 0.3s; }
+
+/* 音乐区背景大频谱（播放时全区跳动） */
+#music .music-band-eq {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 6px;
+  padding: 0 4%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  overflow: hidden;
+}
+
+#music.music-live .music-band-eq {
+  opacity: 0.5;
+}
+
+.music-band-eq span {
+  width: 8px;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(180deg, rgba(100, 255, 218, 0.5), rgba(56, 189, 248, 0.15));
+  height: 8%;
+  animation: eq-big 1.1s ease-in-out infinite;
+}
+
+.music-band-eq span:nth-child(2n) { animation-delay: 0.22s; background: linear-gradient(180deg, rgba(167, 139, 250, 0.5), rgba(124, 58, 237, 0.12)); }
+.music-band-eq span:nth-child(3n) { animation-delay: 0.4s; background: linear-gradient(180deg, rgba(251, 191, 36, 0.45), rgba(251, 146, 60, 0.12)); }
+.music-band-eq span:nth-child(4n) { animation-delay: 0.55s; }
+
+@keyframes eq-big {
+  0%, 100% { height: 6%; }
+  50% { height: 88%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora,
+  .music-band-eq,
+  .music-eq span,
+  .card-eq span {
+    animation: none !important;
+    opacity: 0.4;
+  }
+}
+
+/* 音乐区相对定位（频谱绝对定位需要） */
+#music {
+  position: relative;
+  overflow: hidden;
+}

@@ -1606,6 +1606,7 @@ function initMusicPlayer() {
         <em>${song.desc}</em>
       </span>
       <span class="music-play">▶</span>
+      <span class="card-eq" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>`,
   ).join("")
 
@@ -1633,6 +1634,7 @@ function initMusicPlayer() {
         <button class="music-btn" data-music-next aria-label="下一首">⏭</button>
       </div>
       <div class="music-progress" data-music-progress><span></span></div>
+      <div class="music-eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
       <button class="music-lyrics-btn" data-music-lyrics aria-label="展开歌词">歌词</button>
     </div>
   `
@@ -1642,6 +1644,20 @@ function initMusicPlayer() {
   lyricsPanel.className = "music-lyrics-panel"
   lyricsPanel.setAttribute("aria-label", "歌词面板")
   document.body.appendChild(lyricsPanel)
+
+  // 音乐区背景大频谱
+  const bandEq = document.createElement("div")
+  bandEq.className = "music-band-eq"
+  bandEq.setAttribute("aria-hidden", "true")
+  for (let i = 0; i < 28; i += 1) {
+    const s = document.createElement("span")
+    bandEq.appendChild(s)
+  }
+  const musicSection = document.querySelector("#music")
+  if (musicSection) {
+    musicSection.classList.add("has-band-eq")
+    musicSection.appendChild(bandEq)
+  }
 
   const audio = new Audio()
   audio.preload = "none"
@@ -1671,6 +1687,10 @@ function initMusicPlayer() {
     progress.style.width = "0%"
     renderLyrics()
     setPlaying(false)
+    // 当前播放卡片高亮
+    grid.querySelectorAll(".music-card.is-playing").forEach((c) => c.classList.remove("is-playing"))
+    const active = grid.querySelector(`[data-song="${song.id}"]`)
+    if (active) active.classList.add("is-playing")
   }
 
   function setPlaying(play) {
@@ -1678,6 +1698,7 @@ function initMusicPlayer() {
     toggle.textContent = play ? "⏸" : "▶"
     dock.classList.toggle("is-playing", play)
     document.body.classList.toggle("music-playing", play)
+    if (musicSection) musicSection.classList.toggle("music-live", play)
     if (play) {
       cover.classList.add("is-spin")
     } else {
