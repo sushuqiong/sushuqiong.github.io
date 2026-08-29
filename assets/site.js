@@ -377,17 +377,71 @@ function initPageLoader() {
     <div class="loader-logo">🐔</div>
     <p class="loader-name">DEEP-SPACE LAB</p>
     <p class="loader-sub">sushuqiong · 深空实验室</p>
+    <span class="loader-pct">0%</span>
   `
   document.body.appendChild(loader)
 
+  const pct = loader.querySelector(".loader-pct")
+  let loaded = 0
+  const pctTimer = setInterval(() => {
+    loaded = Math.min(loaded + 7 + Math.random() * 12, 92)
+    if (pct) pct.textContent = `${Math.floor(loaded)}%`
+  }, 90)
+
   function hide() {
+    clearInterval(pctTimer)
+    if (pct) pct.textContent = "100%"
     loader.classList.add("is-done")
     setTimeout(() => loader.remove(), 650)
   }
 
-  window.addEventListener("load", () => setTimeout(hide, 900))
-  setTimeout(hide, 3200) // 兜底
+  window.addEventListener("load", () => setTimeout(hide, 700))
+  setTimeout(hide, 3000) // 兜底
 }
+
+/* ───────────── 公鸡打碟音效（Web Audio 合成 scratch） ───────────── */
+
+function initScratch() {
+  let ctx = null
+  function ensureCtx() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext
+      if (!AC) return null
+      ctx = new AC()
+    }
+    return ctx
+  }
+  function scratch() {
+    try {
+      const c = ensureCtx()
+      if (!c) return
+      if (c.state === "suspended") c.resume()
+      const dur = 0.24
+      const sr = c.sampleRate
+      const buffer = c.createBuffer(1, sr * dur, sr)
+      const data = buffer.getChannelData(0)
+      let phase = 0
+      for (let i = 0; i < data.length; i += 1) {
+        phase += 1 + Math.sin(i / 520) * 3.2
+        const freq = 180 + Math.sin(i / 1800) * 320
+        data[i] = Math.sin(phase * 2 * Math.PI * freq / sr) * (1 - i / data.length)
+      }
+      const src = c.createBufferSource()
+      src.buffer = buffer
+      const gain = c.createGain()
+      gain.gain.setValueAtTime(0.001, c.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.45, c.currentTime + 0.04)
+      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur)
+      src.connect(gain).connect(c.destination)
+      src.start()
+    } catch (e) {
+      /* 忽略音频错误 */
+    }
+  }
+  document.addEventListener("dj-play", scratch)
+}
+
+initScratch()
 
 initHeaderScroll()
 initStarfield()

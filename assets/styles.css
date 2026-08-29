@@ -6021,7 +6021,7 @@ body[data-page="about"] {
   color: rgba(230, 241, 255, 0.6);
 }
 
-/* 卡片 staggered 入场 */
+/* 卡片 staggered 入场（translate 独立属性，不覆盖 tilt 的 transform） */
 .road-step,
 .pub-row,
 .feature-tile,
@@ -6029,8 +6029,8 @@ body[data-page="about"] {
 .note-card,
 .lane-mini {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.5s ease var(--stagger, 0s), transform 0.5s ease var(--stagger, 0s), box-shadow 0.3s ease, border-color 0.2s ease;
+  translate: 0 22px;
+  transition: opacity 0.5s ease var(--stagger, 0s), translate 0.5s ease var(--stagger, 0s), box-shadow 0.3s ease, border-color 0.2s ease, transform 0.16s ease-out;
 }
 
 .reveal.is-visible .road-step.is-in,
@@ -6040,7 +6040,7 @@ body[data-page="about"] {
 .reveal.is-visible .note-card.is-in,
 .reveal.is-visible .lane-mini.is-in {
   opacity: 1;
-  transform: translateY(0);
+  translate: 0 0;
 }
 
 /* 无 JS 时保证可见 */
@@ -6051,7 +6051,7 @@ body[data-page="about"] {
 .reveal-ready .note-card,
 .reveal-ready .lane-mini {
   opacity: 1;
-  transform: none;
+  translate: none;
 }
 
 /* 子页 hero：风景图差异化（保留深色遮罩保证白字可读） */
@@ -6115,7 +6115,7 @@ body[data-page="about"] .article-header {
   .note-card,
   .lane-mini {
     opacity: 1 !important;
-    transform: none !important;
+    translate: none !important;
   }
 }
 
@@ -6991,4 +6991,137 @@ body[data-page="wechat"] .qr-card {
 @keyframes key-glow {
   0%, 100% { filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.35)) drop-shadow(0 0 8px rgba(59, 130, 246, 0.3)); }
   50% { filter: drop-shadow(0 0 18px rgba(239, 68, 68, 0.65)) drop-shadow(0 0 18px rgba(59, 130, 246, 0.5)); }
+}
+
+/* ── 第二十七批：tilt 修复 + loader 百分比 + 文章排版 + 打碟音效配套 ── */
+
+/* loader 百分比 */
+.loader-pct {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(100, 255, 218, 0.8);
+  text-shadow: 0 0 14px rgba(100, 255, 218, 0.4);
+}
+
+/* ── 文章页排版精致化 ── */
+
+/* 首字下沉（文章首段） */
+.article-content > p:first-of-type::first-letter {
+  font-family: var(--font-serif);
+  font-size: 3.4em;
+  font-weight: 800;
+  float: left;
+  line-height: 0.92;
+  margin: 6px 12px 0 0;
+  background: linear-gradient(150deg, #1d4ed8, #7c3aed 55%, #db2777);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* 段落行距呼吸 */
+.article-content p {
+  margin-bottom: 1.15em;
+  line-height: 2.05;
+}
+
+/* 引用块精致化 */
+.article-content blockquote {
+  position: relative;
+  margin: 1.6em 0;
+  padding: 22px 26px 22px 30px;
+  border-radius: 16px;
+  background: linear-gradient(150deg, rgba(37, 99, 235, 0.05), rgba(124, 58, 237, 0.06));
+  border-left: 4px solid transparent;
+  border-image: linear-gradient(180deg, #64ffda, #7c3aed, #f472b6) 1;
+  font-size: 1.04em;
+}
+
+.article-content blockquote::before {
+  content: "“";
+  position: absolute;
+  left: 10px;
+  top: 2px;
+  font-size: 2.2em;
+  line-height: 1;
+  color: rgba(124, 58, 237, 0.35);
+}
+
+/* 代码块：荧光边框 + 顶部 bar */
+.article-content pre {
+  position: relative;
+  border-radius: 14px;
+  border: 1px solid rgba(100, 255, 218, 0.18);
+  box-shadow: 0 10px 30px rgba(7, 13, 31, 0.12);
+}
+
+.article-content pre::before {
+  content: "";
+  display: block;
+  height: 6px;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  width: 44px;
+  background: linear-gradient(90deg, #64ffda, #7c3aed, #f472b6);
+}
+
+/* 行内代码胶囊 */
+.article-content code {
+  border-radius: 6px;
+  padding: 2px 7px;
+}
+
+/* 图片精致化 */
+.article-content img {
+  border-radius: 16px;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+}
+
+/* 列表 marker 彩色 */
+.article-content ul li::marker {
+  color: #7c3aed;
+}
+
+.article-content ol li::marker {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* 标题锚点发光 */
+.article-content h2,
+.article-content h3 {
+  scroll-margin-top: 90px;
+}
+
+.article-content h2 {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+/* 文章底部 meta 卡 */
+.article-footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.article-footer a {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(124, 58, 237, 0.07);
+  border: 1px solid rgba(124, 58, 237, 0.14);
+  transition: all 0.2s ease;
+}
+
+.article-footer a:hover {
+  background: rgba(124, 58, 237, 0.14);
+  transform: translateY(-2px);
 }
