@@ -558,13 +558,31 @@ initTitleRotator()
 function initBackTop() {
   const btn = document.createElement("button")
   btn.className = "back-top"
-  btn.innerHTML = '<span class="back-top-rocket">🚀</span>'
+  const hasArticle = !!document.querySelector(".article-content")
+  btn.innerHTML = hasArticle
+    ? '<svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle class="ring-bg" cx="22" cy="22" r="19.5"/><circle class="ring-fg" cx="22" cy="22" r="19.5"/></svg><span class="back-top-rocket">🚀</span>'
+    : '<span class="back-top-rocket">🚀</span>'
   btn.setAttribute("aria-label", "回到顶部")
   document.body.appendChild(btn)
+
+  const ringFg = btn.querySelector(".ring-fg")
+  const CIRC = 2 * Math.PI * 19.5
+
+  function updateProgress() {
+    const article = document.querySelector(".article-content")
+    if (ringFg && article) {
+      const rect = article.getBoundingClientRect()
+      const total = rect.height - window.innerHeight
+      const pct = total > 0 ? Math.min(Math.max(-rect.top / total, 0), 1) : 0
+      ringFg.style.strokeDashoffset = String(CIRC * (1 - pct))
+    }
+  }
+
   window.addEventListener(
     "scroll",
     () => {
       btn.classList.toggle("is-show", window.scrollY > 480)
+      updateProgress()
     },
     { passive: true },
   )
