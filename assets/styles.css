@@ -7941,3 +7941,112 @@ html[data-theme="dark"] th {
   }
 }
 
+
+/* ── 第三十二批：自定义光标 + 选择色 + 滚动条 + hero 轮换配套 ── */
+
+/* 自定义光标（桌面装饰光环，不替换原生光标） */
+.custom-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.75);
+  box-shadow: 0 0 8px rgba(124, 58, 237, 0.5);
+  pointer-events: none;
+  z-index: 400;
+  transition: opacity 0.2s ease;
+}
+
+.custom-cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(124, 58, 237, 0.55);
+  pointer-events: none;
+  z-index: 399;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.custom-cursor-ring.is-hover {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  border-color: rgba(100, 255, 218, 0.8);
+  background: rgba(100, 255, 218, 0.07);
+  box-shadow: 0 0 24px rgba(100, 255, 218, 0.15);
+}
+
+/* 文字选中色 */
+::selection {
+  background: rgba(124, 58, 237, 0.22);
+  color: inherit;
+}
+
+html[data-theme="dark"] ::selection {
+  background: rgba(100, 255, 218, 0.22);
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #64ffda, #7c3aed);
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #38bdf8, #a78bfa);
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: rgba(7, 13, 31, 0.5);
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  border-color: rgba(13, 23, 48, 0.8);
+}
+
+/* hero 轮换文字逐字动画（char 淡入） */
+.hero-title-line .char {
+  display: inline-block;
+  opacity: 0;
+  animation: hero-char-in 0.5s ease forwards;
+}
+
+@keyframes hero-char-in {
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor,
+  .custom-cursor-ring {
+    display: none;
+  }
+
+  .hero-title-line .char {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+@media (hover: none) {
+  .custom-cursor,
+  .custom-cursor-ring {
+    display: none;
+  }
+}

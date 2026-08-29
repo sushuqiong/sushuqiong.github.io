@@ -443,6 +443,94 @@ function initScratch() {
 
 initScratch()
 
+/* ───────────── 自定义光标（桌面端装饰光环） ───────────── */
+
+function initCustomCursor() {
+  if (window.matchMedia("(hover: none)").matches) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const dot = document.createElement("div")
+  dot.className = "custom-cursor"
+  document.body.appendChild(dot)
+  const ring = document.createElement("div")
+  ring.className = "custom-cursor-ring"
+  document.body.appendChild(ring)
+  let mx = -100
+  let my = -100
+  let rx = -100
+  let ry = -100
+  let raf = null
+  window.addEventListener(
+    "mousemove",
+    (e) => {
+      mx = e.clientX
+      my = e.clientY
+      dot.style.left = `${mx}px`
+      dot.style.top = `${my}px`
+      if (!raf) {
+        raf = requestAnimationFrame(() => {
+          raf = null
+          rx += (mx - rx) * 0.16
+          ry += (my - ry) * 0.16
+          ring.style.left = `${rx}px`
+          ring.style.top = `${ry}px`
+        })
+      }
+    },
+    { passive: true },
+  )
+  // hover 可点元素时放大
+  document.addEventListener(
+    "mouseover",
+    (e) => {
+      if (e.target.closest("a, button, .music-card, .road-step, .pub-row, .feature-tile, .react-btn, input, [role='button']")) {
+        ring.classList.add("is-hover")
+      }
+    },
+    { passive: true },
+  )
+  document.addEventListener("mouseout", (e) => {
+    if (e.target.closest("a, button, .music-card, .road-step, .pub-row, .feature-tile, .react-btn, input, [role='button']")) {
+      ring.classList.remove("is-hover")
+    }
+  })
+}
+
+initCustomCursor()
+
+/* ───────────── Hero 关键词轮换（打字机换词循环） ───────────── */
+
+function initTitleRotator() {
+  const line = document.querySelector(".hero-title-line")
+  if (!line) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const WORDS = ["医学研究，代码与 AI", "肿瘤与胃癌研究", "数据可视化与生信", "开源 · 写作 · AI+医疗"]
+  let wi = 0
+  function splitAnimate(text) {
+    line.textContent = ""
+    ;[...text].forEach((ch, i) => {
+      const span = document.createElement("span")
+      span.className = "char"
+      span.textContent = ch
+      span.style.animationDelay = `${i * 0.028}s`
+      line.appendChild(span)
+    })
+  }
+  function cycle() {
+    wi = (wi + 1) % WORDS.length
+    line.style.opacity = "0"
+    line.style.transition = "opacity 0.28s ease"
+    setTimeout(() => {
+      splitAnimate(WORDS[wi])
+      line.style.opacity = "1"
+      line.style.transition = "opacity 0.4s ease"
+    }, 300)
+  }
+  if (!line.querySelector(".char")) splitAnimate(WORDS[0])
+  setTimeout(() => setInterval(cycle, 4600), 8000)
+}
+
+initTitleRotator()
+
 /* ───────────── 回到顶部飞行按钮 ───────────── */
 
 function initBackTop() {
@@ -657,13 +745,16 @@ function initThemeToggle() {
       return null
     }
   })()
+  // 未手动选过时：跟随系统暗色偏好
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+  const initial = saved === "dark" || saved === "light" ? saved : systemDark ? "dark" : "light"
   function apply(theme) {
     document.documentElement.dataset.theme = theme
     btn.textContent = theme === "dark" ? "☀️" : "🌙"
     btn.title = theme === "dark" ? "切换到亮色" : "切换到暗色"
     syncGiscus(theme)
   }
-  apply(saved === "dark" ? "dark" : "light")
+  apply(initial)
   btn.addEventListener("click", () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark"
     apply(next)
@@ -1574,6 +1665,7 @@ function initTitleChars() {
   if (!lines.length) return
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
   lines.forEach((line, lineIndex) => {
+    if (line.querySelector(".char")) return // 已被轮换器拆字
     const text = line.textContent
     line.textContent = ""
     ;[...text].forEach((ch, i) => {
