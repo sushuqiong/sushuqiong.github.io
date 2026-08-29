@@ -738,22 +738,45 @@ async function initWechatHub() {
     const topics = [...new Set(posts.map((item) => item.topic))]
     const latest = sortByDateDesc(posts, "date")[0]
     summary.innerHTML = `
-      <article class="track-summary track-summary--rose">
-        <span class="track-summary-kicker">公开精选</span>
-        <strong>${posts.length} 篇推文</strong>
-        <span>${topics.length} 个专题 · 最近更新 ${latest?.date || "—"}</span>
+      <article class="track-summary track-summary--rose flip-card" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face">
+            <span class="track-summary-kicker">公开精选</span>
+            <strong>${posts.length} 篇推文</strong>
+            <span>${topics.length} 个专题 · 最近更新 ${latest?.date || "—"}</span>
+          </div>
+          <div class="flip-face flip-back">
+            <strong>🔄 翻面看看</strong>
+            <span>所有内容均来自公众号公开推文，标题与摘要可点击原文核验。</span>
+          </div>
+        </div>
       </article>
-      <article class="track-summary track-summary--blue">
-        <span class="track-summary-kicker">可核验</span>
-        <strong>${topics.slice(0, 3).join(" / ")}</strong>
-        <span>页面只展示公开检索可见的标题、摘要与链接</span>
+      <article class="track-summary track-summary--blue flip-card" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face">
+            <span class="track-summary-kicker">可核验</span>
+            <strong>${topics.slice(0, 3).join(" / ")}</strong>
+            <span>页面只展示公开检索可见的标题、摘要与链接</span>
+          </div>
+          <div class="flip-face flip-back">
+            <strong>🔍 全程留痕</strong>
+            <span>每条推文都保留公众号原文链接，可点击跳转验证，不伪造内容。</span>
+          </div>
+        </div>
       </article>
-      <article class="track-summary track-summary--gold">
-        <span class="track-summary-kicker">安全边界</span>
-        <strong>不展示后台信息</strong>
-        <span>不放登录凭据、私人邮箱、手机号或住址</span>
-      </article>
-    `
+      <article class="track-summary track-summary--gold flip-card" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face">
+            <span class="track-summary-kicker">安全边界</span>
+            <strong>不展示后台信息</strong>
+            <span>不放登录凭据、私人邮箱、手机号或住址</span>
+          </div>
+          <div class="flip-face flip-back">
+            <strong>🛡️ 隐私优先</strong>
+            <span>公开的是作品与内容，私人信息一律留在后台，保护自己也保护读者。</span>
+          </div>
+        </div>
+      </article>`
   }
 
   const filters = document.querySelector("[data-wechat-filters]")
