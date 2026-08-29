@@ -703,6 +703,45 @@ function initToc() {
     { rootMargin: "-20% 0px -65% 0px", threshold: 0 },
   )
   headings.forEach((h) => io.observe(h))
+
+  // 桌面端：右侧悬浮目录（增强）
+  if (window.matchMedia("(min-width: 1180px)").matches) {
+    const side = document.createElement("nav")
+    side.className = "toc-side"
+    side.setAttribute("aria-label", "章节导航")
+    side.innerHTML =
+      '<span class="toc-side-label">本章节</span>' +
+      Array.from(headings)
+        .map((h, i) => `<a href="#toc-${i}" data-toc-side="${i}" class="${h.tagName === "H3" ? "toc-side-sub" : ""}">${h.textContent.slice(0, 22)}</a>`)
+        .join("") +
+      '<a class="toc-side-top" href="#" data-toc-top>↑ 回到顶部</a>'
+    document.body.appendChild(side)
+    const sideLinks = side.querySelectorAll("a[data-toc-side]")
+    const sideIo = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const link = side.querySelector(`a[data-toc-side="${entry.target.id.replace("toc-", "")}"]`)
+          if (!link) return
+          if (entry.isIntersecting) {
+            sideLinks.forEach((l) => l.classList.remove("is-active"))
+            link.classList.add("is-active")
+          }
+        })
+      },
+      { rootMargin: "-15% 0px -70% 0px", threshold: 0 },
+    )
+    headings.forEach((h) => sideIo.observe(h))
+    side.querySelector("[data-toc-top]").addEventListener("click", (e) => {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    })
+    // 侧栏随滚动淡入
+    const onScroll = () => {
+      side.classList.toggle("is-show", window.scrollY > 420)
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+  }
 }
 
 initToc()
@@ -729,6 +768,19 @@ function initReadProgress() {
 }
 
 initReadProgress()
+
+/* ───────────── 性能优化：图片解码异步 + 尺寸提示 ───────────── */
+
+function initPerfHints() {
+  document.querySelectorAll("img").forEach((img) => {
+    if (!img.decoding) img.decoding = "async"
+    if (!img.hasAttribute("loading") && img.width > 0 && img.width > 400) {
+      img.loading = "lazy"
+    }
+  })
+}
+
+initPerfHints()
 
 /* ───────────── 暗色 / 亮色主题切换 ───────────── */
 
