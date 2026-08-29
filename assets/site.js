@@ -1080,6 +1080,27 @@ function initArticleHighlight() {
 
 initArticleHighlight()
 
+/* ───────────── 文章头图（差异化横幅） ───────────── */
+
+function initArticleHero() {
+  const header = document.querySelector(".article-header")
+  if (!header) return
+  const MAP = [
+    { match: "github-pages", img: "/assets/backgrounds/city-sunrise.webp", tag: "🌆 网站建设" },
+    { match: "privacy", img: "/assets/backgrounds/lake.webp", tag: "🛡️ 隐私保护" },
+    { match: "site-architecture", img: "/assets/backgrounds/nebula.webp", tag: "🧭 技术架构" },
+  ]
+  const path = location.pathname
+  const hit = MAP.find((m) => path.includes(m.match))
+  if (!hit) return
+  const fig = document.createElement("figure")
+  fig.className = "article-hero"
+  fig.innerHTML = `<img src="${hit.img}" alt="${hit.tag.replace(/^[^\s]+\s/, "")}" width="1200" height="500" loading="lazy"><span class="article-hero-tag">${hit.tag}</span>`
+  header.before(fig)
+}
+
+initArticleHero()
+
 /* ───────────── 评论区引导横幅 ───────────── */
 
 function initCommentsCta() {

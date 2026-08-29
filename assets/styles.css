@@ -9305,3 +9305,124 @@ html[data-theme="dark"] .sticky-note--yellow {
 html[data-theme="dark"] .sticky-note--yellow::after {
   background: linear-gradient(315deg, rgba(0, 0, 0, 0.4) 0 46%, transparent 46%);
 }
+
+/* ── 第四十四批：hero 面板 HUD 拟物化 + 文章头图 ── */
+
+/* 站点中枢面板：HUD 控制台质感 */
+.metric-grid > div {
+  position: relative;
+  padding: 14px 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(230, 241, 255, 0.12);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* HUD 网格线 */
+.metric-grid > div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(100, 255, 218, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 255, 218, 0.05) 1px, transparent 1px);
+  background-size: 18px 18px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* 底部扫描刻度线 */
+.metric-grid > div::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 7px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.55), transparent);
+  pointer-events: none;
+}
+
+.metric-grid strong {
+  font-family: var(--font-mono);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #64ffda;
+  text-shadow: 0 0 14px rgba(100, 255, 218, 0.55);
+  display: block;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.metric-grid span {
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: rgba(230, 241, 255, 0.62);
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.metric-grid > div:hover {
+  border-color: rgba(100, 255, 218, 0.4);
+  box-shadow: 0 0 26px rgba(100, 255, 218, 0.14), inset 0 0 18px rgba(100, 255, 218, 0.05);
+  transform: translateY(-2px);
+}
+
+.metric-grid > div:hover::after {
+  background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.9), transparent);
+}
+
+/* 文章头图横幅 */
+.article-hero {
+  position: relative;
+  margin: 0 0 26px;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 230px;
+  box-shadow: 0 18px 46px rgba(7, 13, 31, 0.25);
+}
+
+.article-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.article-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 13, 31, 0.12), rgba(7, 13, 31, 0.4));
+}
+
+.article-hero-tag {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 2;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(7, 13, 31, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  color: #e6f1ff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+html[data-theme="dark"] .metric-grid > div {
+  border-color: rgba(100, 255, 218, 0.16);
+}
+
+@media (max-width: 640px) {
+  .article-hero {
+    height: 160px;
+  }
+}
