@@ -443,10 +443,188 @@ function initScratch() {
 
 initScratch()
 
+/* ───────────── 回到顶部飞行按钮 ───────────── */
+
+function initBackTop() {
+  const btn = document.createElement("button")
+  btn.className = "back-top"
+  btn.innerHTML = '<span class="back-top-rocket">🚀</span>'
+  btn.setAttribute("aria-label", "回到顶部")
+  document.body.appendChild(btn)
+  window.addEventListener(
+    "scroll",
+    () => {
+      btn.classList.toggle("is-show", window.scrollY > 480)
+    },
+    { passive: true },
+  )
+  btn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+    // 喷气小星星
+    for (let i = 0; i < 6; i += 1) {
+      const s = document.createElement("span")
+      s.className = "trail-star"
+      s.style.left = `${btn.getBoundingClientRect().left + 18}px`
+      s.style.top = `${btn.getBoundingClientRect().top + 10 + Math.random() * 16}px`
+      s.style.width = "7px"
+      s.style.height = "7px"
+      s.style.background = ["#fbbf24", "#f59e0b", "#fde68a"][i % 3]
+      s.style.boxShadow = "0 0 8px #fbbf24"
+      document.body.appendChild(s)
+      setTimeout(() => s.remove(), 900)
+    }
+  })
+}
+
+/* ───────────── 站内搜索（文章 + 公众号） ───────────── */
+
+async function initSearch() {
+  const SEARCH_PAGES = [
+    { title: "GitHub Pages 网站搭建记录", url: "/posts/github-pages/", desc: "从零到上线：个人网站的搭建思路、结构与迭代记录" },
+    { title: "隐私与数据声明", url: "/posts/privacy/", desc: "网站隐私策略：公开内容、数据边界与安全说明" },
+    { title: "站点架构说明", url: "/posts/site-architecture/", desc: "本网站的技术架构：文件组织、样式与脚本设计" },
+    { title: "个人宣言", url: "/#manifesto", desc: "追求幸福是人的权利，大胆探索自己的道路" },
+    { title: "灵感电台 · 音乐", url: "/#music", desc: "红昭愿 / 游山恋 / 春庭雪 / 琵琶行" },
+    { title: "学术成果", url: "/#publications", desc: "SCI 论文、R 包与中文综述" },
+    { title: "The Road · 我的路线", url: "/#road", desc: "从临床到代码：个人成长路线" },
+    { title: "公众号精选", url: "/wechat.html", desc: "Oncology树鸡的生信代码" },
+    { title: "关于我", url: "/about/", desc: "医学博士 · 代码与 AI 爱好者" },
+    { title: "技能中心", url: "/skills.html", desc: "公开 skills 与工具链" },
+  ]
+  let posts = []
+  try {
+    const data = await loadJson("/assets/wechat-posts.json")
+    posts = (data || []).map((p) => ({
+      title: p.title || "",
+      url: p.url || "/wechat.html",
+      desc: `${p.topic || "公众号"} · ${p.date || ""} ${p.summary || ""}`.trim(),
+    }))
+  } catch (e) {
+    /* 索引失败不阻塞 */
+  }
+  const index = [...posts, ...SEARCH_PAGES].filter((p) => p.title)
+
+  const btn = document.createElement("button")
+  btn.className = "search-fab"
+  btn.innerHTML = "🔍"
+  btn.setAttribute("aria-label", "站内搜索")
+  btn.setAttribute("aria-haspopup", "dialog")
+  document.body.appendChild(btn)
+
+  const panel = document.createElement("div")
+  panel.className = "search-panel"
+  panel.setAttribute("role", "dialog")
+  panel.setAttribute("aria-label", "站内搜索")
+  panel.innerHTML = `
+    <div class="search-panel-inner">
+      <div class="search-head">
+        <span class="search-title">🔍 站内搜索</span>
+        <button class="search-close" aria-label="关闭搜索">✕</button>
+      </div>
+      <input class="search-input" type="search" placeholder="搜索文章、推文、关键词…" autocomplete="off">
+      <div class="search-results" role="listbox"></div>
+    </div>
+  `
+  document.body.appendChild(panel)
+  const input = panel.querySelector(".search-input")
+  const results = panel.querySelector(".search-results")
+
+  function open() {
+    panel.classList.add("is-open")
+    document.body.classList.add("search-open")
+    setTimeout(() => input.focus(), 80)
+  }
+  function close() {
+    panel.classList.remove("is-open")
+    document.body.classList.remove("search-open")
+  }
+
+  btn.addEventListener("click", open)
+  panel.querySelector(".search-close").addEventListener("click", close)
+  panel.addEventListener("click", (e) => {
+    if (e.target === panel) close()
+  })
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close()
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault()
+      panel.classList.contains("is-open") ? close() : open()
+    }
+  })
+
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase()
+    if (!q) {
+      results.innerHTML = '<p class="search-empty">输入关键词开始搜索（Ctrl/⌘+K 唤起）</p>'
+      return
+    }
+    const hits = index
+      .filter((p) => (p.title + " " + p.desc).toLowerCase().includes(q))
+      .slice(0, 12)
+    if (!hits.length) {
+      results.innerHTML = '<p class="search-empty">没有找到相关内容，换个词试试？</p>'
+      return
+    }
+    results.innerHTML = hits
+      .map(
+        (h) => `
+        <a class="search-item" href="${h.url}" onclick="document.body.classList.remove('search-open')">
+          <strong>${h.title}</strong>
+          <span>${h.desc}</span>
+        </a>`,
+      )
+      .join("")
+  })
+  input.dispatchEvent(new Event("input"))
+}
+
+/* ───────────── 文章目录锚点 ───────────── */
+
+function initToc() {
+  const article = document.querySelector(".article-content")
+  if (!article) return
+  const headings = article.querySelectorAll("h2, h3")
+  if (headings.length < 2) return
+  headings.forEach((h, i) => {
+    if (!h.id) h.id = `toc-${i}`
+  })
+  const toc = document.createElement("nav")
+  toc.className = "article-toc"
+  toc.setAttribute("aria-label", "文章目录")
+  toc.innerHTML =
+    '<span class="toc-label">📑 目录</span>' +
+    Array.from(headings)
+      .map((h, i) => `<a href="#toc-${i}" data-toc="${i}">${h.tagName === "H3" ? "· " : ""}${h.textContent.slice(0, 20)}</a>`)
+      .join("")
+  const header = document.querySelector(".article-header")
+  if (header) header.after(toc)
+  else article.before(toc)
+  // 滚动高亮当前章节
+  const links = toc.querySelectorAll("a[data-toc]")
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const link = toc.querySelector(`a[data-toc="${entry.target.id.replace("toc-", "")}"]`)
+        if (!link) return
+        if (entry.isIntersecting) {
+          links.forEach((l) => l.classList.remove("is-active"))
+          link.classList.add("is-active")
+        }
+      })
+    },
+    { rootMargin: "-20% 0px -65% 0px", threshold: 0 },
+  )
+  headings.forEach((h) => io.observe(h))
+}
+
+initToc()
+
 initHeaderScroll()
 initStarfield()
 initReveal()
 initPageLoader()
+initBackTop()
+initSearch()
 
 /* ───────────── 数据加载与渲染（保留原功能） ───────────── */
 
