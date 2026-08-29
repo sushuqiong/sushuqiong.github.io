@@ -10268,3 +10268,123 @@ body.music-playing .music-band-eq span {
     animation: none;
   }
 }
+
+/* ── 第五十二批：修复渐变文字隐形（background-clip:text 渲染失败时文字透明） ── */
+
+/* hero 标题：纯色文字 + 光晕呼吸（不依赖 background-clip:text，100% 可见） */
+.hero-title-line {
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: #f8fafc !important;
+  text-shadow:
+    0 0 22px rgba(100, 255, 218, 0.4),
+    0 0 44px rgba(124, 58, 237, 0.25),
+    0 2px 8px rgba(7, 13, 31, 0.45);
+  animation: title-breathe 3.4s ease-in-out infinite !important;
+}
+
+.hero-title-accent {
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: #fde68a !important;
+  text-shadow:
+    0 0 20px rgba(251, 191, 36, 0.5),
+    0 0 40px rgba(244, 114, 182, 0.25),
+    0 2px 8px rgba(7, 13, 31, 0.45);
+  animation: title-breathe 4.2s ease-in-out infinite 0.6s !important;
+}
+
+/* 其他渐变文字：@supports 兜底（不支持 background-clip:text 时显示纯色） */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .manifesto-line,
+  .m-key,
+  .m-key.m-red,
+  .m-key.m-blue,
+  .m-key.m-purple,
+  .section-head h2,
+  .wechat-card h3,
+  .metric-grid strong,
+  .related-grid strong {
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: inherit !important;
+  }
+
+  .manifesto-line {
+    color: #fcd34d !important;
+  }
+
+  .section-head h2 {
+    color: #1d4ed8 !important;
+  }
+
+  .metric-grid strong {
+    color: #64ffda !important;
+  }
+}
+
+/* ── 第五十三批：便签元素 + 动态背景 + section 标题保底 ── */
+
+/* section 标题：渐变下划线保留，文字纯色保底（防 background-clip 隐形） */
+.section-head h2 {
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: #1e1b4b !important;
+  text-shadow: 0 0 26px rgba(124, 58, 237, 0.16);
+}
+
+html[data-theme="dark"] .section-head h2 {
+  color: #e6f1ff !important;
+  text-shadow: 0 0 26px rgba(100, 255, 218, 0.2);
+}
+
+/* 内容区动态背景：主背景渐变缓慢流动 */
+main#content.page,
+.page > section {
+  background-size: 100% 400% !important;
+}
+
+main#content.page {
+  animation: page-bg-drift 30s ease-in-out infinite;
+}
+
+@keyframes page-bg-drift {
+  0%, 100% { background-position: 50% 0%; }
+  50% { background-position: 50% 100%; }
+}
+
+/* 音乐区便签 */
+.music-note {
+  top: -16px;
+  right: 4%;
+}
+
+/* 学术区便签 */
+.pub-note {
+  top: -16px;
+  right: 4%;
+}
+
+#music .section-head,
+#publications .section-head {
+  position: relative;
+}
+
+/* 便签与 section-head 层级 */
+#music .section-head .music-note,
+#publications .section-head .pub-note {
+  position: absolute;
+  z-index: 4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main#content.page {
+    animation: none;
+  }
+}

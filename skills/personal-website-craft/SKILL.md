@@ -5,7 +5,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 
 # Deep-Space Personal Website（深空实验室个人网站）
 
-纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v49+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
+纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v52+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
 
 ## 触发场景
 
@@ -35,7 +35,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 ## 核心模块实现要点
 
 ### 版本号缓存机制（最重要！）
-- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v49）
+- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v52）
 - 每次改 CSS/JS 必须批量 bump（python 脚本遍历 .html 替换 `?vN`→`?vN+1`）
 - 不 bump 用户浏览器缓存看不到新效果（用户曾两次抱怨"没改"）
 - GitHub Pages CDN 边缘缓存：push 后 5-15 分钟同步，验证用 `?cb=$RANDOM` 绕过
@@ -104,6 +104,8 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 - **图片误删**：批量删未引用图前先 grep 引用（hongzhaoyuan.jpg 曾被误删，git checkout 恢复）
 - **翻牌卡片反引号**：patch 替换 template literal 残留反引号导致语法错误
 - **公鸡耳机双边不协调**：正面视角双耳罩像平贴 → SVG 改单边侧戴（头带弧线 + 单耳罩）
+- **渐变文字隐形（重要）**：`color: transparent` + `background-clip: text` 在部分渲染环境（GPU 合成层/不支持 clip）下文字完全不可见（hero 标题、section 标题曾中招，用户反馈"文字被你隐藏了"）→ **标题类文字一律纯色 + 光晕**（background-clip 渐变仅用于非关键装饰），其余渐变文字加 `@supports not (background-clip: text)` 兜底
+- **内容区丰富度**：区块加便签元素（音乐区粉色"边听边逛"、学术区青色"论文都在这里"）+ 主背景渐变缓慢流动（30s 循环）
 
 ## 复现步骤
 
@@ -120,7 +122,7 @@ for r, d, fs in os.walk("."):
         if f.endswith(".html"):
             p = os.path.join(r, f)
             h = open(p, encoding="utf-8").read()
-            h2 = h.replace("?v49", "?v50")
+            h2 = h.replace("?v52", "?v53")
             if h2 != h: open(p, "w", encoding="utf-8").write(h2)
 PY
 git add -A && git commit -m "update" && git push
