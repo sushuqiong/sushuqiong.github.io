@@ -4177,24 +4177,30 @@ body[data-page="about"] .article-lead {
   100% { transform: rotate(360deg) scale(1); }
 }
 
-/* ── 个人宣言区：参照原图（明亮日出天空 + 地标 + 科幻元素） ── */
+/* ── 个人宣言区：严格参照原图（上暗下亮的日出天空 + 金色发光无衬线大字） ── */
 .manifesto {
   position: relative;
   overflow: hidden;
-  padding: 110px 0 120px;
+  padding: 120px 0 130px;
   color: #fef3c7;
   background:
-    url("/assets/backgrounds/sunrise.jpg") center 35% / cover no-repeat,
-    linear-gradient(180deg, #4a7bd8 0%, #7ea8e8 35%, #f0b85c 72%, #f7a64a 100%);
+    linear-gradient(180deg,
+      rgba(14, 26, 68, 0.92) 0%,
+      rgba(22, 40, 92, 0.66) 24%,
+      rgba(90, 70, 100, 0.3) 44%,
+      rgba(217, 133, 60, 0.12) 62%,
+      transparent 80%),
+    url("/assets/backgrounds/sunrise.jpg") center 40% / cover no-repeat,
+    linear-gradient(180deg, #12204e 0%, #2a4a8f 38%, #e0853c 78%, #f7b05a 100%);
   box-shadow: 0 20px 60px rgba(10, 18, 38, 0.25);
 }
 
-/* 渐变天空（蓝→橙日出，保持图可见） */
+/* 渐变天空（保持图可见，顶部暗） */
 .manifesto::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(74, 123, 216, 0.25) 0%, rgba(126, 168, 232, 0.12) 40%, rgba(240, 184, 92, 0.1) 100%);
+  background: linear-gradient(180deg, rgba(8, 14, 32, 0.35) 0%, transparent 34%);
   pointer-events: none;
 }
 
@@ -6569,4 +6575,162 @@ body[data-page="home"] .site-header {
 #music {
   position: relative;
   overflow: hidden;
+}
+
+/* ── 第二十三批：宣言区按原图重做（上暗下亮 + 无衬线金色发光大字） ── */
+
+/* 宣言主文字：无衬线现代字体 + 金色发光（覆盖旧定义） */
+.manifesto-line {
+  margin: 0 0 12px;
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "HarmonyOS Sans SC", sans-serif;
+  font-size: clamp(1.6rem, 3.8vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0.08em;
+  background: linear-gradient(180deg, #fff3c4 0%, #fcd34d 38%, #f59e0b 78%, #d97706 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 24px rgba(251, 191, 36, 0.6)) drop-shadow(0 3px 5px rgba(7, 13, 31, 0.65));
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.manifesto-line.is-in {
+  animation: manifesto-in 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 关键词彩色保留（打破全金） */
+.m-key {
+  background: linear-gradient(92deg, #38bdf8 0%, #7c3aed 55%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.55));
+  animation: key-glow 2.4s ease-in-out infinite;
+}
+
+/* eyebrow 深空蓝紫（原图无衬线风格） */
+.manifesto .eyebrow {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #a5b4fc;
+  text-shadow: 0 0 18px rgba(165, 180, 252, 0.6);
+  margin-bottom: 34px;
+}
+
+/* 宣言区装饰适配暗色天空（星球/飞船在上部暗区） */
+.manifesto-planet {
+  left: 8%;
+  top: 26%;
+  width: 84px;
+  height: 84px;
+  animation: m-float 10s ease-in-out infinite;
+}
+
+.manifesto-ship {
+  left: 22%;
+  top: 12%;
+  width: 84px;
+  height: 32px;
+  animation: ship-fly 18s ease-in-out infinite;
+}
+
+.manifesto-sun {
+  right: 16%;
+  top: 52%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255, 236, 190, 0.95), rgba(251, 146, 60, 0.55) 52%, rgba(251, 146, 60, 0.12) 72%, transparent 78%);
+  box-shadow: 0 0 110px rgba(251, 146, 60, 0.6);
+}
+
+.manifesto-cloud {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  opacity: 0.75;
+}
+
+/* 字体统一：正文/卡片标题无衬线化（告别纯宋体） */
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "HarmonyOS Sans SC", system-ui, sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "HarmonyOS Sans SC", system-ui, sans-serif;
+}
+
+/* 正文颜色：不再纯黑，深蓝灰 */
+.article-content p,
+.article-content li {
+  color: #2d3a55;
+}
+
+/* 全站文字色彩丰富：标题渐变色、卡片标题彩色 */
+.section-head h2 {
+  background: linear-gradient(92deg, #1d4ed8 0%, #7c3aed 55%, #db2777 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* hero 主标题用无衬线现代（覆盖 serif） */
+.hero-title-line {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-weight: 800;
+}
+
+/* ── 第二十四批：极光联动 + 圆形唱片波形 ── */
+
+/* 黑胶环形波形频谱（播放时围绕封面呼吸） */
+.music-dock-inner {
+  position: relative;
+}
+
+.vinyl-wave {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  margin-top: -2px;
+  pointer-events: none;
+  display: none;
+  z-index: 0;
+}
+
+.music-dock.is-playing .vinyl-wave {
+  display: block;
+}
+
+.vinyl-wave i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #64ffda;
+  box-shadow: 0 0 7px rgba(100, 255, 218, 0.9);
+  transform: rotate(var(--deg, 0deg)) translateY(-27px);
+  animation: vinyl-dot 1.05s ease-in-out infinite;
+}
+
+@keyframes vinyl-dot {
+  0%, 100% {
+    transform: rotate(var(--deg, 0deg)) translateY(-24px) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: rotate(var(--deg, 0deg)) translateY(-32px) scale(1.45);
+    opacity: 1;
+  }
+}
+
+/* 极光鼠标联动：translate 属性与动画 transform 共存 */
+.aurora {
+  will-change: translate;
+  transition: translate 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }

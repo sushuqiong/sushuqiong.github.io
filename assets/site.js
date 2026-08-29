@@ -1316,6 +1316,35 @@ initTilt()
 initParallax()
 initStarTrail()
 
+/* ───────────── 极光鼠标联动 ───────────── */
+
+function initAuroraMouse() {
+  const auroras = document.querySelectorAll(".aurora")
+  const hero = document.querySelector(".hero")
+  if (!auroras.length || !hero) return
+  const weights = [0.07, -0.06, 0.045]
+  let raf = null
+  window.addEventListener(
+    "mousemove",
+    (e) => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = null
+        const r = hero.getBoundingClientRect()
+        const nx = (e.clientX - r.left) / r.width - 0.5
+        const ny = (e.clientY - r.top) / r.height - 0.5
+        auroras.forEach((a, i) => {
+          const w = weights[i] || 0.05
+          a.style.translate = `${(nx * w * 1100).toFixed(1)}px ${(ny * w * 800).toFixed(1)}px`
+        })
+      })
+    },
+    { passive: true },
+  )
+}
+
+initAuroraMouse()
+
 /* ───────────── 论文图表 lightbox（点击放大） ───────────── */
 
 function initLightbox() {
@@ -1662,6 +1691,18 @@ function initMusicPlayer() {
   const audio = new Audio()
   audio.preload = "none"
 
+  // 黑胶封面环形波形频谱
+  const vinylWave = document.createElement("div")
+  vinylWave.className = "vinyl-wave"
+  vinylWave.setAttribute("aria-hidden", "true")
+  for (let i = 0; i < 12; i += 1) {
+    const dot = document.createElement("i")
+    dot.style.setProperty("--deg", `${i * 30}deg`)
+    dot.style.animationDelay = `${(i % 4) * 0.13}s`
+    vinylWave.appendChild(dot)
+  }
+  cover.closest(".music-dock-inner")?.appendChild(vinylWave)
+
   let current = 0
   let playing = false
   let lyricsOpen = false
@@ -1874,12 +1915,12 @@ function initManifesto() {
     if (ci < text.length) {
       line.textContent += text[ci]
       ci += 1
-      setTimeout(typeNext, 88 + Math.random() * 70)
+      setTimeout(typeNext, 46 + Math.random() * 36)
     } else {
       line.classList.remove("typing")
       li += 1
       ci = 0
-      setTimeout(typeNext, 360)
+      setTimeout(typeNext, 240)
     }
   }
 
