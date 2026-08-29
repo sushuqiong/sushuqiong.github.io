@@ -89,7 +89,7 @@ if (footer) {
           <a href="/projects/">项目</a>
           <a href="/about/">关于</a>
         </div>
-        <p class="footer-copy">© <span data-year></span> sushuqiong · Research Workbench</p>
+        <p class="footer-copy">© <span data-year></span> sushuqiong · Research Workbench <span class="footer-rooster" aria-hidden="true">🐔</span></p>
       </div>
     </footer>
   `
@@ -803,6 +803,41 @@ function initPerfHints() {
 }
 
 initPerfHints()
+
+/* ───────────── 文章代码块复制按钮 ───────────── */
+
+function initCopyCode() {
+  const pres = document.querySelectorAll(".article-content pre")
+  pres.forEach((pre) => {
+    const btn = document.createElement("button")
+    btn.className = "copy-btn"
+    btn.type = "button"
+    btn.textContent = "复制"
+    btn.setAttribute("aria-label", "复制代码")
+    pre.appendChild(btn)
+    btn.addEventListener("click", async () => {
+      const text = (pre.innerText || "").replace(/\n+$/, "")
+      try {
+        await navigator.clipboard.writeText(text)
+      } catch (e) {
+        const ta = document.createElement("textarea")
+        ta.value = text
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand("copy")
+        ta.remove()
+      }
+      btn.textContent = "✓ 已复制"
+      btn.classList.add("is-copied")
+      setTimeout(() => {
+        btn.textContent = "复制"
+        btn.classList.remove("is-copied")
+      }, 1600)
+    })
+  })
+}
+
+initCopyCode()
 
 /* ───────────── 暗色 / 亮色主题切换 ───────────── */
 
