@@ -601,6 +601,76 @@ function initSpotlight() {
 
 initSpotlight()
 
+/* ───────────── Anime 深化：标题弹性入场 + SVG 描边 ───────────── */
+
+function initAnimeTitles() {
+  if (!window.anime) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const mo = new MutationObserver(() => {
+    document.querySelectorAll(".reveal.is-visible").forEach((sec) => {
+      if (sec.dataset.animeTitle) return
+      sec.dataset.animeTitle = "1"
+      const h2 = sec.querySelector(".section-head h2")
+      if (h2) {
+        window.anime({
+          targets: h2,
+          translateY: [28, 0],
+          opacity: [0, 1],
+          duration: 850,
+          easing: "easeOutElastic(1, 0.72)",
+          delay: 140,
+        })
+      }
+    })
+  })
+  mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] })
+}
+
+initAnimeTitles()
+
+function initAnimeStroke() {
+  if (!window.anime) return
+  const ring = document.querySelector(".manifesto-planet ellipse")
+  if (!ring) return
+  try {
+    const len = ring.getTotalLength()
+    ring.style.strokeDasharray = String(len)
+    ring.style.strokeDashoffset = String(len)
+    window.anime({
+      targets: ring,
+      strokeDashoffset: [len, 0],
+      duration: 2400,
+      easing: "easeOutQuad",
+      delay: 600,
+    })
+  } catch (e) {
+    /* ignore */
+  }
+}
+
+initAnimeStroke()
+
+/* ───────────── 磁吸按钮（React Bits 风格） ───────────── */
+
+function initMagnetic() {
+  if (window.matchMedia("(hover: none)").matches) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  document.querySelectorAll(".hero-actions .button-primary, .header-cta").forEach((btn) => {
+    btn.classList.add("is-magnetic")
+    btn.addEventListener("mousemove", (e) => {
+      const r = btn.getBoundingClientRect()
+      const dx = (e.clientX - r.left - r.width / 2) * 0.2
+      const dy = (e.clientY - r.top - r.height / 2) * 0.2
+      btn.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`
+    })
+    btn.addEventListener("mouseleave", () => {
+      btn.style.transform = ""
+    })
+  })
+}
+
+initMagnetic()
+
 /* ───────────── Hero 3D 微视差（面板跟随鼠标倾斜 + 文案位移） ───────────── */
 
 function initHero3D() {
