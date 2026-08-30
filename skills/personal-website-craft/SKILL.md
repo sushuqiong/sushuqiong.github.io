@@ -5,7 +5,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 
 # Deep-Space Personal Website（深空实验室个人网站）
 
-纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v53+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
+纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v54+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
 
 ## 触发场景
 
@@ -35,7 +35,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 ## 核心模块实现要点
 
 ### 版本号缓存机制（最重要！）
-- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v53）
+- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v54）
 - 每次改 CSS/JS 必须批量 bump（python 脚本遍历 .html 替换 `?vN`→`?vN+1`）
 - 不 bump 用户浏览器缓存看不到新效果（用户曾两次抱怨"没改"）
 - GitHub Pages CDN 边缘缓存：push 后 5-15 分钟同步，验证用 `?cb=$RANDOM` 绕过
@@ -73,6 +73,14 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 
 ### 评论区
 - giscus（repoId `R_kgDOTwHTVA`，分类 Announcements）+ CTA 引导横幅 + 主题同步
+
+## 外部工具借鉴（轻量渐进增强）
+
+- **Anime.js**（本地化 assets/vendor/anime.min.js，17.4KB gzip ~6KB）：只用它做"纯增强"动画——宣言星球/飞船漂浮、太阳呼吸；`if (!window.anime) return` 保证未加载时零影响；不动已有 CSS 动画的元素（会冲突）
+- **Aceternity UI 风格**：Spotlight 聚光灯卡片（radial-gradient 跟随鼠标 --spot-x/--spot-y，纯 CSS/JS 无需库）
+- **Uiverse 风格**：hero 按钮 conic 渐变旋转边框（hover 激活）
+- **Motion Sites / Showreel Design / React Bits**：作为设计灵感参考源（案例风格借鉴），不直接集成 React 组件（本站零框架）
+- 原则：外部库/组件必须本地化 + 渐进增强 + 可回退，禁止 CDN 运行时依赖（避免加载慢/断网失效）
 
 ## 性能清单（已验证）
 
@@ -123,7 +131,7 @@ for r, d, fs in os.walk("."):
         if f.endswith(".html"):
             p = os.path.join(r, f)
             h = open(p, encoding="utf-8").read()
-            h2 = h.replace("?v53", "?v54")
+            h2 = h.replace("?v54", "?v55")
             if h2 != h: open(p, "w", encoding="utf-8").write(h2)
 PY
 git add -A && git commit -m "update" && git push

@@ -10394,3 +10394,88 @@ main#content.page {
     animation: none;
   }
 }
+
+/* ── 第五十四批：Anime.js 增强 + Aceternity Spotlight + Uiverse 按钮 ── */
+
+/* Spotlight 聚光灯卡片（Aceternity 风格） */
+.has-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.has-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(100, 255, 218, 0.12),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.has-spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Uiverse 风格：渐变边框旋转按钮（hero 主按钮） */
+.hero-actions .button-primary,
+.btn-primary,
+.hero-actions a[class*="btn"]:not(.button-soft) {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-actions .button-primary::before,
+.btn-primary::before,
+.hero-actions a[class*="btn"]:not(.button-soft)::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(100, 255, 218, 0.85) 60deg,
+    rgba(167, 139, 250, 0.85) 120deg,
+    transparent 180deg,
+    rgba(244, 114, 182, 0.7) 260deg,
+    transparent 320deg
+  );
+  animation: btn-border-spin 4.5s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.hero-actions .button-primary:hover::before,
+.btn-primary:hover::before,
+.hero-actions a[class*="btn"]:not(.button-soft):hover::before {
+  opacity: 1;
+}
+
+@keyframes btn-border-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* anime 增强的宣言元素：给 transform 过渡让 anime 平滑接管 */
+.manifesto-planet,
+.manifesto-ship,
+.manifesto-sun {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-spotlight::before {
+    display: none;
+  }
+
+  .hero-actions .button-primary::before {
+    animation: none;
+  }
+}

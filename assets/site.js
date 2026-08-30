@@ -537,6 +537,70 @@ function initCustomCursor() {
 
 initCustomCursor()
 
+/* ───────────── Anime.js 增强（宣言星球/飞船漂浮，纯增强无回退风险） ───────────── */
+
+function initAnimeEnhance() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (!window.anime) return
+  const planet = document.querySelector(".manifesto-planet")
+  const ship = document.querySelector(".manifesto-ship")
+  const sun = document.querySelector(".manifesto-sun")
+  // 星球：上下漂浮 + 轻微旋转
+  if (planet) {
+    window.anime({
+      targets: planet,
+      translateY: [-10, -10, -6, -10, -14, -10],
+      rotate: [-4, 4],
+      duration: 9000,
+      loop: true,
+      easing: "easeInOutSine",
+      direction: "alternate",
+    })
+  }
+  // 飞船：左右漂移 + 呼吸起伏
+  if (ship) {
+    window.anime({
+      targets: ship,
+      translateX: [-14, -14, -4, -14, -24, -14],
+      translateY: [-3, 3],
+      duration: 11000,
+      loop: true,
+      easing: "easeInOutSine",
+      direction: "alternate",
+    })
+  }
+  // 太阳：柔和缩放呼吸（anime 弹性）
+  if (sun) {
+    window.anime({
+      targets: sun,
+      scale: [1, 1.12],
+      duration: 2600,
+      loop: true,
+      easing: "easeInOutSine",
+      direction: "alternate",
+    })
+  }
+}
+
+initAnimeEnhance()
+
+/* ───────────── Spotlight 卡片（Aceternity 风格聚光灯） ───────────── */
+
+function initSpotlight() {
+  if (window.matchMedia("(hover: none)").matches) return
+  const cards = document.querySelectorAll(".pub-row, .feature-tile, .music-card")
+  cards.forEach((card) => {
+    card.classList.add("has-spotlight")
+    card.addEventListener("mousemove", (e) => {
+      const r = card.getBoundingClientRect()
+      card.style.setProperty("--spot-x", `${e.clientX - r.left}px`)
+      card.style.setProperty("--spot-y", `${e.clientY - r.top}px`)
+    })
+  })
+}
+
+initSpotlight()
+
 /* ───────────── Hero 3D 微视差（面板跟随鼠标倾斜 + 文案位移） ───────────── */
 
 function initHero3D() {
