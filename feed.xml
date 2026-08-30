@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sushuqiong · 医学研究，代码与 AI</title>
+    <link>https://sushuqiong.github.io/</link>
+    <description>医学博士的公开工作台：GitHub skills、论文、公众号精选与灵感电台。</description>
+    <language>zh-CN</language>
+    <atom:link href="https://sushuqiong.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Sat, 30 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>为什么我选择 GitHub Pages 做个人站</title>
+      <link>https://sushuqiong.github.io/posts/github-pages/</link>
+      <guid>https://sushuqiong.github.io/posts/github-pages/</guid>
+      <pubDate>Fri, 07 Aug 2026 00:00:00 +0000</pubDate>
+      <description>传统建站要处理服务器、程序、域名、SSL 和 DNS。GitHub Pages 把这些繁琐步骤尽量收起来，适合先把一个个人站快速搭起来，再慢慢补内容。</description>
+    </item>
+    <item>
+      <title>这个站点是怎样组织的</title>
+      <link>https://sushuqiong.github.io/posts/site-architecture/</link>
+      <guid>https://sushuqiong.github.io/posts/site-architecture/</guid>
+      <pubDate>Thu, 06 Aug 2026 00:00:00 +0000</pubDate>
+      <description>本网站的技术架构：文件组织、样式与脚本设计。</description>
+    </item>
+    <item>
+      <title>公开内容与隐私边界</title>
+      <link>https://sushuqiong.github.io/posts/privacy/</link>
+      <guid>https://sushuqiong.github.io/posts/privacy/</guid>
+      <pubDate>Wed, 05 Aug 2026 00:00:00 +0000</pubDate>
+      <description>网站隐私策略：公开内容、数据边界与安全说明。</description>
+    </item>
+  </channel>
+</rss>

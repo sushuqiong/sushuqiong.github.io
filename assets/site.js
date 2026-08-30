@@ -1203,6 +1203,38 @@ function initRelatedPosts() {
 
 initRelatedPosts()
 
+/* ───────────── 文章上一篇 / 下一篇导航 ───────────── */
+
+function initPrevNext() {
+  const footer = document.querySelector(".article-footer")
+  if (!footer) return
+  const ORDER = [
+    { title: "为什么我选择 GitHub Pages 做个人站", url: "/posts/github-pages/" },
+    { title: "这个站点是怎样组织的", url: "/posts/site-architecture/" },
+    { title: "公开内容与隐私边界", url: "/posts/privacy/" },
+  ]
+  const cur = location.pathname
+  const idx = ORDER.findIndex((p) => cur === p.url)
+  if (idx === -1) return
+  const prev = ORDER[(idx - 1 + ORDER.length) % ORDER.length]
+  const next = ORDER[(idx + 1) % ORDER.length]
+  const nav = document.createElement("nav")
+  nav.className = "prev-next"
+  nav.setAttribute("aria-label", "上一篇下一篇")
+  nav.innerHTML = `
+    <a class="pn-link pn-prev" href="${prev.url}">
+      <span class="pn-label">← 上一篇</span>
+      <strong>${prev.title}</strong>
+    </a>
+    <a class="pn-link pn-next" href="${next.url}">
+      <span class="pn-label">下一篇 →</span>
+      <strong>${next.title}</strong>
+    </a>`
+  footer.before(nav)
+}
+
+initPrevNext()
+
 /* ───────────── 文章搜索高亮（?q= 关键词 + 正文高亮） ───────────── */
 
 function initArticleHighlight() {

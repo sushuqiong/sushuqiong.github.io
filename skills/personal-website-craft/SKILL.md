@@ -5,7 +5,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 
 # Deep-Space Personal Website（深空实验室个人网站）
 
-纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v56+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
+纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v57+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
 
 ## 触发场景
 
@@ -35,7 +35,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 ## 核心模块实现要点
 
 ### 版本号缓存机制（最重要！）
-- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v56）
+- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v57）
 - 每次改 CSS/JS 必须批量 bump（python 脚本遍历 .html 替换 `?vN`→`?vN+1`）
 - 不 bump 用户浏览器缓存看不到新效果（用户曾两次抱怨"没改"）
 - GitHub Pages CDN 边缘缓存：push 后 5-15 分钟同步，验证用 `?cb=$RANDOM` 绕过
@@ -96,6 +96,8 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 - `assets/og-image.webp`（1200×630 深空 + 🐔 + 标题，PIL 生成 75KB）
 - `sitemap.xml`（17 页 URL + lastmod）+ `robots.txt`（Allow + Sitemap）
 - 首页 JSON-LD `Person`（name/url/sameAs）
+- `feed.xml` RSS 2.0（3 篇文章）+ 归档页 RSS 订阅入口 + 文章页上一篇/下一篇导航（循环顺序）
+- README.md 重写为 v56 全景（功能/结构/skill 链接/隐私声明）
 - 404 页公鸡从 emoji 升级为内联 SVG 场景（弹跳 + 彩虹尾摆动 + 翅膀扇动 + 星空闪烁）
 - 背景层图（被遮罩覆盖）再压缩：降分辨率到 1600px + q55，2.7MB→959KB（省 65%，视觉无差）
 - img 全带 width/height（零 CLS）、module script 自动 defer、零外部字体
@@ -142,7 +144,7 @@ for r, d, fs in os.walk("."):
         if f.endswith(".html"):
             p = os.path.join(r, f)
             h = open(p, encoding="utf-8").read()
-            h2 = h.replace("?v56", "?v57")
+            h2 = h.replace("?v57", "?v58")
             if h2 != h: open(p, "w", encoding="utf-8").write(h2)
 PY
 git add -A && git commit -m "update" && git push
