@@ -2032,7 +2032,7 @@ html[data-theme="dark"] .rooster::before {
 .stats-pop {
   position: fixed;
   right: 20px;
-  bottom: 104px;
+  bottom: 164px;
   z-index: 82;
   width: min(340px, calc(100vw - 40px));
   padding: 24px 22px 20px;
@@ -2320,7 +2320,7 @@ html[data-theme="dark"] .rooster::before {
 .back-to-top {
   position: fixed;
   right: 20px;
-  bottom: 104px;
+  bottom: 158px;
   z-index: 79;
   width: 44px;
   height: 44px;
@@ -7287,7 +7287,7 @@ body[data-page="wechat"] .qr-card {
 .back-top {
   position: fixed;
   right: 26px;
-  bottom: 88px;
+  bottom: 158px;
   z-index: 120;
   width: 46px;
   height: 46px;
@@ -7330,7 +7330,7 @@ body[data-page="wechat"] .qr-card {
 .search-fab {
   position: fixed;
   right: 26px;
-  bottom: 142px;
+  bottom: 216px;
   z-index: 120;
   width: 46px;
   height: 46px;
@@ -10918,59 +10918,62 @@ html[data-theme="dark"] .section-map a > span {
 /* ── ① 首屏统计面板 → 拟物仪表卡 ── */
 .hero .metric-grid > div {
   position: relative;
-  padding: 15px 17px 20px;
+  padding: 15px 17px 22px;
   border-radius: 16px;
-  background: linear-gradient(162deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.82) 100%);
-  border: 1px solid rgba(15, 23, 42, 0.07);
+  /* 深色玻璃（与深空 hero 一致，保证青绿渐变数字的对比度） */
+  background: linear-gradient(162deg, rgba(230, 241, 255, 0.11) 0%, rgba(230, 241, 255, 0.035) 100%);
+  border: 1px solid rgba(100, 255, 218, 0.2);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(15, 23, 42, 0.045),
-    0 12px 26px rgba(7, 13, 31, 0.16),
-    0 2px 6px rgba(7, 13, 31, 0.08);
-  transition: translate 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.35s ease;
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22),
+    0 12px 26px rgba(3, 6, 18, 0.42),
+    0 2px 6px rgba(3, 6, 18, 0.24);
+  transition: translate 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.35s ease, border-color 0.3s ease;
 }
 
 .hero .metric-grid > div:hover {
   translate: 0 -3px;
+  border-color: rgba(100, 255, 218, 0.42);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(15, 23, 42, 0.045),
-    0 18px 36px rgba(7, 13, 31, 0.22),
-    0 3px 8px rgba(7, 13, 31, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 22px rgba(100, 255, 218, 0.06),
+    0 18px 36px rgba(3, 6, 18, 0.5),
+    0 0 26px rgba(100, 255, 218, 0.14);
 }
 
-/* 数字：内刻质感（高光在上、暗影在下） */
+/* 数字：保留原青绿渐变（不覆盖 background-clip:text），仅加同色光晕 */
 .hero .metric-grid strong {
   display: block;
   letter-spacing: -0.02em;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 -1px 1px rgba(15, 23, 42, 0.14);
+  text-shadow: 0 0 16px rgba(100, 255, 218, 0.5);
 }
 
-/* 底部刻度线（仪表刻痕） */
+/* 底部刻度线（青绿，与主题一致） */
 .hero .metric-grid > div::after {
   content: "";
   position: absolute;
   left: 17px;
   right: 17px;
-  bottom: 10px;
+  bottom: 11px;
   height: 3px;
-  background-image: repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.18) 0 1px, transparent 1px 7px);
-  opacity: 0.5;
+  background-image: repeating-linear-gradient(90deg, rgba(100, 255, 218, 0.5) 0 1px, transparent 1px 7px);
+  opacity: 0.55;
   border-radius: 2px;
   pointer-events: none;
 }
 
-/* 顶部高光弧（玻璃反光） */
+/* 顶部微光（极淡，不遮挡文字） */
 .hero .metric-grid > div::before {
   content: "";
   position: absolute;
   left: 12px;
   right: 12px;
   top: 0;
-  height: 42%;
-  border-radius: 16px 16px 40% 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+  height: 38%;
+  border-radius: 16px 16px 44% 44%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
   pointer-events: none;
+  z-index: 0;
 }
 
 /* ── ② 徽章 → 拟物胶囊 ── */
@@ -11017,20 +11020,16 @@ a.btn:active {
 
 /* ── ④ 深色主题适配 ── */
 html[data-theme="dark"] .hero .metric-grid > div {
-  background: linear-gradient(162deg, rgba(30, 41, 74, 0.92) 0%, rgba(16, 27, 69, 0.88) 100%);
-  border-color: rgba(100, 255, 218, 0.16);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    0 12px 26px rgba(3, 6, 18, 0.5);
+  background: linear-gradient(162deg, rgba(230, 241, 255, 0.13) 0%, rgba(230, 241, 255, 0.04) 100%);
+  border-color: rgba(100, 255, 218, 0.24);
 }
 
 html[data-theme="dark"] .hero .metric-grid strong {
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5), 0 -1px 1px rgba(255, 255, 255, 0.08);
+  text-shadow: 0 0 16px rgba(100, 255, 218, 0.5);
 }
 
 html[data-theme="dark"] .hero .metric-grid > div::after {
-  background-image: repeating-linear-gradient(90deg, rgba(230, 241, 255, 0.22) 0 1px, transparent 1px 7px);
+  background-image: repeating-linear-gradient(90deg, rgba(100, 255, 218, 0.5) 0 1px, transparent 1px 7px);
 }
 
 html[data-theme="dark"] .hero .metric-grid > div::before {
@@ -11060,4 +11059,193 @@ html[data-theme="dark"] .badge {
   a.btn:active {
     translate: none;
   }
+}
+
+
+/* ============================================================
+   v61 · 右下角浮动元素垂直排布（公鸡 114px，顶部位于 bottom 136px）
+   —— 统一间距，避免与放大的公鸡重叠
+   ============================================================ */
+:root {
+  --rooster-size: 114px;
+  --rooster-gap: 22px;
+  --rooster-top: calc(22px + var(--rooster-size)); /* 136px */
+}
+
+.back-top,
+.back-to-top {
+  bottom: calc(var(--rooster-top) + 22px) !important;
+}
+
+.search-fab {
+  bottom: calc(var(--rooster-top) + 80px) !important;
+}
+
+.stats-pop {
+  bottom: calc(var(--rooster-top) + 28px) !important;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --rooster-size: 88px;
+  }
+  .back-top,
+  .back-to-top {
+    bottom: calc(var(--rooster-top) + 14px) !important;
+  }
+  .search-fab {
+    bottom: calc(var(--rooster-top) + 66px) !important;
+  }
+}
+
+
+/* ============================================================
+   v61 · C 批次：首屏光束与光斑层（Aceternity 思路）
+   —— 纯装饰层，pointer-events:none，不影响文字与交互
+   ============================================================ */
+
+.hero-atmos {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* 斜向柔光束（3 条，缓慢漂移） */
+.hero-atmos .beam {
+  position: absolute;
+  top: -35%;
+  width: 170px;
+  height: 170%;
+  background: linear-gradient(180deg, transparent 0%, rgba(100, 255, 218, 0.17) 45%, transparent 100%);
+  filter: blur(30px);
+  transform: rotate(17deg);
+  animation: beam-drift 17s ease-in-out infinite alternate;
+  opacity: 0.65;
+}
+
+.hero-atmos .beam-2 {
+  left: 34%;
+  width: 130px;
+  background: linear-gradient(180deg, transparent 0%, rgba(167, 139, 250, 0.16) 48%, transparent 100%);
+  animation-duration: 21s;
+  animation-delay: -6s;
+}
+
+.hero-atmos .beam-3 {
+  left: 63%;
+  width: 200px;
+  background: linear-gradient(180deg, transparent 0%, rgba(56, 189, 248, 0.14) 46%, transparent 100%);
+  animation-duration: 25s;
+  animation-delay: -12s;
+}
+
+@keyframes beam-drift {
+  from { translate: -28px 0; opacity: 0.5; }
+  to   { translate: 34px 0; opacity: 0.82; }
+}
+
+/* 柔光斑（2 个，缓慢呼吸） */
+.hero-atmos .glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  animation: glow-breathe 15s ease-in-out infinite;
+}
+
+.hero-atmos .glow-1 {
+  left: 8%;
+  top: 16%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(100, 255, 218, 0.2), transparent 70%);
+}
+
+.hero-atmos .glow-2 {
+  right: 10%;
+  bottom: 12%;
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.17), transparent 72%);
+  animation-delay: -7s;
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.55; scale: 1; }
+  50%      { opacity: 0.95; scale: 1.1; }
+}
+
+/* hero 内容需在装饰层之上 */
+.hero .hero-inner,
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-atmos .beam,
+  .hero-atmos .glow {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+
+/* ============================================================
+   v61b · 子页面（.article-header）同样享有 v59/v61 的叙事与氛围
+   ============================================================ */
+
+/* 子页面页头标题：模糊消散进入 */
+body.reveal-ready .reveal .article-header > .eyebrow,
+body.reveal-ready .reveal .article-header > h1,
+body.reveal-ready .reveal .article-header > .article-lead {
+  opacity: 0;
+  filter: blur(9px);
+  translate: 0 22px;
+  transition:
+    opacity 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
+    translate 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.reveal-ready .reveal.is-visible .article-header > .eyebrow {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+  transition-delay: 0.05s;
+}
+
+body.reveal-ready .reveal.is-visible .article-header > h1 {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+  transition-delay: 0.13s;
+}
+
+body.reveal-ready .reveal.is-visible .article-header > .article-lead {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+  transition-delay: 0.22s;
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  body.reveal-ready .reveal .article-header > .eyebrow,
+  body.reveal-ready .reveal .article-header > h1,
+  body.reveal-ready .reveal .article-header > .article-lead {
+    opacity: 1 !important;
+    filter: none !important;
+    translate: none !important;
+  }
+}
+
+/* 子页面页头氛围层容器（由 JS 注入光束/光斑）*/
+.article-header {
+  position: relative;
+}
+
+.article-header > .hero-atmos {
+  border-radius: 20px;
 }

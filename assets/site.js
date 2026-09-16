@@ -3065,9 +3065,13 @@ function initSectionMap() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
   if (window.innerWidth < 1100) return
 
-  const sections = Array.from(document.querySelectorAll("section[id]")).filter((s) => {
+  const sections = Array.from(document.querySelectorAll("section[id], main > section")).filter((s) => {
     if (!s.querySelector("h2, .section-head, .eyebrow")) return false
     return s.offsetHeight > 160
+  })
+  // 没有 id 的区块自动补一个（供锚点跳转）
+  sections.forEach((s, i) => {
+    if (!s.id) s.id = "sec-" + (i + 1)
   })
   if (sections.length < 3) return
 
@@ -3128,3 +3132,63 @@ function initSectionMap() {
 }
 
 initSectionMap()
+
+
+/* ───────────── v61：把滚动叙事推广到全站 ───────────── */
+
+/* 非首页页面自动把 section-head 所在容器标记为 .reveal，
+   使标题"模糊消散"进入动画在全站生效（不改 HTML） */
+function autoMarkReveal() {
+  if (document.querySelector(".reveal")) return // 首页已有显式标记
+  const heads = document.querySelectorAll(".section-head, .article-header")
+  const marked = new Set()
+  heads.forEach((head) => {
+    const host = head.closest("section") || head.parentElement
+    if (host && !marked.has(host)) {
+      host.classList.add("reveal")
+      marked.add(host)
+    }
+  })
+  if (!marked.size) {
+    document.querySelectorAll("main > section, .page-hero, .card-grid, .grid").forEach((el) => el.classList.add("reveal"))
+  }
+}
+
+autoMarkReveal()
+
+/* 首屏光束与光斑（C 批次）：仅在有 .hero 的页面注入 */
+function initHeroAtmos() {
+  // 首页用 .hero；子页面用 .article-header 作为氛围层宿主
+  const hero = document.querySelector(".hero") || document.querySelector(".article-header")
+  if (!hero || hero.querySelector(".hero-atmos")) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // 减少动效时保留静态氛围（无动画）
+    const calm = document.createElement("div")
+    calm.className = "hero-atmos"
+    calm.setAttribute("aria-hidden", "true")
+    calm.innerHTML = '<span class="glow glow-1"></span><span class="glow glow-2"></span>'
+    hero.insertBefore(calm, hero.firstChild)
+    return
+  }
+  const atmos = document.createElement("div")
+  atmos.className = "hero-atmos"
+  atmos.setAttribute("aria-hidden", "true")
+  atmos.innerHTML =
+    '<span class="beam beam-1"></span>' +
+    '<span class="beam beam-2"></span>' +
+    '<span class="beam beam-3"></span>' +
+    '<span class="glow glow-1"></span>' +
+    '<span class="glow glow-2"></span>'
+  hero.insertBefore(atmos, hero.firstChild)
+}
+
+initHeroAtmos()
+
+
+/* v61c：确保子页面的 reveal 动画真正启用
+   （initReveal 在文件前部执行时子页面还没有 .reveal 元素 → 提前 return，
+    这里在标记完成后补跑一次；initReveal 对同一元素重复 observe 是安全的） */
+autoMarkReveal()
+if (typeof initReveal === "function" && !document.body.classList.contains("reveal-ready")) {
+  initReveal()
+}
