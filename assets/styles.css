@@ -1825,14 +1825,53 @@ body[data-page="home"] .site-header:not(.is-scrolled) .nav a[aria-current="page"
    小公鸡吉祥物 + 访客统计
    ============================================================ */
 
+/* ── 公鸡呼吸光晕（v58 新增，配合放大后的存在感）── */
+.rooster::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 190%;
+  height: 190%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(253, 224, 71, 0.62) 0%,
+    rgba(251, 191, 36, 0.42) 28%,
+    rgba(249, 115, 22, 0.22) 50%,
+    rgba(249, 115, 22, 0.08) 68%,
+    transparent 80%);
+  z-index: -1;
+  pointer-events: none;
+  animation: rooster-aura 4.2s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes rooster-aura {
+  0%, 100% { opacity: 0.72; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rooster::before { animation: none; opacity: 0.85; }
+}
+
+html[data-theme="dark"] .rooster::before {
+  background: radial-gradient(circle,
+    rgba(253, 224, 71, 0.55) 0%,
+    rgba(251, 191, 36, 0.36) 30%,
+    rgba(249, 115, 22, 0.2) 52%,
+    transparent 78%);
+}
+
 /* ── 右下角悬浮小公鸡 ── */
 .rooster {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: 22px;
+  bottom: 22px;
   z-index: 80;
-  width: 76px;
-  height: 76px;
+  width: 114px;
+  height: 114px;
   cursor: pointer;
   filter: drop-shadow(0 8px 18px rgba(7, 13, 31, 0.35));
   animation: rooster-bob 3.2s ease-in-out infinite;
@@ -1848,11 +1887,13 @@ body[data-page="home"] .site-header:not(.is-scrolled) .nav a[aria-current="page"
   width: 100%;
   height: 100%;
   overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes rooster-bob {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  50% { transform: translateY(-6px); }
 }
 
 /* 身体：左右轻微摇摆 */
@@ -1923,24 +1964,24 @@ body[data-page="home"] .site-header:not(.is-scrolled) .nav a[aria-current="page"
 
 @keyframes rooster-hop {
   0% { transform: translateY(0) scale(1); }
-  35% { transform: translateY(-26px) scale(1.06); }
-  70% { transform: translateY(4px) scale(0.97); }
+  35% { transform: translateY(-39px) scale(1.06); }
+  70% { transform: translateY(6px) scale(0.97); }
   100% { transform: translateY(0) scale(1); }
 }
 
 /* 气泡 */
 .rooster-bubble {
   position: fixed;
-  right: 104px;
-  bottom: 44px;
+  right: 152px;
+  bottom: 58px;
   z-index: 81;
-  max-width: 150px;
-  padding: 7px 12px;
+  max-width: 196px;
+  padding: 9px 15px;
   border-radius: 14px 14px 4px 14px;
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text);
   opacity: 0;
@@ -2081,10 +2122,10 @@ body[data-page="home"] .site-header:not(.is-scrolled) .nav a[aria-current="page"
 
 @media (max-width: 640px) {
   .rooster {
-    width: 62px;
-    height: 62px;
-    right: 14px;
-    bottom: 14px;
+    width: 88px;
+    height: 88px;
+    right: 16px;
+    bottom: 16px;
   }
 
   .rooster-bubble {
@@ -4148,9 +4189,9 @@ body[data-page="about"] .article-lead {
 
 @keyframes rooster-dance {
   0%, 100% { transform: translateY(0) rotate(-7deg) scale(1); }
-  25% { transform: translateY(-7px) rotate(7deg) scale(1.06); }
+  25% { transform: translateY(-10px) rotate(7deg) scale(1.06); }
   50% { transform: translateY(0) rotate(-4deg) scale(1); }
-  75% { transform: translateY(-5px) rotate(5deg) scale(1.04); }
+  75% { transform: translateY(-8px) rotate(5deg) scale(1.04); }
 }
 
 .rooster.is-dancing .rooster-wing {
@@ -8509,11 +8550,11 @@ html[data-theme="dark"] .related-grid strong {
 .rooster .dj-deck {
   position: absolute;
   left: 50%;
-  bottom: -14px;
+  bottom: -21px;
   transform: translateX(-50%);
-  width: 104px;
-  height: 30px;
-  border-radius: 12px 12px 8px 8px;
+  width: 156px;
+  height: 45px;
+  border-radius: 18px 18px 12px 12px;
   background: linear-gradient(180deg, #1e1e2a, #0c0c14);
   border: 1px solid rgba(100, 255, 218, 0.22);
   box-shadow: 0 8px 22px rgba(7, 13, 31, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -8522,11 +8563,11 @@ html[data-theme="dark"] .related-grid strong {
 
 .rooster .dj-turntable {
   position: absolute;
-  left: 10px;
+  left: 15px;
   top: 50%;
-  width: 22px;
-  height: 22px;
-  margin-top: -11px;
+  width: 33px;
+  height: 33px;
+  margin-top: -16.5px;
   border-radius: 50%;
   background:
     repeating-radial-gradient(circle, rgba(100, 255, 218, 0.14) 0 1.5px, transparent 1.5px 3.5px),
@@ -8538,7 +8579,7 @@ html[data-theme="dark"] .related-grid strong {
 .rooster .dj-turntable::after {
   content: "";
   position: absolute;
-  inset: 7px;
+  inset: 10px;
   border-radius: 50%;
   background: #64ffda;
   box-shadow: 0 0 8px rgba(100, 255, 218, 0.8);
@@ -8546,43 +8587,43 @@ html[data-theme="dark"] .related-grid strong {
 
 .rooster .dj-fader {
   position: absolute;
-  left: 46px;
-  top: 7px;
-  width: 4px;
-  height: 16px;
-  border-radius: 4px;
+  left: 69px;
+  top: 10px;
+  width: 6px;
+  height: 24px;
+  border-radius: 5px;
   background: rgba(100, 255, 218, 0.2);
 }
 
 .rooster .dj-fader i {
   position: absolute;
-  left: -3px;
-  top: 2px;
-  width: 10px;
-  height: 6px;
-  border-radius: 3px;
+  left: -4px;
+  top: 3px;
+  width: 15px;
+  height: 9px;
+  border-radius: 4px;
   background: #fbbf24;
   animation: fader-slide 1.6s ease-in-out infinite alternate;
 }
 
 @keyframes fader-slide {
-  from { top: 2px; }
-  to { top: 8px; }
+  from { top: 3px; }
+  to { top: 14px; }
 }
 
 .rooster .dj-pad {
   position: absolute;
-  top: 7px;
-  width: 12px;
-  height: 12px;
-  border-radius: 4px;
+  top: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
   background: rgba(167, 139, 250, 0.35);
   border: 1px solid rgba(167, 139, 250, 0.5);
   animation: pad-blink 1.1s ease-in-out infinite;
 }
 
-.rooster .dj-pad-1 { right: 22px; }
-.rooster .dj-pad-2 { right: 8px; animation-delay: -0.55s; }
+.rooster .dj-pad-1 { right: 33px; }
+.rooster .dj-pad-2 { right: 12px; animation-delay: -0.55s; }
 
 @keyframes pad-blink {
   0%, 100% { background: rgba(167, 139, 250, 0.25); }
