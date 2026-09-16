@@ -2843,8 +2843,6 @@ function initMusicPlayer() {
     dot.style.animationDelay = `${(i % 4) * 0.13}s`
     vinylWave.appendChild(dot)
   }
-  cover.closest(".music-dock-inner")?.appendChild(vinylWave)
-
   let current = 0
   let playing = false
   let lyricsOpen = false
@@ -2855,6 +2853,10 @@ function initMusicPlayer() {
   const toggle = dock.querySelector("[data-music-toggle]")
   const progress = dock.querySelector("[data-music-progress] span")
   const lyricsBtn = dock.querySelector("[data-music-lyrics]")
+
+  // 黑胶环形波形挂到封面容器（v59 修复：原代码在 cover 声明前调用，触发 TDZ 报错
+  //  "Cannot access 'cover' before initialization"，导致其后所有初始化中断）
+  cover.closest(".music-dock-inner")?.appendChild(vinylWave)
 
   function loadSong(index, autoplay) {
     current = (index + SONGS.length) % SONGS.length
@@ -3055,3 +3057,74 @@ function initManifesto() {
 }
 
 initManifesto()
+
+
+/* ───────────── 右侧章节小地图（v59）───────────── */
+
+function initSectionMap() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (window.innerWidth < 1100) return
+
+  const sections = Array.from(document.querySelectorAll("section[id]")).filter((s) => {
+    if (!s.querySelector("h2, .section-head, .eyebrow")) return false
+    return s.offsetHeight > 160
+  })
+  if (sections.length < 3) return
+
+  const map = document.createElement("nav")
+  map.className = "section-map"
+  map.setAttribute("aria-label", "章节导航")
+
+  const links = sections.map((sec, i) => {
+    const eyebrowEl = sec.querySelector(".eyebrow")
+    const h2El = sec.querySelector("h2")
+    const label = (eyebrowEl && eyebrowEl.textContent.trim()) || (h2El && h2El.textContent.trim()) || "第 " + (i + 1) + " 节"
+    const a = document.createElement("a")
+    a.href = "#" + sec.id
+    a.setAttribute("aria-label", label)
+    a.title = label
+    const span = document.createElement("span")
+    span.textContent = label
+    a.appendChild(span)
+    a.addEventListener("click", (e) => {
+      e.preventDefault()
+      sec.scrollIntoView({ behavior: "smooth", block: "start" })
+      try {
+        history.replaceState(null, "", "#" + sec.id)
+      } catch (err) {
+        /* 忽略 */
+      }
+    })
+    map.appendChild(a)
+    return a
+  })
+
+  document.body.appendChild(map)
+  document.body.classList.add("section-map-ready")
+  setTimeout(() => map.classList.add("is-shown"), 500)
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue
+        const idx = sections.indexOf(entry.target)
+        if (idx < 0) continue
+        links.forEach((l, i) => l.classList.toggle("is-active", i === idx))
+      }
+    },
+    { threshold: 0.12, rootMargin: "-18% 0px -52% 0px" },
+  )
+  sections.forEach((s) => io.observe(s))
+
+  // 视口变窄时隐藏，变宽时恢复
+  let raf = null
+  window.addEventListener("resize", () => {
+    if (raf) return
+    raf = requestAnimationFrame(() => {
+      raf = null
+      map.style.display = window.innerWidth < 1100 ? "none" : ""
+    })
+  })
+}
+
+initSectionMap()

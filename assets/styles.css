@@ -10738,3 +10738,173 @@ html[data-theme="dark"] .rss-link {
   border-color: rgba(249, 115, 22, 0.45);
   color: #fb923c;
 }
+
+
+/* ============================================================
+   v59 · 滚动叙事增强
+   ============================================================ */
+
+/* ── ① 章节标题：上浮 + 模糊消散（滚动进入时触发）──
+   安全设计：默认状态挂在 body.reveal-ready 下（JS 失败时不生效 → 文字始终可见），
+   并额外用 @media print / prefers-reduced-motion 兜底；用 translate 属性而非 transform，
+   避免与其它动效争抢 transform。 */
+body.reveal-ready .reveal .section-head > .eyebrow,
+body.reveal-ready .reveal .section-head > h2,
+body.reveal-ready .reveal .section-head > .section-sub {
+  opacity: 0;
+  filter: blur(9px);
+  translate: 0 22px;
+  transition:
+    opacity 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
+    translate 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.reveal-ready .reveal.is-visible .section-head > .eyebrow {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+  transition-delay: 0.05s;
+}
+
+body.reveal-ready .reveal.is-visible .section-head > h2 {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+  transition-delay: 0.13s;
+}
+
+body.reveal-ready .reveal.is-visible .section-head > .section-sub {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+  transition-delay: 0.22s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.reveal-ready .reveal .section-head > .eyebrow,
+  body.reveal-ready .reveal .section-head > h2,
+  body.reveal-ready .reveal .section-head > .section-sub {
+    opacity: 1 !important;
+    filter: none !important;
+    translate: none !important;
+  }
+}
+
+@media print {
+  body.reveal-ready .reveal .section-head > .eyebrow,
+  body.reveal-ready .reveal .section-head > h2,
+  body.reveal-ready .reveal .section-head > .section-sub {
+    opacity: 1 !important;
+    filter: none !important;
+    translate: none !important;
+  }
+}
+
+/* ── ② 右侧章节小地图 ── */
+.section-map {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  translate: 14px 0;
+  transition: opacity 0.45s ease, translate 0.45s ease;
+}
+
+body.section-map-ready .section-map {
+  display: flex;
+}
+
+.section-map.is-shown {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.section-map a {
+  position: relative;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(100, 255, 218, 0.45);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.09);
+  transition: background 0.3s ease, scale 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-map a:hover {
+  scale: 1.55;
+  background: #22d3ee;
+}
+
+.section-map a.is-active {
+  background: linear-gradient(135deg, #64ffda, #38bdf8);
+  scale: 1.4;
+  box-shadow: 0 0 0 4px rgba(100, 255, 218, 0.2);
+}
+
+.section-map a > span {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 8px;
+  padding: 4px 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+}
+
+.section-map a:hover > span,
+.section-map a:focus-visible > span {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+html[data-theme="dark"] .section-map {
+  background: rgba(16, 27, 69, 0.62);
+  border-color: rgba(100, 255, 218, 0.2);
+  box-shadow: 0 12px 34px rgba(7, 13, 31, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="dark"] .section-map a {
+  background: rgba(100, 255, 218, 0.5);
+  box-shadow: 0 0 0 1px rgba(100, 255, 218, 0.28);
+}
+
+html[data-theme="dark"] .section-map a > span {
+  background: rgba(16, 27, 69, 0.96);
+  color: #e6f1ff;
+  border-color: rgba(100, 255, 218, 0.3);
+}
+
+@media (max-width: 1099px) {
+  .section-map {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-map {
+    transition: none;
+  }
+}
