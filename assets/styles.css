@@ -10908,3 +10908,156 @@ html[data-theme="dark"] .section-map a > span {
     transition: none;
   }
 }
+
+
+/* ============================================================
+   v60 · 拟物质感控件（Uiverse 思路：内凹/微凸 + 高光 + 刻痕）
+   —— 纯 CSS，不改 HTML/JS 结构，不影响既有 data-* 钩子
+   ============================================================ */
+
+/* ── ① 首屏统计面板 → 拟物仪表卡 ── */
+.hero .metric-grid > div {
+  position: relative;
+  padding: 15px 17px 20px;
+  border-radius: 16px;
+  background: linear-gradient(162deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.82) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.045),
+    0 12px 26px rgba(7, 13, 31, 0.16),
+    0 2px 6px rgba(7, 13, 31, 0.08);
+  transition: translate 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.hero .metric-grid > div:hover {
+  translate: 0 -3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.045),
+    0 18px 36px rgba(7, 13, 31, 0.22),
+    0 3px 8px rgba(7, 13, 31, 0.1);
+}
+
+/* 数字：内刻质感（高光在上、暗影在下） */
+.hero .metric-grid strong {
+  display: block;
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 -1px 1px rgba(15, 23, 42, 0.14);
+}
+
+/* 底部刻度线（仪表刻痕） */
+.hero .metric-grid > div::after {
+  content: "";
+  position: absolute;
+  left: 17px;
+  right: 17px;
+  bottom: 10px;
+  height: 3px;
+  background-image: repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.18) 0 1px, transparent 1px 7px);
+  opacity: 0.5;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* 顶部高光弧（玻璃反光） */
+.hero .metric-grid > div::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 0;
+  height: 42%;
+  border-radius: 16px 16px 40% 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+/* ── ② 徽章 → 拟物胶囊 ── */
+.badge {
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.05),
+    0 2px 6px rgba(15, 23, 42, 0.07);
+  transition: box-shadow 0.28s ease, translate 0.28s ease;
+}
+
+.badge:hover {
+  translate: 0 -1px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 5px 14px rgba(15, 23, 42, 0.12);
+}
+
+/* ── ③ 按钮 → 按压质感 ── */
+.btn,
+button.btn,
+a.btn {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 0 rgba(15, 23, 42, 0.12),
+    0 6px 16px rgba(15, 23, 42, 0.14);
+  transition: translate 0.16s ease, box-shadow 0.16s ease, filter 0.2s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.04);
+}
+
+.btn:active,
+button.btn:active,
+a.btn:active {
+  translate: 0 2px;
+  box-shadow:
+    inset 0 2px 4px rgba(15, 23, 42, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 6px rgba(15, 23, 42, 0.12);
+}
+
+/* ── ④ 深色主题适配 ── */
+html[data-theme="dark"] .hero .metric-grid > div {
+  background: linear-gradient(162deg, rgba(30, 41, 74, 0.92) 0%, rgba(16, 27, 69, 0.88) 100%);
+  border-color: rgba(100, 255, 218, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 12px 26px rgba(3, 6, 18, 0.5);
+}
+
+html[data-theme="dark"] .hero .metric-grid strong {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5), 0 -1px 1px rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .hero .metric-grid > div::after {
+  background-image: repeating-linear-gradient(90deg, rgba(230, 241, 255, 0.22) 0 1px, transparent 1px 7px);
+}
+
+html[data-theme="dark"] .hero .metric-grid > div::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+}
+
+html[data-theme="dark"] .badge {
+  border-color: rgba(100, 255, 218, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 2px 6px rgba(3, 6, 18, 0.4);
+}
+
+/* ── ⑤ 无障碍：减少动效 ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero .metric-grid > div,
+  .badge,
+  .btn,
+  button.btn,
+  a.btn {
+    transition: none;
+  }
+  .hero .metric-grid > div:hover,
+  .badge:hover,
+  .btn:active,
+  button.btn:active,
+  a.btn:active {
+    translate: none;
+  }
+}
