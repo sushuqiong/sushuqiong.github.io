@@ -1,165 +1,272 @@
 ---
 name: deep-space-personal-website
-description: 端到端构建并持续迭代一个"深空实验室"主题的 GitHub Pages 个人网站（sushuqiong.github.io）。覆盖设计定论（多轮用户纠偏后确立）、动效体系、黑胶音乐播放器、公鸡 DJ 吉祥物、主题切换、站内搜索、性能优化、隐私边界与版本号部署流程。适用于复现、继续迭代本站，或为同类个人网站提供完整参考。
+description: 端到端构建并持续迭代一个"深空实验室"主题的 GitHub Pages 个人网站（sushuqiong.github.io）。覆盖设计定论（多轮用户纠偏后确立）、动效体系、滚动叙事、黑胶音乐播放器、公鸡 DJ 吉祥物、主题切换、性能优化、隐私边界、验证方法论与全部踩坑记录。适用于复现、继续迭代本站，或为同类个人网站提供完整参考。
 ---
 
 # Deep-Space Personal Website（深空实验室个人网站）
 
-纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。从 v1 迭代到 v57+，本 skill 记录最终稳定下来的架构、设计原则与踩坑经验。
+纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。
+从 v1 迭代到 **v61+**，本 skill 记录最终稳定下来的架构、设计原则、验证方法与踩坑经验。
+
+> **这份文档的价值在于"坑"**：下面每条 ⚠️/🐛 都是真实发生过、被用户当面指出的问题。
+> 照抄架构很容易，避开这些坑才是省时间的地方。
 
 ## 触发场景
 
 - 复现或继续迭代 https://sushuqiong.github.io/
-- 构建同风格（深空 + 明亮内容区 + 音乐 + 吉祥物）个人网站
-- 需要参考"如何给 GitHub Pages 网站加动效/播放器/主题切换而不翻车"
+- 构建同风格（深空 hero + 明亮内容区 + 音乐 + 吉祥物 + 滚动叙事）个人网站
+- 需要参考"如何给 GitHub Pages 网站加动效 / 播放器 / 主题切换而不翻车"
+- 排查静态站"改了没效果 / 页面空白 / 元素重叠 / 文字看不见"这类问题
 
-## 技术栈与规模
+## 技术栈与规模（v61）
 
 - 零框架零构建：原生 HTML/CSS/JS，GitHub Pages 直接托管
-- 17 个 HTML 页，共用 `assets/styles.css`（~9800 行）+ `assets/site.js`（~2700 行）
-- 页面：index / skills / wechat / about / archives / projects / posts×3 / road / publications×5 / 404
-- 数据：`assets/skills.json`、`assets/wechat-posts.json`（公众号 20 篇）
+- 15+ 个 HTML 页，共用 `assets/styles.css`（**~246 KB**）+ `assets/site.js`（**~111 KB**）
+- 页面：index / skills / skill / wechat / about / archives / projects / posts×3 / road / publications×5 / 404
+- 数据：`assets/skills.json`、`assets/wechat-posts.json`
 - 图片：全部 WebP（背景图 8 张 + 论文图 40+ + 歌曲封面 6 张 + 二维码）
 - 音乐：`assets/music/` 6 首真实 mp3（网易云）+ 官方歌词 JSON + 专辑封面
 
-## 设计定论（多轮用户纠偏后确立，勿再走回头路）
+---
+
+## 一、设计定论（多轮用户纠偏后确立，勿再走回头路）
 
 1. **内容区必须明亮丰富**，忌全站暗色（曾全深空化被否："难看的暗色系还很空洞"）
 2. **风景图做背景层融入**（半透明白遮罩透出），忌横幅占位、忌突兀硬切
 3. **区块间必须有渐变过渡带**（伪元素渐变桥），忌硬切
-4. **色彩层次丰富**：金+红+蓝+紫多色关键词（参照用户参考图），忌全黄/全黑/全宋体
-5. **宣言区**：黎明背景（太阳刚出地平线的水面码头）+ 无衬线金发光大字 + 红/蓝/紫关键词
-6. **现代无衬线字体栈**：PingFang SC / Microsoft YaHei / Noto Sans SC / HarmonyOS Sans SC
-7. 动效要克制但丰富：签名元素 = 公鸡 DJ + 音乐区（全站记忆点）
+4. **色彩层次丰富**：金 + 红 + 蓝 + 紫多色关键词，忌全黄 / 全黑 / 全宋体
+5. **宣言区**：黎明背景 + 无衬线金发光大字 + 红/蓝/紫关键词；顶部遮罩 ≤0.62（"黎明不能像夜晚"）
+6. **现代无衬线字体栈**：PingFang SC / Microsoft YaHei / Noto Sans SC（中文站点**不要**用 Google Fonts，大陆会加载失败）
+7. **动效要克制但丰富**：签名元素 = 公鸡 DJ + 音乐区（全站记忆点）
+8. **不做移动端专项优化**（用户明确不需要）；移动端只需不崩
+9. **拟物/质感 > 纯堆动效**（用户认可路线：便签拟物化、仪表盘质感）
 
-## 核心模块实现要点
+---
 
-### 版本号缓存机制（最重要！）
-- 17 页所有 `styles.css` / `site.js` 链接带 `?vN`（当前 v57）
-- 每次改 CSS/JS 必须批量 bump（python 脚本遍历 .html 替换 `?vN`→`?vN+1`）
-- 不 bump 用户浏览器缓存看不到新效果（用户曾两次抱怨"没改"）
-- GitHub Pages CDN 边缘缓存：push 后 5-15 分钟同步，验证用 `?cb=$RANDOM` 绕过
+## 二、核心机制（必须先理解，否则改什么都看不到效果）
+
+### ⭐ 版本号缓存机制（最重要）
+
+- **所有** `styles.css` / `site.js` 链接都带版本查询：`href="/assets/styles.css?v61"`
+- **每次改 CSS/JS 必须批量 bump**（`?v61` → `?v62`），否则用户浏览器 / GitHub Pages CDN
+  继续用旧文件 → 用户会说"你根本没改"（本站真实发生过两次）
+- 批量脚本见「复现步骤」；**bump 后必须验证线上版本号**（curl + grep）
+- GitHub Pages CDN 边缘缓存：push 后 5–15 分钟同步；验证用 `?cb=$RANDOM` 绕过
+
+### 单文件全站换肤
+
+- 只改 `assets/styles.css` + `assets/site.js` → 全站 15+ 页同时生效
+- 页面结构由 JS 统一渲染（导航、页脚、浮动元素），改一处全站变
+- **代价**：改 CSS 时容易波及全站（本轮就出现过"统计卡白底黑字变看不清"）→ 改配色后必须回归检查三处：首页 hero、子页面页头、浮动元素
+
+---
+
+## 三、动效模块清单（全部 `prefers-reduced-motion` 保护）
+
+### Hero 区（首页）
+- 星空 canvas（430 粒子 + 鼠标排斥 + 亮星连线）、4 层极光、标题渐变流动 + 呼吸发光、3D 微视差
+- **光束与光斑层（v61 C 批次）**：`.hero-atmos` 装饰层（`pointer-events:none; z-index:0`，在 hero 内容之下），
+  3 条斜向柔光束（`blur(30px)`，17–25s 缓慢漂移）+ 2 个柔光斑（`blur(64px)`，15s 呼吸）。
+  ⚠️ 注意 hero 已有 `.hero-canvas(z-index:1)` 和 `.hero .container(z-index:2)`，氛围层必须 `z-index:0`
+
+### 滚动叙事（v59 / v61b）
+- **标题"模糊消散"进入**：滚动到区块时标题从 `blur(9px) + translate 0 22px` 消散归位，
+  eyebrow → h2 → 副标题级联延迟（0.05 / 0.13 / 0.22s）
+  - ⚠️ **用 `translate` 属性而非 `transform`**（否则与其它动效争抢 transform）
+  - ⚠️ **初始隐藏态必须挂在 `body.reveal-ready` 下**（JS 失败时文字照常可见），再加 `@media print` / `prefers-reduced-motion` 兜底
+- **右侧章节小地图（v59）**：自动读取 `section[id]`，生成右侧固定圆点导航（悬停显示章节名 → 点击平滑滚动 → 当前章节高亮）
+  - 条件：`innerWidth ≥ 1100` 且站点有 ≥3 个有效 section；无 id 的 section 自动补 `sec-N`
+  - 圆点配色要在**深色 hero 和浅色内容区都可辨**（青绿淡色 45% + 细描边）
+- **卡片 staggered 入场**：IO 触发后给 `.road-step / .pub-row / .feature-tile` 等设 `--stagger` 延迟
+
+### 吉祥物：公鸡 DJ（v58 放大）
+- SVG 动态注入（渐变身体 + 彩虹尾羽 + 大红鸡冠 + 白羽尖翅 + DJ 墨镜 + 单边耳机 + 迷你打碟机底座）
+- 交互：单击 hop + 气泡台词、连点 3 次 dance、随机 360° 旋转、DJ 模式触发播放器
+- **尺寸体系（v58：76px → 114px，1.5 倍）**——放大时必须连带调整：
+  | 元素 | 原值 → 新值 |
+  |---|---|
+  | 主体 | 76 → **114px**（边距 20 → 22px） |
+  | 唱盘 | 104×30 → **156×45px** |
+  | 转盘 / 推子 / 打击垫 | 22 → 33px ｜ 4×16 → 6×24px ｜ 12×12 → 18×18px |
+  | 气泡 | 宽 150 → 196px，字号 12.5 → 14px，位置同步外移 |
+  | 跳跃 / 舞蹈位移 | 26 → 39px ｜ 7/5 → 10/8px |
+  | 移动端 | 62 → 88px |
+- **呼吸光晕**：`.rooster::before` 暖金径向光晕（190%，4.2s 呼吸）；⚠️ 光晕在**深色 hero 上要单独调亮**，否则看不见
+
+### 浮动元素垂直排布（v61 修复）
+- 公鸡放大后与右下角按钮重叠（`.back-top` 🚀 88px / `.search-fab` 142px / `.stats-pop` 104px vs 公鸡顶部 136px）
+- **统一用 CSS 变量**：
+  ```css
+  :root { --rooster-size: 114px; --rooster-top: calc(22px + var(--rooster-size)); }
+  .back-top, .back-to-top { bottom: calc(var(--rooster-top) + 22px) !important; }
+  .search-fab              { bottom: calc(var(--rooster-top) + 80px) !important; }
+  ```
+- **教训**：任何固定定位元素改尺寸，都要检查右下角 / 右下浮动元素的相对关系
+
+### 拟物质感控件（v60，Uiverse 思路）
+- **统计仪表卡**：深色玻璃底 + 顶部微光弧（`::before`，**≤12% 透明度**）+ 数字内刻阴影 + 底部刻度线（`repeating-linear-gradient`）
+  - 🐛 **血的教训**：曾把卡片改成**白底**，而数字是 `background-clip:text` 的青绿渐变、标签是浅灰
+    → **白底上几乎看不见**（用户："站点中枢内容显示不清"）。深空主题的卡片**必须保持深色玻璃**。
+- **徽章胶囊**：内高光 + 内阴影 + 细边框（全站徽章统一生效）
+- **按钮**：默认底部内阴影（凸起感）→ `:active` 下沉 2px + 内凹阴影
 
 ### 黑胶音乐播放器
-- 网易云 API：`music.163.com/api/search/get/web?s=<urlencoded>&type=1` 搜歌 ID
-- 音频直链：`music.163.com/song/media/outer/url?id=<id>.mp3`（部分版权受限换翻唱/DJ 版）
-- 歌词：`music.163.com/api/song/lyric?id=<id>&lv=1`；封面：`api/song/detail`
-- UI：黑胶唱片卡（repeating-radial-gradient 密纹 + 中心标签 + 真实封面 inset）、唱臂 tonearm、频谱（dock 5 柱 + 音乐区 28 柱）、vinyl-wave 环形光点、歌词面板
+- 网易云接口：搜索 `music.163.com/api/search/get/web?s=<q>&type=1`；音频 `music.163.com/song/media/outer/url?id=<id>.mp3`；歌词 `api/song/lyric?id=<id>&lv=1`
+- UI：黑胶唱片卡（repeating-radial-gradient 密纹 + 真实封面 inset）、唱臂 tonearm、频谱（dock 5 柱 + 音乐区 28 柱）、vinyl-wave 环形光点、歌词面板
 - Web Audio 合成打碟 scratch 音效（无音频文件）
 
-### 公鸡 DJ 吉祥物
-- SVG 动态注入（渐变身体 + 彩虹尾羽 + 大红鸡冠 + 白羽尖翅）
-- 交互：单击 hop + 气泡台词、连点 3 次 dance、随机 360° 旋转、DJ 模式（耳机 + 打碟音效 + 触发播放器 + 滚动到音乐区）
-- 记忆点升级：常驻耳机 + 迷你打碟机底座（旋转转盘 + 推子 + 闪烁打击垫）
-
 ### 宣言区
-- 黎明背景（dawn.webp 蓝→橙渐变 + 深蓝遮罩）
-- 文字永远可见（HTML 静态 + 关键词 span），JS 只做高亮 + 渐入——**勿用"清空再打字"**（曾导致文字消失 bug）
-- 动态：流光扫过、行呼吸发光、关键词彩色发光、萤火虫上浮
+- 黎明背景（蓝→橙渐变 + 深蓝遮罩）
+- **文字永远静态存在于 HTML**，JS 只做关键词高亮 + 渐入 —— 🐛 曾用"清空 DOM 再打字"，链路卡住时文字永久消失（用户："你把我的宣言搞没了"）
 
 ### 主题切换（亮/暗）
-- `html[data-theme="dark"]` 变量覆盖 + 大批量元素覆盖
-- FOUC 防护：<head> 内联脚本首帧前应用 localStorage 主题
-- 未手动选择时跟随系统 `prefers-color-scheme`
-- giscus 评论区用 postMessage `setConfig` 同步主题
+- `html[data-theme="dark"]` 覆盖块；`<head>` 内联脚本首帧前应用（防 FOUC）；未手动选择时跟随系统
+- giscus 评论区用 `postMessage({giscus:{setConfig:{theme}}})` 同步
 
-### 动效体系（全部 prefers-reduced-motion 保护）
-- Hero：星空 canvas（430 粒子 + 鼠标排斥 + 亮星连线鼠标）、4 层极光、标题渐变流动 + 呼吸发光、3D 微视差
-- 全站：自定义光标、星空拖尾、点击星星、区块视差、卡片 tilt、staggered 入场、翻牌、标签云漂浮
+### 站内搜索 / 评论区
+- 搜索面板索引 = 公众号推文 + 页面区块；文章页支持 `?q=` 正文高亮
+- giscus（repoId + 分类），CTA 引导 + 主题同步
 
-### 站内搜索
-- Ctrl/⌘+K 唤起面板，索引 = 公众号推文 + 页面/区块
-- 文章页支持 `?q=关键词` 正文高亮（mark + 滚动 + 闪光）
+---
 
-### 评论区
-- giscus（repoId `R_kgDOTwHTVA`，分类 Announcements）+ CTA 引导横幅 + 主题同步
+## 四、外部工具借鉴（本地化 + 渐进增强）
 
-## 外部工具借鉴（轻量渐进增强）
+| 灵感源 | 借鉴方式 | 本站落地 |
+|---|---|---|
+| **Anime.js** | 本地 `assets/vendor/anime.min.js`，`if (!window.anime) return` | 宣言星球/飞船漂浮、太阳呼吸、SVG 描边动画 |
+| **Aceternity UI** | 复刻效果（React 组件不能直接用） | Spotlight 聚光灯卡片、**首屏光束/光斑层**、3D 倾斜 |
+| **Uiverse** | 直接借鉴纯 CSS 元素 | conic 旋转边框、霓虹 mini-tag、**拟物仪表卡/胶囊按钮** |
+| **React Bits** | 复刻效果 | 磁吸按钮、文字流光 |
+| **MotionSites / Showreel** | 案例风格参考 | **滚动叙事**、章节小地图、进入补间节奏 |
 
-- **Anime.js**（本地化 assets/vendor/anime.min.js，17.4KB gzip ~6KB）：只用它做"纯增强"动画——宣言星球/飞船漂浮、太阳呼吸；`if (!window.anime) return` 保证未加载时零影响；不动已有 CSS 动画的元素（会冲突）
-- **Aceternity UI 风格**：Spotlight 聚光灯卡片（radial-gradient 跟随鼠标 --spot-x/--spot-y，纯 CSS/JS 无需库）
-- **Uiverse 风格**：hero 按钮 conic 渐变旋转边框（hover 激活）
-- **Anime 深化**：section 标题滚动弹性入场（MutationObserver 监听 .is-visible + easeOutElastic）、SVG 描边动画（宣言星球环 getTotalLength + strokeDashoffset）
-- **React Bits 风格**：磁吸按钮（mousemove 计算偏移 translate，hover:none/reduced-motion 关闭）
-- **Uiverse 深化**：mini-tag 霓虹发光（hover 渐变填充 + glow）
-- **Motion Sites / Showreel Design / React Bits**：作为设计灵感参考源（案例风格借鉴），不直接集成 React 组件（本站零框架）
-- 原则：外部库/组件必须本地化 + 渐进增强 + 可回退，禁止 CDN 运行时依赖（避免加载慢/断网失效）
+**原则**：外部库必须**本地化**（禁 CDN 运行时依赖）+ **渐进增强**（缺失时站点照常可用）+ **可回退**；
+不要对 CSS 动画已占用的属性做二次动画（transform 冲突）。
 
-## 性能清单（已验证）
+---
 
-- gzip 自动（GitHub Pages）：CSS 214KB→42.8KB、JS 97KB→29KB
-- 图片全 WebP（24.5MB→10.5MB），删除未引用旧图（51.8MB→26.7MB 仓库）
+## 五、隐私红线（重要）
 
-## SEO / 分享层（v56）
+- 网站公开，**不得出现私人邮箱、手机号、住址、后台入口、登录凭据、本机绝对路径**
+- 页脚社交行只放 GitHub / 公众号 / 电台；投稿邮箱不出现在公开页
+- 路线叙事抽象化（L-Path），不出现具体人名 / 单位名
+- 上线前用 grep 扫描：邮箱正则、手机号正则、`C:\Users`、真实姓名
 
-- 全站 17 页 OG + Twitter Card（og:title/description/url/image + twitter:card），社交分享显示深空卡片
-- `assets/og-image.webp`（1200×630 深空 + 🐔 + 标题，PIL 生成 75KB）
-- `sitemap.xml`（17 页 URL + lastmod）+ `robots.txt`（Allow + Sitemap）
-- 首页 JSON-LD `Person`（name/url/sameAs）
-- `feed.xml` RSS 2.0（3 篇文章）+ 归档页 RSS 订阅入口 + 文章页上一篇/下一篇导航（循环顺序）
-- README.md 重写为 v56 全景（功能/结构/skill 链接/隐私声明）
-- 404 页公鸡从 emoji 升级为内联 SVG 场景（弹跳 + 彩虹尾摆动 + 翅膀扇动 + 星空闪烁）
-- 背景层图（被遮罩覆盖）再压缩：降分辨率到 1600px + q55，2.7MB→959KB（省 65%，视觉无差）
-- img 全带 width/height（零 CLS）、module script 自动 defer、零外部字体
+---
 
-## 隐私红线（重要）
+## 六、验证方法论（不要靠"应该没问题"）
 
-- 网站公开，**不得出现私人邮箱、手机号、住址、后台入口、登录凭据**
-- 页脚社交行只放 GitHub / 公众号 / 电台，邮箱仅投稿用不出现在公开页
-- 路线叙事抽象化（L-Path），不出现具体人名/单位名
+**每次改动必须走完这一套**（本轮 5 个 bug 全靠它抓出来）：
 
-## 验证与部署流程
+1. **语法**：`node --check assets/site.js`（⚠️ .js 是普通脚本，直接 check 有时会因 `export` 报错 → 先 `cp x.js _c.mjs && node --check _c.mjs`）
+2. **CSS 结构**：花括号平衡检查 `css.count("{") == css.count("}")`
+3. **渲染后 DOM**：Edge headless `--dump-dom` → 判断 JS 是否真的执行了（元素是否存在、类名是否加上）
+4. **控制台错误**（关键！）：
+   ```bash
+   msedge --headless=new --enable-logging=stderr --v=1 --dump-dom <url> 2> err.txt
+   grep -iE "uncaught|typeerror|referenceerror" err.txt
+   ```
+   🐛 **一个未捕获的 ReferenceError 会让脚本后续全部不执行**（本轮 `cover` TDZ 就是这样让半个站的初始化静默失效）
+5. **像素检测**：截图后用 PIL 统计特征像素（颜色阈值要**考虑半透明混合与背景色**，否则会误判"功能没生效"）
+6. **OCR 辅助**：用 rapidocr 读截图，验证文字**真的可见**（像素检测判断不了文字语义）
+7. **部署后**：`sleep 75-150` → curl 线上（带 `?cb=$RANDOM`）确认版本号与关键规则已生效
 
-1. `node --check assets/site.js` + 确认关键函数完整
-2. 本地预览：`python -m http.server 8777` + Edge headless 截图（`--user-data-dir` 独立目录 + `taskkill` 清理）
-3. 子代理 vision 验证截图效果（渲染 DOM 用 `--dump-dom`，截图工具不滚动时 reveal 区块会透明）
-4. bump 版本号（python 批量）→ `git add -A && git commit && git push`
-5. sleep 90-150s → curl 线上验证（`?cb=$RANDOM` 绕过 CDN 缓存）+ `gh api .../pages/builds/latest --jq '.status'` 确认 built
+### Edge headless 注意事项
+- 必须 `--user-data-dir=<独立目录>`，并在两次截图之间 `taskkill //F //IM msedge.exe`，否则实例复用产生陈旧/空文件
+- **默认窗口只有 800×600** → 你的 `innerWidth < 1100` 响应式判断在 headless 下会"意外不生效"；
+  截桌面效果必须显式 `--window-size=1440,900`
+- 截图只截首屏；需要看内容区要额外注入样式缩小 hero 或滚动后截
+- 本机 HTTP_PROXY 已设：本地服务器要用 `curl --noproxy "*"`；Edge 传 `--no-proxy-server`
 
-## 踩坑记录
+---
 
-- **宣言文字消失**：JS 清空 DOM 再打字，链路卡住文字永空 → 改为文字静态 HTML，JS 只增强
-- **tilt 3D 失效**：staggered 入场用 `transform: translateY` 覆盖 tilt 的 perspective transform → 改用 `translate` 独立属性
-- **整页截图空白**：reveal 动画 opacity:0 未触发（IO 未触发时区块永久透明）→ ① @media print + prefers-reduced-motion 强制显示 ② **initReveal 加 2s 超时兜底**（2s 内未触发 IO 强制全部 is-visible/is-in）——此修复解决"用户截图/慢滚动看到大片空白"
-- **子页 hero 图片异常**：8 个子页差异化风景背景被后加的 `background: transparent` 规则覆盖（CSS 顺序后者赢）→ 统一在文件末尾重新定义各页背景（图 + 顶部深蓝遮罩 + 底部亮色渐变），并在暗色主题加深为星野
-- **CDN 旧版**：Edge 截图/用户看到旧版但 curl 新 → CDN 边缘缓存，等 5-15 分钟或带参访问
-- **图片误删**：批量删未引用图前先 grep 引用（hongzhaoyuan.jpg 曾被误删，git checkout 恢复）
-- **翻牌卡片反引号**：patch 替换 template literal 残留反引号导致语法错误
-- **公鸡耳机双边不协调**：正面视角双耳罩像平贴 → SVG 改单边侧戴（头带弧线 + 单耳罩）
-- **渐变文字隐形（重要）**：`color: transparent` + `background-clip: text` 在部分渲染环境（GPU 合成层/不支持 clip）下文字完全不可见（hero 标题、section 标题曾中招，用户反馈"文字被你隐藏了"）→ **标题类文字一律纯色 + 光晕**（background-clip 渐变仅用于非关键装饰），其余渐变文字加 `@supports not (background-clip: text)` 兜底
-- **内容区丰富度**：区块加便签元素（音乐区粉色"边听边逛"、学术区青色"论文都在这里"）+ 主背景渐变缓慢流动（30s 循环）
+## 七、踩坑记录（按时间倒序，全部真实发生）
 
-## 复现步骤
+### v57–v61 阶段
+
+- 🐛 **`cover` TDZ 报错让半个站静默失效**：音乐模块里 `cover` 在第 2852 行才 `const` 声明，
+  却在第 2846 行被使用 → `ReferenceError: Cannot access 'cover' before initialization`
+  → **该错误之后的所有顶层初始化全部中断**（黑胶波形、宣言动画、小地图都没跑）。
+  排查靠 `--enable-logging=stderr` + grep；修复把使用移到声明之后。
+  **经验：任何"某段代码莫名不执行"，先抓控制台错误**
+- 🐛 **白卡 + 渐变数字 = 对比度灾难**：给统计卡换白底后，`background-clip:text` 的青绿渐变数字
+  和浅灰标签在白底上几乎不可见。**深空主题卡片必须保持深色玻璃**；改配色后必须回归检查文字对比度
+- 🐛 **元素放大引发浮动元素重叠**：公鸡 76→114px 后，右下角"🚀 回到顶部""搜索"按钮与它重叠。
+  **改尺寸必须检查同区域其它固定元素的相对位置**（改用 CSS 变量统一排布）
+- 🐛 **执行顺序导致动画不启用**：`initReveal()` 在文件前部执行时，页面还没有 `.reveal` 元素
+  → 提前 `return`，`body.reveal-ready` 永远加不上 → 后面再加 `.reveal` 也没人观察它。
+  **修复：标记完成后补跑 initReveal**（或把标记逻辑前置）
+- 🐛 **同一种改进在不同页面结构上失效**：滚动叙事原本只挂在 `.hero` / `.section-head` 上，
+  而子页面用的是 `.article-header` → "除首页外改进不大"。
+  **推广到全站前，先 grep 各页面的类名差异**
+- 🐛 **headless 默认 800px 宽**导致响应式分支判断失误（小地图"没生成"，其实是被宽度条件挡了）
+- ⚠️ **模糊消散这类"初始不可见"的动效**：务必挂在 JS 添加的类（`body.reveal-ready`）下 + 保留 2s 兜底
+
+### v56 及更早
+
+- 🐛 **宣言文字消失**：JS 清空 DOM 再打字 → 改为静态 HTML + JS 增强
+- 🐛 **tilt 3D 失效**：staggered 入场用 `transform: translateY` 覆盖了 tilt 的 `perspective()` → 改用 `translate` 属性
+- 🐛 **整页截图 / 慢滚动大片空白**：`.reveal{opacity:0}` 未触发 IO → ① `@media print` / `prefers-reduced-motion` 强制可见 ② **initReveal 加 2s 超时兜底**
+- 🐛 **子页 hero 图片消失**：后加的 `background: transparent` 覆盖了各页差异化背景（CSS 同优先级后者赢）→ 在文件末尾重新声明最终意图
+- 🐛 **渐变文字隐形**：`color: transparent` + `background-clip: text` 在部分渲染环境完全不可见
+  → **关键文字一律纯色 + 光晕**，渐变只用于装饰并加 `@supports not (background-clip: text)` 兜底
+- 🐛 **图片误删**：批量删"未引用"图前先 grep 全部引用（曾有封面被误删，靠 `git checkout --` 恢复）
+- 🐛 **CDN 旧版**：push 后 curl 新、浏览器旧 → 等 5–15 分钟或 `?cb=$RANDOM` 验证
+- 🐛 **公鸡单边耳机**：正面视角双耳罩像平贴 → 改单边侧戴（头带弧线 + 单耳罩）
+
+---
+
+## 八、复现步骤
 
 ```bash
 git clone https://github.com/sushuqiong/sushuqiong.github.io.git
 cd sushuqiong.github.io
-python -m http.server 8777   # 本地预览
-# 改 CSS/JS 后批量 bump 版本号：
-python - <<'PY'
-import os
-for r, d, fs in os.walk("."):
-    if ".git" in r: continue
-    for f in fs:
-        if f.endswith(".html"):
-            p = os.path.join(r, f)
-            h = open(p, encoding="utf-8").read()
-            h2 = h.replace("?v57", "?v58")
-            if h2 != h: open(p, "w", encoding="utf-8").write(h2)
-PY
-git add -A && git commit -m "update" && git push
+python -m http.server 8777          # 本地预览（HTTP_PROXY 环境用 curl --noproxy "*"）
 ```
 
-## 网站文件结构速览
+**改完 CSS/JS 后（必做）**：
+
+```python
+# bump 版本号：?v61 → ?v62（遍历所有 html）
+import glob
+old, new = "?v61", "?v62"
+n = 0
+for f in glob.glob("*.html") + glob.glob("*/*.html"):
+    t = open(f, encoding="utf-8").read()
+    if old in t:
+        open(f, "w", encoding="utf-8").write(t.replace(old, new)); n += 1
+print("updated", n)
+```
+
+```bash
+node --check assets/site.js        # 或 cp x.js _c.mjs && node --check _c.mjs
+git add -A && git commit -m "update" && git push
+sleep 90 && curl -sL --noproxy "*" "https://sushuqiong.github.io/?cb=$RANDOM" | grep -o "styles.css?v[0-9]*"
+```
+
+---
+
+## 九、网站文件结构速览
 
 ```
 site/
-├── index.html / skills.html / wechat.html / about/ / archives/ / projects/ / road.html / 404.html
-├── posts/（github-pages / privacy / site-architecture，各含 index.html）
+├── index.html / skills.html / skill.html / wechat.html / road.html / 404.html
+├── about/ archives/ projects/ skills/（各含 index.html）
+├── posts/（3 篇，各含 index.html）
 ├── publications/（5 个论文详情页）
 ├── skills/personal-website-craft/SKILL.md   ← 本 skill
 └── assets/
-    ├── styles.css（~9800 行）/ site.js（~2700 行）
+    ├── styles.css（~246 KB，含全部动效与主题）/ site.js（~111 KB）
+    ├── vendor/anime.min.js      ← 本地化的唯一外部库
     ├── backgrounds/（8 张 webp）/ music/（6 mp3 + covers/）/ pub-imgs/（webp）/ wechat-qr.webp
-    ├── skills.json / wechat-posts.json / logo.svg
+    └── skills.json / wechat-posts.json / logo.svg / og-image.webp
 ```
+
+---
+
+## 十、给后来者的三句话
+
+1. **改完必 bump 版本号**，否则一切"没效果"的抱怨都从这里来。
+2. **每次改动跑完验证四件套**：语法 → DOM → 控制台错误 → 像素/OCR。
+3. **动效的安全底线**：任何"初始不可见"的元素，都必须有 JS 失败时的可见兜底 + 超时强制显示。
+
+*本 skill 由网站作者与 AI 助手在 2026 年多轮迭代中共同沉淀。最后更新：v61。*

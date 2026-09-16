@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>本站构建 Skill · sushuqiong</title>
-  <meta name="description" content="Deep-Space Personal Website skill：本网站从 v1 到 v57 的完整构建过程、设计定论、动效体系与踩坑记录，供复现与参考。">
+  <meta name="description" content="Deep-Space Personal Website skill：本网站从 v1 到 v61 的完整构建过程、设计定论、动效体系与踩坑记录，供复现与参考。">
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/styles.css?v61">
+  <link rel="stylesheet" href="/assets/styles.css?v62">
   <script>
   (function () {
     try {
@@ -19,13 +19,13 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="sushuqiong · Deep-Space Lab">
     <meta property="og:title" content="本站构建 Skill · sushuqiong">
-    <meta property="og:description" content="从 v1 到 v57 的个人网站完整构建指南：设计定论、动效体系、踩坑记录，可复现。">
+    <meta property="og:description" content="从 v1 到 v61 的个人网站完整构建指南：设计定论、动效体系、踩坑记录，可复现。">
     <meta property="og:url" content="https://sushuqiong.github.io/skill.html">
     <meta property="og:image" content="https://sushuqiong.github.io/assets/og-image.webp">
     <meta property="og:locale" content="zh_CN">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="本站构建 Skill · sushuqiong">
-    <meta name="twitter:description" content="从 v1 到 v57 的个人网站完整构建指南：设计定论、动效体系、踩坑记录，可复现。">
+    <meta name="twitter:description" content="从 v1 到 v61 的个人网站完整构建指南：设计定论、动效体系、踩坑记录，可复现。">
     <meta name="twitter:image" content="https://sushuqiong.github.io/assets/og-image.webp">
 </head>
 <body data-page="skill">
@@ -43,7 +43,7 @@
           <p class="scene-sign">DEEP-SPACE Research Lab</p>
           <p class="eyebrow">Skill · 可复现资产</p>
           <h1>本站构建全过程沉淀</h1>
-          <p style="max-width: 560px; color: rgba(226,232,255,.85); margin-top: 12px;">从 v1 到 v57 的设计思路、动效体系、音乐播放器、主题切换与性能优化，全部写成一份可复现的 skill，发布在 GitHub 供参考。</p>
+          <p style="max-width: 560px; color: rgba(226,232,255,.85); margin-top: 12px;">从 v1 到 v61 的设计思路、动效体系、音乐播放器、主题切换与性能优化，全部写成一份可复现的 skill，发布在 GitHub 供参考。</p>
         </div>
       </div>
     </section>
@@ -61,7 +61,7 @@
         <article class="feature-tile" style="grid-column: span 1;">
           <span class="road-icon" aria-hidden="true">📐</span>
           <h3>设计定论</h3>
-          <p>内容区明亮 + 风景背景融入、宣言区黎明配色、区块渐变过渡、多色关键词——全部是用户多轮纠偏后的最终定论。</p>
+          <p>内容区明亮 + 风景背景融入、宣言区黎明配色、区块渐变过渡、多色关键词——全部是用户多轮纠偏后的最终定论。 另有拟物质感路线（仪表卡 / 胶囊 / 按压反馈）与滚动叙事（标题模糊消散 + 章节小地图）。</p>
         </article>
         <article class="feature-tile">
           <span class="road-icon" aria-hidden="true">🎧</span>
@@ -72,6 +72,7 @@
           <span class="road-icon" aria-hidden="true">⚙️</span>
           <h3>工程机制</h3>
           <p>版本号缓存、FOUC 防护、giscus 主题同步、WebP 压缩、零 CLS——GitHub Pages 环境下的最佳实践。</p>
+          <p style="margin-top:8px">含<b>控制台错误排查法</b>：一个未捕获的 ReferenceError 会让脚本后续全部静默失效（本站曾因此半个站点的初始化未执行）。</p>
         </article>
       </div>
     </div>
@@ -112,6 +113,9 @@ python -m http.server 8777   # 打开 http://127.0.0.1:8777
           <ul>
             <li><span class="wc-title">🎨 设计定论</span><span class="wc-date">内容区明亮、风景融入、渐变过渡、多色层次</span></li>
             <li><span class="wc-title">📦 核心模块</span><span class="wc-date">版本号机制、音乐播放器、公鸡 DJ、宣言区、主题切换、动效体系、搜索、评论区</span></li>
+            <li><span class="wc-title">🎬 滚动叙事（v59–v61）</span><span class="wc-date">标题模糊消散进入、右侧章节小地图、首屏光束与光斑、卡片交错入场</span></li>
+            <li><span class="wc-title">🧱 拟物质感（v58–v60）</span><span class="wc-date">公鸡放大 1.5 倍 + 呼吸光晕、统计仪表卡、徽章胶囊、按钮按压反馈、浮动元素统一排布</span></li>
+            <li><span class="wc-title">🧪 验证方法论</span><span class="wc-date">语法 → 渲染 DOM → 控制台错误 → 像素检测 → OCR 复核 → 线上版本号确认</span></li>
             <li><span class="wc-title">⚡ 性能清单</span><span class="wc-date">gzip / WebP / 零 CLS / defer / 零外部字体</span></li>
             <li><span class="wc-title">🔒 隐私红线</span><span class="wc-date">公开页不出现私人邮箱、手机号、住址、后台入口</span></li>
             <li><span class="wc-title">🔄 验证部署</span><span class="wc-date">node --check、Edge 截图、子代理 vision、CDN 缓存绕过验证</span></li>
@@ -123,6 +127,6 @@ python -m http.server 8777   # 打开 http://127.0.0.1:8777
   </main>
   <div data-footer></div>
       <script src="/assets/vendor/anime.min.js"></script>
-<script type="module" src="/assets/site.js?v61"></script>
+<script type="module" src="/assets/site.js?v62"></script>
 </body>
 </html>
