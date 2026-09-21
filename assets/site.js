@@ -3535,8 +3535,10 @@ initHero3DTilt()
 /* ㉗ 图片灯箱：点击文章内图片放大查看（ESC / 点击空白关闭） */
 function initImageLightbox() {
   const imgs = Array.from(
-    document.querySelectorAll(".publication-body img, article img, .post-body img"),
-  ).filter((im) => im.naturalWidth > 120 && !im.closest(".img-lightbox"))
+    document.querySelectorAll(
+      ".publication-body img, article img, .post-body img, .pub-figure img, main figure img",
+    ),
+  ).filter((im) => !im.closest(".img-lightbox") && !im.classList.contains("logo") && !im.closest("header, footer, nav"))
   if (!imgs.length) return
 
   const box = document.createElement("div")
