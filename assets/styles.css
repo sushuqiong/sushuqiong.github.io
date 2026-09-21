@@ -11448,3 +11448,79 @@ body.img-reveal-ready img.img-reveal.is-shown {
     opacity: 1 !important; scale: none !important;
   }
 }
+
+
+/* ============================================================
+   v67 · 批次 7-9：点击粒子爆散 / 鼠标星光拖尾 / 首屏依次浮现
+   ============================================================ */
+
+/* ⑦ 点击处的粒子爆散 */
+.click-spark {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px currentColor;
+  animation: spark-fly 0.72s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes spark-fly {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3);
+  }
+}
+
+/* ⑧ 鼠标星光拖尾 */
+.trail-star {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(100, 255, 218, 0.5) 60%, transparent 70%);
+  animation: trail-fade 0.85s ease-out forwards;
+}
+
+@keyframes trail-fade {
+  from { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
+  to   { opacity: 0;   transform: translate(-50%, -50%) scale(0.2) translateY(10px); }
+}
+
+/* ⑨ 首屏元素依次浮现（只控制已在 DOM 的元素，JS 失败即全部可见） */
+body.hero-stage-ready .hero-panel,
+body.hero-stage-ready .hero-actions,
+body.hero-stage-ready .hero-scroll-hint {
+  opacity: 0;
+  translate: 0 18px;
+  transition: opacity 0.75s ease, translate 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.hero-stage-ready .hero-panel { transition-delay: 0.5s; }
+body.hero-stage-ready .hero-actions { transition-delay: 0.68s; }
+body.hero-stage-ready .hero-scroll-hint { transition-delay: 0.9s; }
+
+body.hero-stage-ready.is-staged .hero-panel,
+body.hero-stage-ready.is-staged .hero-actions,
+body.hero-stage-ready.is-staged .hero-scroll-hint {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  body.hero-stage-ready .hero-panel,
+  body.hero-stage-ready .hero-actions,
+  body.hero-stage-ready .hero-scroll-hint {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}

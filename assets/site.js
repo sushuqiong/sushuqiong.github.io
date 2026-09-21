@@ -3333,3 +3333,74 @@ function initImgReveal() {
   setTimeout(() => imgs.forEach((im) => im.classList.add("is-shown")), 3000)
 }
 initImgReveal()
+
+
+/* ───────────── v67 · 批次 7-9 ───────────── */
+
+/* ⑦ 点击粒子爆散（12 颗彩色粒子向外飞散） */
+function initClickBurst() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const COLORS = ["#64ffda", "#a78bfa", "#38bdf8", "#fbbf24"]
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (e.clientY < 0 || e.clientX < 0) return
+      for (let i = 0; i < 12; i += 1) {
+        const p = document.createElement("span")
+        p.className = "click-spark"
+        const ang = (Math.PI * 2 * i) / 12 + Math.random() * 0.45
+        const dist = 38 + Math.random() * 64
+        p.style.setProperty("--dx", (Math.cos(ang) * dist).toFixed(1) + "px")
+        p.style.setProperty("--dy", (Math.sin(ang) * dist).toFixed(1) + "px")
+        p.style.left = e.clientX + "px"
+        p.style.top = e.clientY + "px"
+        p.style.background = COLORS[i % COLORS.length]
+        p.style.color = COLORS[i % COLORS.length]
+        document.body.appendChild(p)
+        setTimeout(() => p.remove(), 800)
+      }
+    },
+    { passive: true },
+  )
+}
+
+/* ⑧ 鼠标星光拖尾（节流生成，移动端关闭） */
+function initCursorTrail() {
+  if (window.matchMedia("(hover: none)").matches) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  let last = 0
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      const now = performance.now()
+      if (now - last < 70) return
+      last = now
+      const s = document.createElement("span")
+      s.className = "trail-star"
+      s.style.left = e.clientX + (Math.random() * 10 - 5) + "px"
+      s.style.top = e.clientY + (Math.random() * 10 - 5) + "px"
+      const size = 3 + Math.random() * 3
+      s.style.width = size + "px"
+      s.style.height = size + "px"
+      document.body.appendChild(s)
+      setTimeout(() => s.remove(), 900)
+    },
+    { passive: true },
+  )
+}
+
+/* ⑨ 首屏元素依次浮现（panel → actions → scroll hint） */
+function initHeroStage() {
+  const hero = document.querySelector(".hero")
+  if (!hero) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (!hero.querySelector(".hero-panel, .hero-actions")) return
+  document.body.classList.add("hero-stage-ready")
+  const go = () => document.body.classList.add("is-staged")
+  requestAnimationFrame(() => setTimeout(go, 180))
+  setTimeout(go, 1600) // 兜底
+}
+
+initClickBurst()
+initCursorTrail()
+initHeroStage()
