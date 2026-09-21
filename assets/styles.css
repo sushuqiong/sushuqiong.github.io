@@ -11249,3 +11249,76 @@ body.reveal-ready .reveal.is-visible .article-header > .article-lead {
 .article-header > .hero-atmos {
   border-radius: 20px;
 }
+
+
+/* ============================================================
+   v65 · 批次 1：鼠标光晕跟随 / 滚动 hero 淡出 / 按钮涟漪
+   ============================================================ */
+
+/* ① 全站鼠标光晕（跟随鼠标的柔光，提升"高级感"） */
+.cursor-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 460px;
+  height: 460px;
+  margin: -230px 0 0 -230px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(100, 255, 218, 0.13) 0%,
+    rgba(167, 139, 250, 0.07) 38%,
+    rgba(56, 189, 248, 0.03) 58%,
+    transparent 72%);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+
+body.cursor-glow-ready .cursor-glow {
+  opacity: 1;
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .cursor-glow {
+    display: none !important;
+  }
+}
+
+/* ② 滚动时 hero 内容淡出 + 下移视差 */
+.hero .container {
+  will-change: opacity, translate;
+}
+
+/* ③ 按钮点击涟漪 */
+.button,
+.btn,
+.button-primary,
+#back-to-top {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+  transform: scale(0);
+  animation: btn-ripple-out 0.62s ease-out forwards;
+}
+
+@keyframes btn-ripple-out {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-ripple {
+    display: none;
+  }
+}

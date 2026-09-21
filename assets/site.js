@@ -3192,3 +3192,96 @@ autoMarkReveal()
 if (typeof initReveal === "function" && !document.body.classList.contains("reveal-ready")) {
   initReveal()
 }
+
+
+/* ───────────── v65 · 批次 1：鼠标光晕 / 滚动 hero / 按钮涟漪 ───────────── */
+
+/* ① 全站鼠标光晕（缓动跟随，rAF 驱动，移动端与减少动效下自动关闭） */
+function initCursorGlow() {
+  if (window.matchMedia("(hover: none)").matches) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+  const glow = document.createElement("div")
+  glow.className = "cursor-glow"
+  glow.setAttribute("aria-hidden", "true")
+  document.body.appendChild(glow)
+
+  let tx = window.innerWidth / 2
+  let ty = window.innerHeight / 2
+  let cx = tx
+  let cy = ty
+  let raf = null
+
+  function tick() {
+    raf = null
+    cx += (tx - cx) * 0.14
+    cy += (ty - cy) * 0.14
+    glow.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)"
+    if (Math.abs(tx - cx) > 0.4 || Math.abs(ty - cy) > 0.4) {
+      raf = requestAnimationFrame(tick)
+    }
+  }
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      tx = e.clientX
+      ty = e.clientY
+      if (!raf) raf = requestAnimationFrame(tick)
+    },
+    { passive: true },
+  )
+
+  setTimeout(() => document.body.classList.add("cursor-glow-ready"), 700)
+}
+
+/* ② 滚动时 hero 内容淡出 + 下移（视差感） */
+function initHeroScrollFade() {
+  const hero = document.querySelector(".hero")
+  if (!hero) return
+  const inner = hero.querySelector(".container")
+  if (!inner) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+  let raf = null
+  function update() {
+    raf = null
+    const h = hero.offsetHeight || 1
+    const p = Math.min(window.scrollY / h, 1)
+    inner.style.opacity = String(Math.max(0, 1 - p * 0.85))
+    inner.style.translate = "0 " + (p * 64).toFixed(1) + "px"
+    inner.style.filter = p > 0.06 ? "blur(" + (p * 6).toFixed(2) + "px)" : ""
+  }
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    },
+    { passive: true },
+  )
+  update()
+}
+
+/* ③ 按钮点击涟漪 */
+function initButtonRipple() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".button, .btn, .button-primary")
+    if (!btn) return
+    const rect = btn.getBoundingClientRect()
+    if (!rect.width || !rect.height) return
+    const size = Math.max(rect.width, rect.height) * 2
+    const span = document.createElement("span")
+    span.className = "btn-ripple"
+    span.style.width = size + "px"
+    span.style.height = size + "px"
+    span.style.left = e.clientX - rect.left - size / 2 + "px"
+    span.style.top = e.clientY - rect.top - size / 2 + "px"
+    btn.appendChild(span)
+    setTimeout(() => span.remove(), 680)
+  })
+}
+
+initCursorGlow()
+initHeroScrollFade()
+initButtonRipple()
