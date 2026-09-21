@@ -11823,3 +11823,91 @@ body::before {
     animation: none;
   }
 }
+
+
+/* ============================================================
+   v79 · 批次 21-23：hero 3D 跟手 / 关键词点亮 / 章节光点
+   ============================================================ */
+
+/* ㉑ hero 网格 3D 跟手倾斜（用 .hero-grid，避开已有 transform 的 .hero-copy） */
+.hero-grid {
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .hero-grid {
+    transform: none !important;
+    transition: none;
+  }
+}
+
+/* ㉒ 宣言区关键词逐个点亮 */
+.manifesto-line .m-key {
+  display: inline-block;
+}
+
+.reveal-ready .manifesto-line.is-in .m-key {
+  animation: key-ignite 1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.reveal-ready .manifesto-line.is-in .m-key:nth-of-type(2) { animation-delay: 0.22s; }
+.reveal-ready .manifesto-line.is-in .m-key:nth-of-type(3) { animation-delay: 0.44s; }
+.reveal-ready .manifesto-line.is-in .m-key:nth-of-type(4) { animation-delay: 0.66s; }
+
+@keyframes key-ignite {
+  0% {
+    filter: brightness(0.85) saturate(0.7);
+    text-shadow: none;
+  }
+  45% {
+    filter: brightness(1.55) saturate(1.3);
+    text-shadow: 0 0 20px currentColor, 0 0 34px currentColor;
+  }
+  100% {
+    filter: brightness(1.14) saturate(1.08);
+    text-shadow: 0 0 10px currentColor;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .reveal-ready .manifesto-line.is-in .m-key {
+    animation: none;
+    filter: none;
+  }
+}
+
+/* ㉓ 章节标题前的小光点（进入时弹出） */
+.section-head .eyebrow {
+  position: relative;
+  display: inline-block;
+}
+
+.section-head .eyebrow::before {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #64ffda, #38bdf8);
+  box-shadow: 0 0 10px rgba(100, 255, 218, 0.75);
+  transform: translateY(-50%) scale(0);
+  pointer-events: none;
+}
+
+.reveal.is-visible .section-head .eyebrow::before {
+  animation: dot-pop 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.12s both;
+}
+
+@keyframes dot-pop {
+  0%   { transform: translateY(-50%) scale(0); opacity: 0; }
+  60%  { transform: translateY(-50%) scale(1.35); opacity: 1; }
+  100% { transform: translateY(-50%) scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.is-visible .section-head .eyebrow::before { animation: none; transform: translateY(-50%) scale(1); }
+}

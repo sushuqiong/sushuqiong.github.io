@@ -3470,3 +3470,47 @@ function initDepthParallax() {
 }
 
 initDepthParallax()
+
+
+/* ───────────── v79 · 批次 21-23 ───────────── */
+
+/* ㉑ hero 3D 跟手倾斜（±4deg / ±3deg，鼠标离开复位） */
+function initHero3DTilt() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return
+
+  const grid = document.querySelector(".hero-grid")
+  if (!grid) return
+  const stage = grid.closest(".hero") || grid.parentElement || grid
+  let raf = null
+  let tx = 0
+  let ty = 0
+
+  function apply() {
+    raf = null
+    grid.style.transform =
+      "perspective(1200px) rotateY(" + tx.toFixed(2) + "deg) rotateX(" + ty.toFixed(2) + "deg)"
+  }
+
+  stage.addEventListener(
+    "mousemove",
+    (e) => {
+      const r = stage.getBoundingClientRect()
+      if (!r.width || !r.height) return
+      const px = (e.clientX - r.left) / r.width - 0.5
+      const py = (e.clientY - r.top) / r.height - 0.5
+      tx = px * 4
+      ty = -py * 3
+      if (!raf) raf = requestAnimationFrame(apply)
+    },
+    { passive: true },
+  )
+
+  stage.addEventListener("mouseleave", () => {
+    tx = 0
+    ty = 0
+    if (!raf) raf = requestAnimationFrame(apply)
+  })
+}
+
+initHero3DTilt()
