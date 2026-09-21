@@ -12145,3 +12145,78 @@ html[data-theme="dark"] .page-waves {
 @media (prefers-reduced-motion: reduce) {
   .page-sheen { display: none; }
 }
+
+
+/* ============================================================
+   v84 · 批次 34-35：章节分隔线生长 / 火箭喷射粒子
+   ============================================================ */
+
+/* ㉞ 章节顶部的发光分隔线（进入视口时从中心展开） */
+.section {
+  position: relative;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(100, 255, 218, 0.65) 45%,
+    rgba(167, 139, 250, 0.55) 55%,
+    transparent 100%);
+  pointer-events: none;
+}
+
+.reveal.is-visible.section::before {
+  animation: line-grow 1.25s cubic-bezier(0.22, 0.61, 0.36, 1) 0.18s forwards;
+}
+
+@keyframes line-grow {
+  to { width: min(620px, 76%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.is-visible.section::before { animation: none; width: min(620px, 76%); }
+}
+
+/* ㉟ 回到顶部按钮的常驻喷射粒子（hover 时） */
+.back-top,
+.back-to-top {
+  overflow: visible;
+}
+
+.back-top::after,
+.back-to-top::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(100, 255, 218, 0.5) 55%, transparent 72%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.back-top:hover::after,
+.back-to-top:hover::after {
+  animation: thruster 0.9s ease-out infinite;
+}
+
+@keyframes thruster {
+  0%   { opacity: 0.9; transform: translateY(0) scale(1); }
+  70%  { opacity: 0.5; transform: translateY(22px) scale(0.5); }
+  100% { opacity: 0; transform: translateY(34px) scale(0.25); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-top::after,
+  .back-to-top::after { display: none; }
+}
