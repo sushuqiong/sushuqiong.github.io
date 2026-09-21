@@ -11386,3 +11386,49 @@ body.hero-reveal-ready .hero-title-line.is-shown {
   .section-head > h2::after,
   .article-header > h1::after { display: none; }
 }
+
+/* ── v68 · 批次 4：卡片 hover 流光边框（conic 渐变，不遮挡内容）── */
+.card,
+.feature-tile,
+.skill-card {
+  position: relative;
+}
+.card::before,
+.feature-tile::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--edge-angle, 0deg),
+    rgba(100, 255, 218, 0) 0deg,
+    rgba(100, 255, 218, 0.85) 60deg,
+    rgba(167, 139, 250, 0.85) 130deg,
+    rgba(56, 189, 248, 0.7) 190deg,
+    rgba(100, 255, 218, 0) 260deg,
+    rgba(100, 255, 218, 0) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.card:hover::before,
+.feature-tile:hover::before {
+  opacity: 1;
+  animation: edge-spin 3.2s linear infinite;
+}
+@keyframes edge-spin {
+  to { --edge-angle: 360deg; }
+}
+@property --edge-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card::before, .feature-tile::before { display: none; }
+}
