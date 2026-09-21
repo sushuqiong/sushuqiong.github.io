@@ -11348,3 +11348,41 @@ body.hero-reveal-ready .hero-title-line.is-shown {
     opacity: 1 !important; translate: none !important; filter: none !important;
   }
 }
+
+/* ── v67 · 批次 3：章节标题高光扫过（伪元素，不碰文字颜色）── */
+.section-head > h2,
+.article-header > h1 {
+  position: relative;
+  overflow: hidden;
+}
+.section-head > h2::after,
+.article-header > h1::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -60%;
+  width: 45%;
+  height: 140%;
+  background: linear-gradient(100deg,
+    transparent 0%,
+    rgba(100, 255, 218, 0.16) 45%,
+    rgba(255, 255, 255, 0.22) 52%,
+    rgba(100, 255, 218, 0.14) 60%,
+    transparent 100%);
+  transform: skewX(-18deg);
+  pointer-events: none;
+  opacity: 0;
+}
+.reveal.is-visible .section-head > h2::after,
+.reveal.is-visible .article-header > h1::after {
+  animation: title-sheen 1.5s ease-out 0.35s 1;
+}
+@keyframes title-sheen {
+  0%   { opacity: 0; left: -60%; }
+  18%  { opacity: 1; }
+  100% { opacity: 0; left: 118%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-head > h2::after,
+  .article-header > h1::after { display: none; }
+}
