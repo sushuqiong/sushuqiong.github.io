@@ -3298,3 +3298,38 @@ function initHeroTitleReveal() {
   setTimeout(show, 1200)
 }
 initHeroTitleReveal()
+
+/* v69 · 批次 5：内容图片淡入（只处理详情页与列表里的图片，跳过 logo/图标） */
+function initImgReveal() {
+  if (!("IntersectionObserver" in window)) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const imgs = Array.from(document.querySelectorAll("main img, .publication-body img, article img")).filter(
+    (im) => !im.closest(".header, .nav, footer") && im.naturalWidth !== 32 && !im.classList.contains("logo"),
+  )
+  if (!imgs.length) return
+  document.body.classList.add("img-reveal-ready")
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const en of entries) {
+        if (en.isIntersecting) {
+          en.target.classList.add("is-shown")
+          io.unobserve(en.target)
+        }
+      }
+    },
+    { threshold: 0.05, rootMargin: "0px 0px -30px 0px" },
+  )
+  imgs.forEach((im) => {
+    im.classList.add("img-reveal")
+    if (im.complete) {
+      // 已加载完成：直接标记，避免等 IO 造成的空白
+      setTimeout(() => im.classList.add("is-shown"), 60)
+    } else {
+      io.observe(im)
+      im.addEventListener("load", () => im.classList.add("is-shown"), { once: true })
+    }
+  })
+  // 兜底：3 秒后全部显示
+  setTimeout(() => imgs.forEach((im) => im.classList.add("is-shown")), 3000)
+}
+initImgReveal()

@@ -11432,3 +11432,19 @@ body.hero-reveal-ready .hero-title-line.is-shown {
 @media (prefers-reduced-motion: reduce) {
   .card::before, .feature-tile::before { display: none; }
 }
+
+/* ── v69 · 批次 5：内容图片滚动淡入（已加载即显示，绝不隐藏）── */
+body.img-reveal-ready img.img-reveal {
+  opacity: 0;
+  scale: 1.03;
+  transition: opacity 0.7s ease, scale 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+body.img-reveal-ready img.img-reveal.is-shown {
+  opacity: 1;
+  scale: 1;
+}
+@media (prefers-reduced-motion: reduce), print {
+  body.img-reveal-ready img.img-reveal {
+    opacity: 1 !important; scale: none !important;
+  }
+}
