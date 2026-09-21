@@ -219,7 +219,7 @@ function initStarfield() {
     }
 
     // 流星：偶发划过
-    if (Math.random() < 0.014 && meteors.length < 5) {
+    if (Math.random() < 0.022 && meteors.length < 7) {
       meteors.push({
         x: width * 0.3 + Math.random() * width * 0.7,
         y: Math.random() * height * 0.35,
@@ -3359,10 +3359,10 @@ function initClickBurst() {
     "click",
     (e) => {
       if (e.clientY < 0 || e.clientX < 0) return
-      for (let i = 0; i < 12; i += 1) {
+      for (let i = 0; i < 20; i += 1) {
         const p = document.createElement("span")
         p.className = "click-spark"
-        const ang = (Math.PI * 2 * i) / 12 + Math.random() * 0.45
+        const ang = (Math.PI * 2 * i) / 20 + Math.random() * 0.4
         const dist = 38 + Math.random() * 64
         p.style.setProperty("--dx", (Math.cos(ang) * dist).toFixed(1) + "px")
         p.style.setProperty("--dy", (Math.sin(ang) * dist).toFixed(1) + "px")
@@ -3387,7 +3387,7 @@ function initCursorTrail() {
     "pointermove",
     (e) => {
       const now = performance.now()
-      if (now - last < 70) return
+      if (now - last < 42) return
       last = now
       const s = document.createElement("span")
       s.className = "trail-star"
