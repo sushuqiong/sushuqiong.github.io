@@ -12388,3 +12388,207 @@ body.music-playing .eq-bar,
     animation: none;
   }
 }
+
+
+/* ============================================================
+   v91 · 宣言区：动态字幕 + 多色彩
+   —— ⛔ 依旧遵守保护规则：文字内容一字不改、不新增文字、
+      不使用 clip-path / filter / opacity（只调颜色与发光）
+   —— 5 行文字**始终完整可见**，动态仅表现为"当前行更亮"的依次高亮
+   ============================================================ */
+
+.manifesto-inner .manifesto-line {
+  /* 常态：略暗，作为"字幕未播到"的状态 */
+  color: rgba(230, 241, 255, 0.58);
+  transition: color 0.75s ease, text-shadow 0.85s ease;
+  /* 每行由 --mh 定义专属色（RGB 三元组） */
+  --mh: 100, 255, 218;
+}
+
+/* 5 行各自的色彩（关键句保持原有 m-key 分类色，整行光晕用不同色相） */
+.manifesto-inner .manifesto-line:nth-child(2) { --mh: 100, 255, 218; }  /* 青绿 */
+.manifesto-inner .manifesto-line:nth-child(3) { --mh: 167, 139, 250; }  /* 紫 */
+.manifesto-inner .manifesto-line:nth-child(4) { --mh: 56, 189, 248; }   /* 天蓝 */
+.manifesto-inner .manifesto-line:nth-child(5) { --mh: 244, 114, 182; }  /* 粉 */
+.manifesto-inner .manifesto-line:nth-child(6) { --mh: 251, 191, 36; }   /* 金 */
+
+/* 当前"字幕行"：提亮 + 该行专属色的辉光 */
+.manifesto-inner .manifesto-line.is-subbing {
+  color: #ffffff;
+  text-shadow:
+    0 0 20px rgba(var(--mh), 0.5),
+    0 0 40px rgba(var(--mh), 0.22);
+}
+
+/* 关键词：在所属行被点亮时同步发光（仍是原有 m-key 元素，不新增内容） */
+.manifesto-inner .manifesto-line.is-subbing .m-key {
+  text-shadow:
+    0 0 16px currentColor,
+    0 0 30px rgba(var(--mh), 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-inner .manifesto-line {
+    color: rgba(230, 241, 255, 0.85);
+    text-shadow: none;
+  }
+}
+
+
+/* ============================================================
+   v91 · 鼠标光晕改为双层：外层大范围柔光 + 内层亮核
+   ============================================================ */
+
+.cursor-glow-outer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 760px;
+  height: 760px;
+  margin: -380px 0 0 -380px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(100, 255, 218, 0.14) 0%,
+    rgba(167, 139, 250, 0.1) 34%,
+    rgba(56, 189, 248, 0.05) 56%,
+    transparent 72%);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+
+.cursor-glow-inner {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 170px;
+  height: 170px;
+  margin: -85px 0 0 -85px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(100, 255, 218, 0.16) 42%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+
+body.cursor-glow-ready .cursor-glow-outer,
+body.cursor-glow-ready .cursor-glow-inner {
+  opacity: 1;
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .cursor-glow-outer,
+  .cursor-glow-inner {
+    display: none !important;
+  }
+}
+
+
+/* ============================================================
+   v91 · 点击冲击波环 / 加载星尘爆开
+   ============================================================ */
+
+/* ③ 点击冲击波：两圈扩散圆环 */
+.click-wave {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9996;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(100, 255, 218, 0.85);
+  box-shadow: 0 0 24px rgba(100, 255, 218, 0.35), inset 0 0 18px rgba(100, 255, 218, 0.18);
+  animation: wave-ring 0.78s cubic-bezier(0.16, 0.8, 0.3, 1) forwards;
+}
+
+.click-wave.delay {
+  border-color: rgba(167, 139, 250, 0.85);
+  box-shadow: 0 0 26px rgba(167, 139, 250, 0.35);
+  animation-delay: 0.11s;
+}
+
+@keyframes wave-ring {
+  from {
+    width: 8px;
+    height: 8px;
+    opacity: 1;
+  }
+  to {
+    width: 240px;
+    height: 240px;
+    opacity: 0;
+  }
+}
+
+/* ④ 加载星尘爆开（开场） */
+.dust-burst {
+  position: fixed;
+  left: 50%;
+  top: 46%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9995;
+  transform: translate(-50%, -50%);
+  animation: burst-fly 1.15s cubic-bezier(0.16, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes burst-fly {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+  to {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by))) scale(0.25);
+  }
+}
+
+/* ⑤ 音乐律动：播放时整体氛围呼吸（由 JS 按播放状态切换） */
+body.music-pulsing .cursor-glow-outer {
+  animation: music-breathe 1.9s ease-in-out infinite;
+}
+
+@keyframes music-breathe {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .click-wave,
+  .dust-burst {
+    display: none;
+  }
+  body.music-pulsing .cursor-glow-outer {
+    animation: none;
+  }
+}
+
+
+/* ============================================================
+   v92 · 宣言区只显示 5 行宣言
+   —— 用户明确要求：该区域只显示
+      「追求幸福是人的权利，/ 破除幸福是别人恩赐的错误认识，/
+        大胆探索自己的道路，/ 在寻找个人幸福的同时 /
+        为社会幸福奉献心力。」
+   —— 隐藏原有的 eyebrow 小标签（"Manifesto · 我的宣言"），
+      以及任何非宣言文字的可见元素；文字内容本身不作改动。
+   ============================================================ */
+
+.manifesto-inner > .eyebrow {
+  display: none !important;
+}
+
+/* 兜底：宣言区里除 5 行宣言外，其余直接文本子元素一律隐藏 */
+.manifesto-inner > :not(.manifesto-line):not(.manifesto-inner) {
+  display: none !important;
+}

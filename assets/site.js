@@ -3709,3 +3709,135 @@ function initManifestoReveal() {
 
 initPubReveal()
 /* 已停用（v88 回退）：initManifestoReveal() */
+
+
+/* ───────────── v91 · 宣言动态字幕 / 双层光晕 / 冲击波 / 星尘爆开 / 音乐律动 ───────────── */
+
+/* ① 宣言动态字幕：5 行依次点亮（只切换类，不改文字、不隐藏） */
+function initManifestoSubtitle() {
+  const lines = document.querySelectorAll(".manifesto-inner .manifesto-line")
+  if (!lines.length) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+  let idx = 0
+  function paint() {
+    lines.forEach((l, k) => l.classList.toggle("is-subbing", k === idx))
+    idx = (idx + 1) % lines.length
+  }
+  paint()
+  setInterval(paint, 2600)
+}
+
+/* ② 双层鼠标光晕（外层柔光 + 内层亮核，共用一次 pointermove） */
+function initCursorGlowLayers() {
+  if (window.matchMedia("(hover: none)").matches) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (document.querySelector(".cursor-glow-outer")) return
+
+  const outer = document.createElement("div")
+  outer.className = "cursor-glow-outer"
+  outer.setAttribute("aria-hidden", "true")
+  const inner = document.createElement("div")
+  inner.className = "cursor-glow-inner"
+  inner.setAttribute("aria-hidden", "true")
+  document.body.appendChild(outer)
+  document.body.appendChild(inner)
+
+  let tx = window.innerWidth / 2
+  let ty = window.innerHeight / 2
+  let ox = tx
+  let oy = ty
+  let ix = tx
+  let iy = ty
+  let raf = null
+
+  function tick() {
+    raf = null
+    // 外层跟随更慢（柔），内层跟随更快（亮核贴手）
+    ox += (tx - ox) * 0.1
+    oy += (ty - oy) * 0.1
+    ix += (tx - ix) * 0.22
+    iy += (ty - iy) * 0.22
+    outer.style.transform = "translate3d(" + ox.toFixed(1) + "px," + oy.toFixed(1) + "px,0)"
+    inner.style.transform = "translate3d(" + ix.toFixed(1) + "px," + iy.toFixed(1) + "px,0)"
+    if (Math.abs(tx - ox) > 0.4 || Math.abs(tx - ix) > 0.4) raf = requestAnimationFrame(tick)
+  }
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      tx = e.clientX
+      ty = e.clientY
+      if (!raf) raf = requestAnimationFrame(tick)
+    },
+    { passive: true },
+  )
+
+  setTimeout(() => document.body.classList.add("cursor-glow-ready"), 700)
+}
+
+/* ③ 点击冲击波环（与已有粒子爆散同时触发，互不干扰） */
+function initClickWave() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (e.clientX < 0 || e.clientY < 0) return
+      for (const cls of ["click-wave", "click-wave delay"]) {
+        const ring = document.createElement("span")
+        ring.className = cls
+        ring.style.left = e.clientX + "px"
+        ring.style.top = e.clientY + "px"
+        document.body.appendChild(ring)
+        setTimeout(() => ring.remove(), 1000)
+      }
+    },
+    { passive: true },
+  )
+}
+
+/* ④ 加载星尘爆开（每会话一次，从屏幕中部爆开 26 颗星尘） */
+function initDustBurst() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  try {
+    if (sessionStorage.getItem("burst_shown")) return
+    sessionStorage.setItem("burst_shown", "1")
+  } catch (e) {
+    return
+  }
+  const COLORS = ["#64ffda", "#a78bfa", "#38bdf8", "#fbbf24", "#f472b6"]
+  setTimeout(() => {
+    for (let i = 0; i < 26; i += 1) {
+      const p = document.createElement("span")
+      p.className = "dust-burst"
+      const ang = (Math.PI * 2 * i) / 26 + Math.random() * 0.3
+      const dist = 180 + Math.random() * 340
+      p.style.setProperty("--bx", (Math.cos(ang) * dist).toFixed(0) + "px")
+      p.style.setProperty("--by", (Math.sin(ang) * dist * 0.62).toFixed(0) + "px")
+      p.style.background = COLORS[i % COLORS.length]
+      p.style.boxShadow = "0 0 12px " + COLORS[i % COLORS.length]
+      const size = 4 + Math.random() * 5
+      p.style.width = size + "px"
+      p.style.height = size + "px"
+      document.body.appendChild(p)
+      setTimeout(() => p.remove(), 1300)
+    }
+  }, 220)
+}
+
+/* ⑤ 音乐律动：监听播放状态，给 body 加 music-pulsing（驱动氛围呼吸） */
+function initMusicPulse() {
+  const audio = document.querySelector("audio")
+  if (!audio) return
+  const sync = () => document.body.classList.toggle("music-pulsing", !audio.paused)
+  audio.addEventListener("play", sync)
+  audio.addEventListener("pause", sync)
+  audio.addEventListener("ended", sync)
+  sync()
+}
+
+initManifestoSubtitle()
+initCursorGlowLayers()
+initClickWave()
+initDustBurst()
+initMusicPulse()
