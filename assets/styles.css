@@ -11322,3 +11322,29 @@ body.cursor-glow-ready .cursor-glow {
     display: none;
   }
 }
+
+/* ── v66 · 批次 2：首屏标题错落浮现（仅对已有 span 加延迟，不拆 DOM）── */
+.hero-title-line {
+  display: inline-block;
+}
+body.hero-reveal-ready .hero-title-line {
+  opacity: 0;
+  translate: 0 26px;
+  filter: blur(7px);
+  transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+              translate 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+              filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+body.hero-reveal-ready .hero-title-line:nth-child(2) { transition-delay: 0.14s; }
+body.hero-reveal-ready .hero-title-line:nth-child(3) { transition-delay: 0.28s; }
+body.hero-reveal-ready .hero-title-line:nth-child(4) { transition-delay: 0.42s; }
+body.hero-reveal-ready .hero-title-line.is-shown {
+  opacity: 1;
+  translate: 0 0;
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  body.hero-reveal-ready .hero-title-line {
+    opacity: 1 !important; translate: none !important; filter: none !important;
+  }
+}

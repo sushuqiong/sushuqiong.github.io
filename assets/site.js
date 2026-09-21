@@ -3285,3 +3285,16 @@ function initButtonRipple() {
 initCursorGlow()
 initHeroScrollFade()
 initButtonRipple()
+
+/* v66 · 批次 2：首屏标题错落浮现（JS 失败时标题照常可见） */
+function initHeroTitleReveal() {
+  const lines = document.querySelectorAll(".hero-title-line")
+  if (!lines.length) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  document.body.classList.add("hero-reveal-ready")
+  const show = () => lines.forEach((l) => l.classList.add("is-shown"))
+  // 首屏立即可见（不依赖滚动），并保留 1.2s 兜底
+  requestAnimationFrame(() => setTimeout(show, 120))
+  setTimeout(show, 1200)
+}
+initHeroTitleReveal()
