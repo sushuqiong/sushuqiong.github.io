@@ -12075,3 +12075,73 @@ html.theme-transition,
 html.theme-transition body {
   transition: background-color 0.45s ease, color 0.45s ease;
 }
+
+
+/* ============================================================
+   v83 · 批次 30-32：波浪背景层 / 数字弹性 / 加载光幕
+   ============================================================ */
+
+/* ㉚ 底部波浪背景层（缓慢横向流动，营造"数据流"感） */
+.page-waves {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 190px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.45;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
+}
+
+.page-waves svg {
+  width: 200%;
+  height: 100%;
+  display: block;
+  animation: wave-drift 28s linear infinite;
+}
+
+@keyframes wave-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+html[data-theme="dark"] .page-waves {
+  opacity: 0.32;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-waves svg { animation: none; }
+}
+
+/* ㉜ 页面加载时的光幕扫过（一次性，电影开场感） */
+.page-sheen {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0;
+  background: linear-gradient(105deg,
+    transparent 38%,
+    rgba(100, 255, 218, 0.13) 47%,
+    rgba(255, 255, 255, 0.2) 51%,
+    rgba(167, 139, 250, 0.13) 55%,
+    transparent 64%);
+  background-size: 260% 100%;
+  background-position: 130% 0;
+}
+
+.page-sheen.is-run {
+  animation: sheen-sweep 1.45s cubic-bezier(0.32, 0.1, 0.18, 1) 1;
+}
+
+@keyframes sheen-sweep {
+  0%   { opacity: 1; background-position: 130% 0; }
+  75%  { opacity: 0.85; }
+  100% { opacity: 0; background-position: -30% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-sheen { display: none; }
+}

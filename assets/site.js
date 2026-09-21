@@ -3590,3 +3590,51 @@ function initThemeTransition() {
 
 initImageLightbox()
 initThemeTransition()
+
+
+/* ───────────── v83 · 批次 30-32 ───────────── */
+
+/* ㉚ 注入底部波浪背景层（12 秒循环，两层不同速度） */
+function initPageWaves() {
+  if (document.querySelector(".page-waves")) return
+  const wrap = document.createElement("div")
+  wrap.className = "page-waves"
+  wrap.setAttribute("aria-hidden", "true")
+  wrap.innerHTML =
+    '<svg viewBox="0 0 1440 190" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+    '<defs>' +
+    '<linearGradient id="wv1" x1="0" y1="0" x2="1" y2="0">' +
+    '<stop offset="0" stop-color="#64ffda" stop-opacity="0.28"/>' +
+    '<stop offset="0.5" stop-color="#38bdf8" stop-opacity="0.22"/>' +
+    '<stop offset="1" stop-color="#a78bfa" stop-opacity="0.26"/>' +
+    "</linearGradient>" +
+    "</defs>" +
+    '<path d="M0,110 C180,60 360,160 540,110 C720,60 900,160 1080,110 C1260,60 1440,160 1440,110 L1440,190 L0,190 Z" fill="url(#wv1)"/>' +
+    '<path d="M0,140 C200,100 400,180 600,140 C800,100 1000,180 1200,140 C1320,118 1400,150 1440,140 L1440,190 L0,190 Z" fill="url(#wv1)" opacity="0.55"/>' +
+    "</svg>"
+  document.body.appendChild(wrap)
+}
+
+/* ㉜ 加载光幕（首屏后一次性扫过） */
+function initPageSheen() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (sessionStorage.getItem("sheen_shown")) return
+  try {
+    sessionStorage.setItem("sheen_shown", "1")
+  } catch (e) {
+    /* 忽略 */
+  }
+  const el = document.createElement("div")
+  el.className = "page-sheen"
+  el.setAttribute("aria-hidden", "true")
+  document.body.appendChild(el)
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      el.classList.add("is-run")
+      setTimeout(() => el.remove(), 1700)
+    }, 260)
+  })
+}
+
+initPageWaves()
+initPageSheen()
