@@ -7604,12 +7604,7 @@ html[data-theme="dark"] #notes {
   background: linear-gradient(180deg, rgba(13, 23, 48, 0.78), rgba(13, 23, 48, 0.6));
 }
 
-html[data-theme="dark"] .section-head h2 {
-  background: linear-gradient(92deg, #a5b4fc, #f0abfc 55%, #fda4af);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+
 
 html[data-theme="dark"] .section-head p {
   color: rgba(226, 232, 255, 0.72);
@@ -10752,8 +10747,8 @@ body.reveal-ready .reveal .section-head > .eyebrow,
 body.reveal-ready .reveal .section-head > h2,
 body.reveal-ready .reveal .section-head > .section-sub {
   opacity: 0;
-  filter: blur(9px);
-  translate: 0 22px;
+  filter: blur(5px);
+  translate: 0 14px;
   transition:
     opacity 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
     filter 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
@@ -11202,8 +11197,8 @@ body.reveal-ready .reveal .article-header > .eyebrow,
 body.reveal-ready .reveal .article-header > h1,
 body.reveal-ready .reveal .article-header > .article-lead {
   opacity: 0;
-  filter: blur(9px);
-  translate: 0 22px;
+  filter: blur(5px);
+  translate: 0 14px;
   transition:
     opacity 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
     filter 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
@@ -11287,11 +11282,6 @@ body.cursor-glow-ready .cursor-glow {
   }
 }
 
-/* ② 滚动时 hero 内容淡出 + 下移视差 */
-.hero .container {
-  will-change: opacity, translate;
-}
-
 /* ③ 按钮点击涟漪 */
 .button,
 .btn,
@@ -11329,8 +11319,8 @@ body.cursor-glow-ready .cursor-glow {
 }
 body.hero-reveal-ready .hero-title-line {
   opacity: 0;
-  translate: 0 26px;
-  filter: blur(7px);
+  translate: 0 10px;
+  filter: blur(4px);
   transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
               translate 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
               filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -11501,7 +11491,7 @@ body.hero-stage-ready .hero-panel,
 body.hero-stage-ready .hero-actions,
 body.hero-stage-ready .hero-scroll-hint {
   opacity: 0;
-  translate: 0 18px;
+  translate: 0 8px;
   transition: opacity 0.75s ease, translate 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -11743,11 +11733,11 @@ body::before {
   z-index: -2;
   pointer-events: none;
   background: linear-gradient(115deg,
-    rgba(100, 255, 218, 0.055) 0%,
-    rgba(167, 139, 250, 0.065) 28%,
-    rgba(56, 189, 248, 0.05) 52%,
-    rgba(253, 224, 71, 0.04) 74%,
-    rgba(100, 255, 218, 0.055) 100%);
+    rgba(100, 255, 218, 0.032) 0%,
+    rgba(167, 139, 250, 0.038) 28%,
+    rgba(56, 189, 248, 0.03) 52%,
+    rgba(253, 224, 71, 0.024) 74%,
+    rgba(100, 255, 218, 0.032) 100%);
   background-size: 380% 380%;
   animation: bg-drift 44s ease-in-out infinite;
 }
@@ -11759,19 +11749,6 @@ body::before {
 
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; }
-}
-
-/* ⑱ 内容区纵深视差（滚动时区块轻微错速移动） */
-.parallax-depth {
-  will-change: translate;
-  transition: translate 0.12s linear;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .parallax-depth {
-    transition: none;
-    translate: none !important;
-  }
 }
 
 /* ⑳ 星空闪烁（细颗粒脉动，营造"活"的夜空） */
@@ -11829,20 +11806,6 @@ body::before {
    v79 · 批次 21-23：hero 3D 跟手 / 关键词点亮 / 章节光点
    ============================================================ */
 
-/* ㉑ hero 网格 3D 跟手倾斜（用 .hero-grid，避开已有 transform 的 .hero-copy） */
-.hero-grid {
-  transform-style: preserve-3d;
-  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
-  .hero-grid {
-    transform: none !important;
-    transition: none;
-  }
-}
-
 /* ㉒ 宣言区关键词逐个点亮 */
 .manifesto-line .m-key {
   display: inline-block;
@@ -11862,12 +11825,10 @@ body::before {
     text-shadow: none;
   }
   45% {
-    filter: brightness(1.55) saturate(1.3);
-    text-shadow: 0 0 20px currentColor, 0 0 34px currentColor;
+    filter: brightness(1.4) saturate(1.2);
   }
   100% {
-    filter: brightness(1.14) saturate(1.08);
-    text-shadow: 0 0 10px currentColor;
+    filter: brightness(1.08) saturate(1.05);
   }
 }
 
@@ -12046,30 +12007,6 @@ article img,
   cursor: zoom-in;
 }
 
-/* ㉘ 粘性章节标题（滚动时当前章节标题吸顶，带毛玻璃托底） */
-@media (min-width: 900px) {
-  .section-head {
-    position: sticky;
-    top: 72px;
-    z-index: 12;
-    padding: 10px 0 8px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.6) 70%, rgba(255, 255, 255, 0) 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 12px;
-  }
-
-  html[data-theme="dark"] .section-head {
-    background: linear-gradient(180deg, rgba(9, 14, 34, 0.86) 0%, rgba(9, 14, 34, 0.6) 70%, rgba(9, 14, 34, 0) 100%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .section-head {
-    position: static;
-  }
-}
-
 /* ㉙ 主题切换的柔和过渡（避免生硬闪变） */
 html.theme-transition,
 html.theme-transition body {
@@ -12087,10 +12024,10 @@ html.theme-transition body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 190px;
+  height: 150px;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.45;
+  opacity: 0.3;
   mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
 }
@@ -12245,11 +12182,7 @@ html.perf-low #starfield {
   filter: none;
 }
 
-html.perf-low .section-head {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  background: rgba(255, 255, 255, 0.94);
-}
+
 
 html.perf-low .section-head .eyebrow::before {
   animation: none;
@@ -12267,9 +12200,7 @@ html.perf-low .parallax-depth {
   transition: none;
 }
 
-html[data-theme="dark"].perf-low .section-head {
-  background: rgba(9, 14, 34, 0.94);
-}
+
 
 
 /* ============================================================
@@ -12304,12 +12235,12 @@ html[data-theme="dark"].perf-low .section-head {
 /* ㊳ 论文列表项：滚动进入时左右交替滑入（JS 失败则全部可见） */
 body.pub-reveal-ready .pub-list .pub-row {
   opacity: 0;
-  translate: -20px 0;
+  translate: -6px 0;
   transition: opacity 0.62s ease, translate 0.72s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 body.pub-reveal-ready .pub-list .pub-row:nth-child(even) {
-  translate: 20px 0;
+  translate: 6px 0;
 }
 
 body.pub-reveal-ready .pub-list .pub-row.is-in {
@@ -12327,28 +12258,6 @@ body.pub-reveal-ready .pub-list .pub-row:nth-child(5) { transition-delay: 0.32s;
   body.pub-reveal-ready .pub-list .pub-row {
     opacity: 1 !important;
     translate: none !important;
-  }
-}
-
-/* ㊴ 宣言逐行揭示（clip-path 从右向左揭开，不改 DOM 结构、文字始终存在） */
-body.manifesto-reveal-ready .manifesto-line {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.95s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-body.manifesto-reveal-ready .manifesto-line.is-in {
-  clip-path: inset(0 -2% 0 0);
-}
-
-body.manifesto-reveal-ready .manifesto-line:nth-child(1) { transition-delay: 0.05s; }
-body.manifesto-reveal-ready .manifesto-line:nth-child(2) { transition-delay: 0.22s; }
-body.manifesto-reveal-ready .manifesto-line:nth-child(3) { transition-delay: 0.39s; }
-body.manifesto-reveal-ready .manifesto-line:nth-child(4) { transition-delay: 0.56s; }
-body.manifesto-reveal-ready .manifesto-line:nth-child(5) { transition-delay: 0.73s; }
-
-@media (prefers-reduced-motion: reduce), print {
-  body.manifesto-reveal-ready .manifesto-line {
-    clip-path: none !important;
   }
 }
 

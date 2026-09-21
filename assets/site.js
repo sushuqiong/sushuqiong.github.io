@@ -3251,6 +3251,7 @@ function initCursorGlow() {
 
 /* ② 滚动时 hero 内容淡出 + 下移（视差感） */
 function initHeroScrollFade() {
+  return // v88 回退：滚动淡出会模糊/位移首屏内容
   const hero = document.querySelector(".hero")
   if (!hero) return
   const inner = hero.querySelector(".container")
@@ -3483,7 +3484,7 @@ function initDepthParallax() {
   update()
 }
 
-initDepthParallax()
+/* 已停用（v88 回退）：initDepthParallax() */
 
 
 /* ───────────── v79 · 批次 21-23 ───────────── */
@@ -3527,7 +3528,7 @@ function initHero3DTilt() {
   })
 }
 
-initHero3DTilt()
+/* 已停用（v88 回退）：initHero3DTilt() */
 
 
 /* ───────────── v81 · 批次 27-29 ───────────── */
@@ -3708,4 +3709,4 @@ function initManifestoReveal() {
 }
 
 initPubReveal()
-initManifestoReveal()
+/* 已停用（v88 回退）：initManifestoReveal() */
