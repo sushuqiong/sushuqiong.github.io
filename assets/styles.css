@@ -11642,3 +11642,25 @@ header.is-scrolled,
 header.is-scrolled .brand {
   translate: 0 -1px;
 }
+
+/* ── v76 · 批次 15：播放状态下的唱片光晕与旋转增强 ── */
+.music-card.is-playing .music-cover,
+.music-card.is-playing img,
+body.music-playing .music-cover,
+body.music-playing .vinyl {
+  box-shadow: 0 0 0 1px rgba(100, 255, 218, 0.35),
+              0 0 28px rgba(100, 255, 218, 0.32),
+              0 0 60px rgba(167, 139, 250, 0.18);
+  animation: vinyl-glow 2.6s ease-in-out infinite;
+}
+@keyframes vinyl-glow {
+  0%, 100% { filter: brightness(1) saturate(1); }
+  50%      { filter: brightness(1.08) saturate(1.15); }
+}
+.music-card.is-playing {
+  border-color: rgba(100, 255, 218, 0.35) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .music-card.is-playing .music-cover,
+  body.music-playing .music-cover { animation: none; }
+}
