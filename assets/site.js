@@ -3841,3 +3841,45 @@ initCursorGlowLayers()
 initClickWave()
 initDustBurst()
 initMusicPulse()
+
+
+/* ───────────── v95 · 宣言区力量感 ───────────── */
+
+/* 注入：光柱层 + 能量地平线；并在进入视口时触发一次"能量光爆" */
+function initManifestoPower() {
+  const section = document.querySelector(".manifesto")
+  if (!section) return
+  if (section.querySelector(".manifesto-beams")) return
+
+  // ① 光柱层
+  const beams = document.createElement("div")
+  beams.className = "manifesto-beams"
+  beams.setAttribute("aria-hidden", "true")
+  beams.innerHTML = "<i></i><i></i><i></i><i></i>"
+  section.insertBefore(beams, section.firstChild)
+
+  // ② 能量地平线
+  const line = document.createElement("span")
+  line.className = "manifesto-energy-line"
+  line.setAttribute("aria-hidden", "true")
+  section.appendChild(line)
+
+  // ③ 进入视口时一次性光爆
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (!("IntersectionObserver" in window)) return
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const en of entries) {
+        if (en.isIntersecting) {
+          section.classList.add("is-charging")
+          setTimeout(() => section.classList.remove("is-charging"), 1400)
+          io.disconnect()
+        }
+      }
+    },
+    { threshold: 0.35 },
+  )
+  io.observe(section)
+}
+
+initManifestoPower()

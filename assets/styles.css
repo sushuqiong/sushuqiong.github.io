@@ -12677,3 +12677,264 @@ body.music-pulsing .cursor-glow-outer {
 .manifesto-inner .manifesto-line .m-key {
   text-shadow: 0 1px 3px rgba(8, 14, 32, 0.75) !important;
 }
+
+
+/* ============================================================
+   v95 · 宣言区「力量感」增强
+   —— 全部通过"背景光效 + 亮度脉冲"实现：
+      · 不改变文字的字号 / 字重 / 字距 / 位置（避免被看作"改了显示"）
+      · 不使用 drop-shadow / background-clip:text / clip-path（避免重影与裁剪）
+      · 宣言区文字仍然只有那 5 行
+   ============================================================ */
+
+/* ① 太阳：更强的光晕 + 缓慢呼吸（黎明的能量源） */
+.manifesto-sun {
+  box-shadow:
+    0 0 60px 26px rgba(251, 191, 36, 0.4),
+    0 0 150px 70px rgba(251, 191, 36, 0.2),
+    0 0 260px 130px rgba(251, 146, 60, 0.1);
+  animation: sun-breathe 6.5s ease-in-out infinite;
+}
+
+@keyframes sun-breathe {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.3); }
+}
+
+/* ② 光柱：从太阳向上发散的柔光带（3 条，缓慢摇摆） */
+.manifesto-beams {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 92%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.manifesto-beams i {
+  position: absolute;
+  bottom: 14%;
+  left: 50%;
+  width: 130px;
+  height: 78%;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(0deg,
+    rgba(251, 191, 36, 0.26) 0%,
+    rgba(251, 146, 60, 0.12) 42%,
+    transparent 88%);
+  filter: blur(28px);
+  transform-origin: bottom center;
+  animation: beam-sway 13s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+.manifesto-beams i:nth-child(1) { transform: rotate(-19deg); }
+.manifesto-beams i:nth-child(2) { transform: rotate(-6deg); animation-duration: 16s; animation-delay: -4s; opacity: 0.65; }
+.manifesto-beams i:nth-child(3) { transform: rotate(9deg); animation-duration: 19s; animation-delay: -8s; opacity: 0.55; }
+.manifesto-beams i:nth-child(4) { transform: rotate(22deg); animation-duration: 14s; animation-delay: -11s; opacity: 0.45; }
+
+@keyframes beam-sway {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.9; }
+}
+
+/* ③ 逐行「能量点亮」：当前行文字本身做亮度脉冲（不产生重影、不改位置） */
+.manifesto-inner .manifesto-line {
+  /* 保持 v94 的可读性设置，叠加亮度脉冲 */
+  animation: line-energy 3.4s ease-in-out infinite;
+}
+
+@keyframes line-energy {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.14); }
+}
+
+/* 非当前行：呼吸幅度更小，避免整屏跳动 */
+.manifesto-inner .manifesto-line:not(.is-subbing) {
+  animation-duration: 5.2s;
+}
+
+/* ④ 进入视口时的能量光爆（由 JS 触发一次性类） */
+.manifesto.is-charging::after {
+  animation: charge-flash 1.25s ease-out 1;
+}
+
+@keyframes charge-flash {
+  0%   {
+    opacity: 0.9;
+    background: radial-gradient(circle at 50% 62%,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(251, 191, 36, 0.32) 22%,
+      transparent 62%);
+  }
+  100% {
+    opacity: 0;
+    background: radial-gradient(circle at 50% 62%,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(251, 191, 36, 0) 40%,
+      transparent 70%);
+  }
+}
+
+/* ⑤ 宣言区底部能量地平线（横向脉冲光带） */
+.manifesto-energy-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18%;
+  height: 2px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(251, 191, 36, 0.55) 22%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(251, 191, 36, 0.55) 78%,
+    transparent 100%);
+  filter: blur(0.6px);
+  animation: horizon-pulse 4.6s ease-in-out infinite;
+}
+
+@keyframes horizon-pulse {
+  0%, 100% { opacity: 0.35; transform: scaleX(0.92); }
+  50%      { opacity: 0.95; transform: scaleX(1); }
+}
+
+/* ⑥ 萤火/尘埃上浮增强（存在则加强，不存在也不会报错） */
+.manifesto .m-dust {
+  box-shadow: 0 0 12px 3px rgba(255, 224, 130, 0.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-sun,
+  .manifesto-beams i,
+  .manifesto-inner .manifesto-line,
+  .manifesto-energy-line,
+  .manifesto.is-charging::after {
+    animation: none !important;
+  }
+}
+
+
+/* ============================================================
+   v96 · 全站特效补充（应对"太呆板"）
+   —— 全部为**背景层**动画：不改变文字、不改变元素位置与尺寸
+   ============================================================ */
+
+/* ① 区块进入视口：一圈柔光"脉冲"（像能量场被激活） */
+@keyframes section-glow-pulse {
+  0% {
+    box-shadow: inset 0 0 0 0 rgba(100, 255, 218, 0);
+  }
+  45% {
+    box-shadow: inset 0 0 110px 0 rgba(100, 255, 218, 0.11);
+  }
+  100% {
+    box-shadow: inset 0 0 0 0 rgba(100, 255, 218, 0);
+  }
+}
+
+.reveal.is-visible.section {
+  animation: section-glow-pulse 1.6s ease-out 1;
+}
+
+/* ② 区块进入视口：一道柔光斜向扫过整块（明显，但不遮挡文字） */
+.section {
+  position: relative;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  background: linear-gradient(105deg,
+    transparent 40%,
+    rgba(100, 255, 218, 0.07) 47%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(167, 139, 250, 0.07) 53%,
+    transparent 60%);
+  background-size: 270% 100%;
+  background-position: 130% 0;
+}
+
+.reveal.is-visible.section::after {
+  animation: section-sweep 1.7s cubic-bezier(0.32, 0.1, 0.2, 1) 0.12s 1;
+}
+
+@keyframes section-sweep {
+  0%   { opacity: 1; background-position: 130% 0; }
+  70%  { opacity: 0.75; }
+  100% { opacity: 0; background-position: -30% 0; }
+}
+
+/* ③ 内容卡片：常驻的"能量呼吸"（极淡边框光，非位移） */
+@keyframes card-energy {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(100, 255, 218, 0.08), 0 0 22px rgba(100, 255, 218, 0.06); }
+  50%      { box-shadow: 0 0 0 1px rgba(100, 255, 218, 0.16), 0 0 34px rgba(100, 255, 218, 0.12); }
+}
+
+.card,
+.feature-tile,
+.note-card {
+  animation: card-energy 5.6s ease-in-out infinite;
+}
+
+/* ④ 首屏标题：常驻的"光晕呼吸"（背景层，不改文字字色与位置） */
+@keyframes title-aura {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.8; }
+}
+
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  left: -6%;
+  top: -18%;
+  width: 112%;
+  height: 150%;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 40% 44% 46% 42%;
+  background: radial-gradient(ellipse at 30% 40%,
+    rgba(100, 255, 218, 0.09) 0%,
+    rgba(167, 139, 250, 0.07) 42%,
+    transparent 72%);
+  filter: blur(28px);
+  animation: title-aura 7.2s ease-in-out infinite;
+}
+
+/* ⑤ 页脚上方：一条柔光收束带 */
+footer {
+  position: relative;
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(100, 255, 218, 0.5) 30%,
+    rgba(167, 139, 250, 0.5) 70%,
+    transparent 100%);
+  filter: blur(0.4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.is-visible.section,
+  .reveal.is-visible.section::after,
+  .card,
+  .feature-tile,
+  .note-card,
+  .hero-copy::after {
+    animation: none !important;
+  }
+}
