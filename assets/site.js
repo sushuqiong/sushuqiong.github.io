@@ -3251,7 +3251,8 @@ function initCursorGlow() {
 
 /* ② 滚动时 hero 内容淡出 + 下移（视差感） */
 function initHeroScrollFade() {
-  return // v88 回退：滚动淡出会模糊/位移首屏内容
+  // v89 恢复（安全版）：只用 opacity 渐隐，不做 blur、不做位移，
+  // 避免"滚动时文字发虚 / 内容位置错动"（v88 曾因此被回退）
   const hero = document.querySelector(".hero")
   if (!hero) return
   const inner = hero.querySelector(".container")
@@ -3263,9 +3264,7 @@ function initHeroScrollFade() {
     raf = null
     const h = hero.offsetHeight || 1
     const p = Math.min(window.scrollY / h, 1)
-    inner.style.opacity = String(Math.max(0, 1 - p * 0.85))
-    inner.style.translate = "0 " + (p * 64).toFixed(1) + "px"
-    inner.style.filter = p > 0.06 ? "blur(" + (p * 6).toFixed(2) + "px)" : ""
+    inner.style.opacity = String(Math.max(0.05, 1 - p * 0.72))
   }
   window.addEventListener(
     "scroll",

@@ -10747,8 +10747,8 @@ body.reveal-ready .reveal .section-head > .eyebrow,
 body.reveal-ready .reveal .section-head > h2,
 body.reveal-ready .reveal .section-head > .section-sub {
   opacity: 0;
-  filter: blur(5px);
-  translate: 0 14px;
+  filter: blur(7px);
+  translate: 0 18px;
   transition:
     opacity 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
     filter 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
@@ -11319,8 +11319,8 @@ body.cursor-glow-ready .cursor-glow {
 }
 body.hero-reveal-ready .hero-title-line {
   opacity: 0;
-  translate: 0 10px;
-  filter: blur(4px);
+  translate: 0 16px;
+  filter: blur(6px);
   transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
               translate 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
               filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -12024,10 +12024,10 @@ html.theme-transition body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 150px;
+  height: 175px;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.4;
   mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
 }
@@ -12287,4 +12287,71 @@ body.pub-reveal-ready .pub-list .pub-row:nth-child(5) { transition-delay: 0.32s;
 .road-step:hover::before {
   opacity: 1;
   transform: translateX(0);
+}
+
+
+/* ============================================================
+   ⛔ 宣言区保护（用户明确要求，勿违反）
+   .manifesto / .manifesto-line / .m-key 及其内部文字：
+     · 禁止添加 clip-path / 3D transform / blur / 位移 / 遮罩 等
+       会改变文字"呈现"的效果（曾因此被用户指出"句子被改错了"）
+     · 允许：颜色、发光（谨慎）、背景与装饰元素（不遮挡文字）
+   ============================================================ */
+
+.manifesto .manifesto-line,
+.manifesto .m-key {
+  /* 显式声明：文字始终完整可见，不受任何裁剪 */
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+
+/* ============================================================
+   v89 · 两个补充效果（明显可见，且不改变文字与布局位置）
+   ============================================================ */
+
+/* 卡片 hover 轻微放大 + 抬升（scale 不影响文档流布局） */
+.card,
+.feature-tile,
+.note-card,
+.skill-card,
+.music-card {
+  transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.4s ease;
+}
+
+.card:hover,
+.feature-tile:hover,
+.note-card:hover,
+.music-card:hover {
+  transform: translateY(-4px) scale(1.014);
+  box-shadow: 0 18px 44px rgba(7, 13, 31, 0.16);
+}
+
+html[data-theme="dark"] .card:hover,
+html[data-theme="dark"] .feature-tile:hover,
+html[data-theme="dark"] .note-card:hover {
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(100, 255, 218, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .feature-tile:hover,
+  .note-card:hover,
+  .music-card:hover {
+    transform: none;
+  }
+}
+
+/* 悬停任意行的整行高亮（阅读辅助） */
+.pub-row,
+.road-step {
+  transition: background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.pub-row:hover,
+.road-step:hover {
+  background-color: rgba(100, 255, 218, 0.045);
 }
