@@ -11524,3 +11524,15 @@ body.hero-stage-ready.is-staged .hero-scroll-hint {
     translate: none !important;
   }
 }
+
+/* ── v71 · 批次 10：星空层增强（更亮更通透）── */
+#starfield {
+  filter: brightness(1.18) contrast(1.06) saturate(1.1);
+}
+.hero-canvas {
+  mix-blend-mode: screen;
+}
+/* 星空层在深色区更通透，在浅色内容区不抢戏 */
+@media (prefers-reduced-motion: reduce) {
+  #starfield { filter: brightness(1.1); }
+}
