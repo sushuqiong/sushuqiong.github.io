@@ -3431,7 +3431,7 @@ function tagSectionMapIndex() {
 setTimeout(tagSectionMapIndex, 400)
 
 /* v70 · 批次 6：滚动到顶部时隐藏进度光点 */
-(function () {
+;(function () {
   const root = document.documentElement
   function tick() {
     root.dataset.scrollTop = window.scrollY < 24 ? "1" : "0"
