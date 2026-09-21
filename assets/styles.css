@@ -11536,3 +11536,45 @@ body.hero-stage-ready.is-staged .hero-scroll-hint {
 @media (prefers-reduced-motion: reduce) {
   #starfield { filter: brightness(1.1); }
 }
+
+/* ── v72 · 批次 11：卡片 hover 时光泽对角扫过 ── */
+.card,
+.feature-tile,
+.note-card,
+.music-card {
+  position: relative;
+  overflow: hidden;
+}
+.card::after,
+.feature-tile::after,
+.note-card::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -80%;
+  width: 55%;
+  height: 220%;
+  background: linear-gradient(100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 42%,
+    rgba(255, 255, 255, 0.16) 50%,
+    rgba(255, 255, 255, 0.06) 58%,
+    transparent 100%);
+  transform: rotate(12deg);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+}
+.card:hover::after,
+.feature-tile:hover::after,
+.note-card:hover::after {
+  opacity: 1;
+  animation: card-sheen 1.15s ease-out 1;
+}
+@keyframes card-sheen {
+  0%   { left: -80%; opacity: 0.9; }
+  100% { left: 130%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card::after, .feature-tile::after, .note-card::after { display: none; }
+}
