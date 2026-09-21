@@ -3638,3 +3638,24 @@ function initPageSheen() {
 
 initPageWaves()
 initPageSheen()
+
+
+/* ───────────── v85 · 批次 36：性能自适应 ───────────── */
+
+/* 低端设备检测：CPU 核心数 / 设备内存偏低时，给 <html> 加 perf-low 类，
+   由 CSS 关闭装饰性效果（光晕、拖尾、粒子、波浪、光幕、视差等）。 */
+function initPerfTier() {
+  try {
+    const cores = navigator.hardwareConcurrency || 0
+    const mem = navigator.deviceMemory || 0
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    // 仅在能明确判定为低端时才降级（检测不到就不降级，避免误伤）
+    const low = (cores > 0 && cores <= 4) || (mem > 0 && mem <= 4) || reduced
+    if (low) document.documentElement.classList.add("perf-low")
+  } catch (e) {
+    /* 忽略：检测失败不影响页面 */
+  }
+}
+
+initPerfTier()

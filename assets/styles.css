@@ -12220,3 +12220,53 @@ html[data-theme="dark"] .page-waves {
   .back-top::after,
   .back-to-top::after { display: none; }
 }
+
+
+/* ============================================================
+   v85 · 批次 36：性能自适应
+   —— 检测到低端设备（CPU ≤4 核 / 内存 ≤4GB）时自动关闭装饰性效果，
+      保证内容浏览与交互始终流畅。检测失败时默认不降级（不影响正常设备）。
+   ============================================================ */
+
+html.perf-low .cursor-glow,
+html.perf-low .trail-star,
+html.perf-low .click-spark,
+html.perf-low .page-waves,
+html.perf-low .page-sheen {
+  display: none !important;
+}
+
+html.perf-low body::before {
+  animation: none;
+}
+
+html.perf-low #starfield {
+  animation: none;
+  filter: none;
+}
+
+html.perf-low .section-head {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+html.perf-low .section-head .eyebrow::before {
+  animation: none;
+  transform: translateY(-50%) scale(1);
+}
+
+html.perf-low .card::after,
+html.perf-low .feature-tile::after,
+html.perf-low .note-card::after {
+  display: none;
+}
+
+html.perf-low .parallax-depth {
+  translate: none !important;
+  transition: none;
+}
+
+html[data-theme="dark"].perf-low .section-head {
+  background: rgba(9, 14, 34, 0.94);
+}
