@@ -11578,3 +11578,24 @@ body.hero-stage-ready.is-staged .hero-scroll-hint {
 @media (prefers-reduced-motion: reduce) {
   .card::after, .feature-tile::after, .note-card::after { display: none; }
 }
+
+/* ── v73 · 批次 12：小地图圆点显示章节序号 ── */
+.section-map a::before {
+  content: attr(data-idx);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  font-size: 8px;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: #0b1a2b;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+.section-map a.is-active::before,
+.section-map a:hover::before {
+  opacity: 0.75;
+  transform: translate(-50%, -50%) scale(1);
+}

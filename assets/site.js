@@ -3404,3 +3404,14 @@ function initHeroStage() {
 initClickBurst()
 initCursorTrail()
 initHeroStage()
+
+/* v73 · 批次 12：给小地图圆点标序号（已有小地图则补属性，无则跳过） */
+function tagSectionMapIndex() {
+  const map = document.querySelector(".section-map")
+  if (!map) return
+  Array.from(map.children).forEach((a, i) => {
+    if (a.dataset.idx) return
+    a.dataset.idx = String(i + 1)
+  })
+}
+setTimeout(tagSectionMapIndex, 400)
