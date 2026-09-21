@@ -219,13 +219,16 @@ function initStarfield() {
     }
 
     // 流星：偶发划过
-    if (Math.random() < 0.006 && meteors.length < 3) {
+    if (Math.random() < 0.014 && meteors.length < 5) {
       meteors.push({
         x: width * 0.3 + Math.random() * width * 0.7,
         y: Math.random() * height * 0.35,
         vx: -(4.5 + Math.random() * 4),
         vy: 1.8 + Math.random() * 1.8,
         life: 55 + Math.random() * 30,
+        // 流星本体着色：白 / 青绿 / 淡紫
+        color: Math.random() < 0.5 ? "235, 245, 255" : Math.random() < 0.6 ? "100, 255, 218" : "196, 181, 253",
+        wide: Math.random() < 0.25 ? 2.6 : 1.8,
       })
     }
     for (let i = meteors.length - 1; i >= 0; i--) {
@@ -238,20 +241,31 @@ function initStarfield() {
         continue
       }
       const alpha = Math.min(0.9, m.life / 22)
+      const mc = m.color || "235, 245, 255"
       const tail = ctx.createLinearGradient(m.x, m.y, m.x - m.vx * 12, m.y - m.vy * 12)
-      tail.addColorStop(0, `rgba(235, 245, 255, ${alpha})`)
-      tail.addColorStop(1, "rgba(235, 245, 255, 0)")
+      tail.addColorStop(0, `rgba(${mc}, ${alpha})`)
+      tail.addColorStop(1, `rgba(${mc}, 0)`)
       ctx.strokeStyle = tail
-      ctx.lineWidth = 1.8
+      ctx.lineWidth = m.wide || 1.8
       ctx.lineCap = "round"
       ctx.beginPath()
       ctx.moveTo(m.x, m.y)
       ctx.lineTo(m.x - m.vx * 12, m.y - m.vy * 12)
       ctx.stroke()
       ctx.beginPath()
-      ctx.arc(m.x, m.y, 1.8, 0, Math.PI * 2)
+      ctx.arc(m.x, m.y, (m.wide || 1.8) * 1.05, 0, Math.PI * 2)
       ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`
       ctx.fill()
+      // 光晕
+      if (m.wide && m.wide > 2) {
+        ctx.beginPath()
+        ctx.arc(m.x, m.y, 6, 0, Math.PI * 2)
+        const halo = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 6)
+        halo.addColorStop(0, `rgba(${m.color || "235, 245, 255"}, ${alpha * 0.5})`)
+        halo.addColorStop(1, "rgba(0, 0, 0, 0)")
+        ctx.fillStyle = halo
+        ctx.fill()
+      }
     }
 
     // 鼠标视差（轻微，营造穿行感）

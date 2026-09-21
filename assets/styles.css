@@ -11911,3 +11911,79 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .reveal.is-visible .section-head .eyebrow::before { animation: none; transform: translateY(-50%) scale(1); }
 }
+
+
+/* ============================================================
+   v80 · 批次 25-26：滚动条 / 选中样式 / 链接与图片细节
+   ============================================================ */
+
+/* ㉕ 自定义滚动条（青绿→天蓝渐变） */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(7, 13, 31, 0.06);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #64ffda, #38bdf8);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #64ffda, #a78bfa);
+  background-clip: content-box;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* 文字选中样式 */
+::selection {
+  background: rgba(100, 255, 218, 0.3);
+  color: inherit;
+  text-shadow: 0 0 14px rgba(100, 255, 218, 0.45);
+}
+
+::-moz-selection {
+  background: rgba(100, 255, 218, 0.3);
+}
+
+/* ㉖ 正文链接的下划线柔和过渡 */
+main a:not([class*="button"]):not([class*="btn"]):not(.row):not(.card) {
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(100, 255, 218, 0.35);
+  transition: text-decoration-color 0.25s ease, color 0.25s ease;
+}
+
+main a:not([class*="button"]):not([class*="btn"]):not(.row):not(.card):hover {
+  text-decoration-color: #64ffda;
+}
+
+/* 文章内图片 hover 轻微放大（仅详情页，避免布局跳动） */
+.publication-body img,
+article img,
+.post-body img {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.45s ease;
+  border-radius: 10px;
+}
+
+.publication-body img:hover,
+article img:hover,
+.post-body img:hover {
+  transform: scale(1.015);
+  box-shadow: 0 14px 40px rgba(7, 13, 31, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .publication-body img:hover,
+  article img:hover,
+  .post-body img:hover {
+    transform: none;
+  }
+}
