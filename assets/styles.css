@@ -11628,3 +11628,17 @@ body.hero-stage-ready.is-staged .hero-desc::after {
 @media (prefers-reduced-motion: reduce) {
   .hero-copy .lead::after, .hero-lead::after, .hero-desc::after { display: none; }
 }
+
+/* ── v75 · 批次 14：导航栏滚动时的玻璃质感与紧凑化 ── */
+.site-header.is-scrolled,
+header.is-scrolled,
+.nav-scrolled {
+  backdrop-filter: blur(20px) saturate(1.35);
+  -webkit-backdrop-filter: blur(20px) saturate(1.35);
+  box-shadow: 0 10px 30px rgba(7, 13, 31, 0.18);
+  border-bottom-color: rgba(100, 255, 218, 0.16);
+}
+.site-header.is-scrolled .brand,
+header.is-scrolled .brand {
+  translate: 0 -1px;
+}
