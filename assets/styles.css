@@ -11599,3 +11599,32 @@ body.hero-stage-ready.is-staged .hero-scroll-hint {
   opacity: 0.75;
   transform: translate(-50%, -50%) scale(1);
 }
+
+/* ── v74 · 批次 13：hero 副标题的下划线生长 + 光标闪烁 ── */
+.hero-copy .lead,
+.hero-lead,
+.hero-desc {
+  position: relative;
+}
+.hero-copy .lead::after,
+.hero-lead::after,
+.hero-desc::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(90deg, rgba(100, 255, 218, 0.85), rgba(167, 139, 250, 0.55), transparent);
+}
+body.hero-stage-ready.is-staged .hero-copy .lead::after,
+body.hero-stage-ready.is-staged .hero-lead::after,
+body.hero-stage-ready.is-staged .hero-desc::after {
+  animation: lead-underline 1.3s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s forwards;
+}
+@keyframes lead-underline {
+  to { width: 62%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy .lead::after, .hero-lead::after, .hero-desc::after { display: none; }
+}
