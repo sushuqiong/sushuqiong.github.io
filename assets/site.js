@@ -3659,3 +3659,53 @@ function initPerfTier() {
 }
 
 initPerfTier()
+
+
+/* ───────────── v86 · 批次 37-40 ───────────── */
+
+/* ㊳ 论文列表项进入视口时滑入（IO 驱动 + 2s 兜底） */
+function initPubReveal() {
+  const rows = document.querySelectorAll(".pub-list .pub-row")
+  if (!rows.length) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+  document.body.classList.add("pub-reveal-ready")
+
+  const showAll = () => rows.forEach((r) => r.classList.add("is-in"))
+
+  if (!("IntersectionObserver" in window)) {
+    showAll()
+    return
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const en of entries) {
+        if (en.isIntersecting) {
+          en.target.classList.add("is-in")
+          io.unobserve(en.target)
+        }
+      }
+    },
+    { threshold: 0.18, rootMargin: "0px 0px -40px 0px" },
+  )
+  rows.forEach((r) => io.observe(r))
+
+  // 兜底：2 秒后全部显示（避免任何情况下列表不可见）
+  setTimeout(showAll, 2000)
+}
+
+/* ㊴ 宣言逐行揭示：复用已有的 .is-in 标记，仅在此挂上"准备"类以启用 clip-path */
+function initManifestoReveal() {
+  const lines = document.querySelectorAll(".manifesto-line")
+  if (!lines.length) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  document.body.classList.add("manifesto-reveal-ready")
+  // 兜底：若 1.6s 内仍未有 is-in（例如 IO 未触发），直接全部揭示
+  setTimeout(() => {
+    lines.forEach((l) => l.classList.add("is-in"))
+  }, 1600)
+}
+
+initPubReveal()
+initManifestoReveal()

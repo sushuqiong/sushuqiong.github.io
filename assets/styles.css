@@ -12270,3 +12270,112 @@ html.perf-low .parallax-depth {
 html[data-theme="dark"].perf-low .section-head {
   background: rgba(9, 14, 34, 0.94);
 }
+
+
+/* ============================================================
+   v86 · 批次 37-40：音乐音波 / 列表进入 / 宣言揭示 / 侧光
+   ============================================================ */
+
+/* ㊲ 播放中的音乐卡片：音波脉冲光环 */
+.music-card {
+  position: relative;
+}
+
+.music-card.is-playing::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1.5px solid rgba(100, 255, 218, 0.55);
+  pointer-events: none;
+  animation: card-wave 1.9s ease-out infinite;
+}
+
+@keyframes card-wave {
+  0%   { opacity: 0.85; transform: scale(1); }
+  70%  { opacity: 0.25; }
+  100% { opacity: 0; transform: scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-card.is-playing::after { animation: none; opacity: 0.5; }
+}
+
+/* ㊳ 论文列表项：滚动进入时左右交替滑入（JS 失败则全部可见） */
+body.pub-reveal-ready .pub-list .pub-row {
+  opacity: 0;
+  translate: -20px 0;
+  transition: opacity 0.62s ease, translate 0.72s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.pub-reveal-ready .pub-list .pub-row:nth-child(even) {
+  translate: 20px 0;
+}
+
+body.pub-reveal-ready .pub-list .pub-row.is-in {
+  opacity: 1;
+  translate: 0 0;
+}
+
+body.pub-reveal-ready .pub-list .pub-row:nth-child(1) { transition-delay: 0.04s; }
+body.pub-reveal-ready .pub-list .pub-row:nth-child(2) { transition-delay: 0.11s; }
+body.pub-reveal-ready .pub-list .pub-row:nth-child(3) { transition-delay: 0.18s; }
+body.pub-reveal-ready .pub-list .pub-row:nth-child(4) { transition-delay: 0.25s; }
+body.pub-reveal-ready .pub-list .pub-row:nth-child(5) { transition-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce), print {
+  body.pub-reveal-ready .pub-list .pub-row {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+
+/* ㊴ 宣言逐行揭示（clip-path 从右向左揭开，不改 DOM 结构、文字始终存在） */
+body.manifesto-reveal-ready .manifesto-line {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.95s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.manifesto-reveal-ready .manifesto-line.is-in {
+  clip-path: inset(0 -2% 0 0);
+}
+
+body.manifesto-reveal-ready .manifesto-line:nth-child(1) { transition-delay: 0.05s; }
+body.manifesto-reveal-ready .manifesto-line:nth-child(2) { transition-delay: 0.22s; }
+body.manifesto-reveal-ready .manifesto-line:nth-child(3) { transition-delay: 0.39s; }
+body.manifesto-reveal-ready .manifesto-line:nth-child(4) { transition-delay: 0.56s; }
+body.manifesto-reveal-ready .manifesto-line:nth-child(5) { transition-delay: 0.73s; }
+
+@media (prefers-reduced-motion: reduce), print {
+  body.manifesto-reveal-ready .manifesto-line {
+    clip-path: none !important;
+  }
+}
+
+/* ㊵ 列表项 hover：左侧滑入一条发光光带 */
+.pub-row,
+.road-step {
+  position: relative;
+}
+
+.pub-row::before,
+.road-step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12%;
+  height: 76%;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #64ffda, #a78bfa);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.32s ease, transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
+  pointer-events: none;
+}
+
+.pub-row:hover::before,
+.road-step:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
