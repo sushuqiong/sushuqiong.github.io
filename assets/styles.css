@@ -11729,3 +11729,97 @@ html[data-scroll-top="1"] .read-progress::after { opacity: 0; }
   .scroll-progress::after,
   .progress-bar::after { animation: none; }
 }
+
+
+/* ============================================================
+   v78 · 批次 17-20：动态渐变背景 / 视差纵深 / 页面转场 / 星空闪烁
+   ============================================================ */
+
+/* ⑰ 内容区动态渐变背景（极淡，缓慢流动，不干扰阅读） */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: linear-gradient(115deg,
+    rgba(100, 255, 218, 0.055) 0%,
+    rgba(167, 139, 250, 0.065) 28%,
+    rgba(56, 189, 248, 0.05) 52%,
+    rgba(253, 224, 71, 0.04) 74%,
+    rgba(100, 255, 218, 0.055) 100%);
+  background-size: 380% 380%;
+  animation: bg-drift 44s ease-in-out infinite;
+}
+
+@keyframes bg-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+}
+
+/* ⑱ 内容区纵深视差（滚动时区块轻微错速移动） */
+.parallax-depth {
+  will-change: translate;
+  transition: translate 0.12s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-depth {
+    transition: none;
+    translate: none !important;
+  }
+}
+
+/* ⑳ 星空闪烁（细颗粒脉动，营造"活"的夜空） */
+#starfield {
+  animation: star-pulse 7.5s ease-in-out infinite;
+}
+
+@keyframes star-pulse {
+  0%, 100% { opacity: 0.88; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #starfield { animation: none; }
+}
+
+/* ⑲ 页面转场（View Transitions API；不支持的浏览器自动忽略） */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: page-out 0.26s ease both;
+}
+
+::view-transition-new(root) {
+  animation: page-in 0.36s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale(0.994);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: scale(1.006);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

@@ -3425,3 +3425,48 @@ setTimeout(tagSectionMapIndex, 400)
   window.addEventListener("scroll", tick, { passive: true })
   tick()
 })()
+
+
+/* ───────────── v78 · 批次 17-20 ───────────── */
+
+/* ⑱ 内容区纵深视差：给主要区块内的卡片按奇偶分组，滚动时轻微错速 */
+function initDepthParallax() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  if (window.matchMedia("(hover: none)").matches) return
+
+  const targets = Array.from(
+    document.querySelectorAll(".card, .feature-tile, .road-step, .pub-row, .note-card, .lane-mini"),
+  ).slice(0, 40) // 控制数量，避免长页面滚动卡顿
+
+  if (!targets.length) return
+
+  targets.forEach((el, i) => {
+    el.classList.add("parallax-depth")
+    el.dataset.depth = ((i % 3) + 1) * 0.5 // 0.5 / 1.0 / 1.5 三档
+  })
+
+  let raf = null
+  function update() {
+    raf = null
+    const vh = window.innerHeight
+    for (const el of targets) {
+      const r = el.getBoundingClientRect()
+      if (r.bottom < -80 || r.top > vh + 80) continue
+      // 相对视口中心的位置 → 轻微位移
+      const center = r.top + r.height / 2
+      const offset = ((center - vh / 2) / vh) * (parseFloat(el.dataset.depth) || 1) * 14
+      el.style.translate = "0 " + (-offset).toFixed(1) + "px"
+    }
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    },
+    { passive: true },
+  )
+  update()
+}
+
+initDepthParallax()
