@@ -3528,3 +3528,63 @@ function initHero3DTilt() {
 }
 
 initHero3DTilt()
+
+
+/* ───────────── v81 · 批次 27-29 ───────────── */
+
+/* ㉗ 图片灯箱：点击文章内图片放大查看（ESC / 点击空白关闭） */
+function initImageLightbox() {
+  const imgs = Array.from(
+    document.querySelectorAll(".publication-body img, article img, .post-body img"),
+  ).filter((im) => im.naturalWidth > 120 && !im.closest(".img-lightbox"))
+  if (!imgs.length) return
+
+  const box = document.createElement("div")
+  box.className = "img-lightbox"
+  box.setAttribute("role", "dialog")
+  box.setAttribute("aria-label", "图片查看")
+  box.innerHTML = '<img alt=""><span class="lb-hint">按 ESC 或点击空白处关闭</span>'
+  document.body.appendChild(box)
+  const bigImg = box.querySelector("img")
+
+  function open(src, alt) {
+    bigImg.src = src
+    bigImg.alt = alt || ""
+    box.classList.add("is-open")
+    document.documentElement.style.overflow = "hidden"
+  }
+
+  function close() {
+    box.classList.remove("is-open")
+    document.documentElement.style.overflow = ""
+    setTimeout(() => {
+      if (!box.classList.contains("is-open")) bigImg.src = ""
+    }, 320)
+  }
+
+  imgs.forEach((im) => {
+    im.style.cursor = "zoom-in"
+    im.addEventListener("click", () => open(im.currentSrc || im.src, im.alt))
+  })
+
+  box.addEventListener("click", (e) => {
+    if (e.target === box || e.target === bigImg) close()
+  })
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && box.classList.contains("is-open")) close()
+  })
+}
+
+/* ㉙ 主题切换过渡：切换瞬间给 html 加过渡类，避免全局常驻 transition */
+function initThemeTransition() {
+  const btn = document.querySelector("[data-theme-toggle], .theme-toggle, #theme-toggle")
+  if (!btn) return
+  btn.addEventListener("click", () => {
+    const root = document.documentElement
+    root.classList.add("theme-transition")
+    setTimeout(() => root.classList.remove("theme-transition"), 520)
+  })
+}
+
+initImageLightbox()
+initThemeTransition()

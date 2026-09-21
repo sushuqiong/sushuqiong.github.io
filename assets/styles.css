@@ -11987,3 +11987,91 @@ article img:hover,
     transform: none;
   }
 }
+
+
+/* ============================================================
+   v81 · 批次 27-29：图片灯箱 / 粘性章节标题 / 主题过渡
+   ============================================================ */
+
+/* ㉗ 图片灯箱（点击文章图片可放大查看） */
+.img-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  background: rgba(4, 8, 20, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  cursor: zoom-out;
+}
+
+.img-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.img-lightbox img {
+  max-width: 92vw;
+  max-height: 86vh;
+  border-radius: 12px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(100, 255, 218, 0.2);
+  transform: scale(0.94);
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.img-lightbox.is-open img {
+  transform: scale(1);
+}
+
+.img-lightbox .lb-hint {
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: rgba(226, 232, 255, 0.7);
+  letter-spacing: 0.05em;
+}
+
+/* 可点击图片的光标提示 */
+.publication-body img,
+article img,
+.post-body img {
+  cursor: zoom-in;
+}
+
+/* ㉘ 粘性章节标题（滚动时当前章节标题吸顶，带毛玻璃托底） */
+@media (min-width: 900px) {
+  .section-head {
+    position: sticky;
+    top: 72px;
+    z-index: 12;
+    padding: 10px 0 8px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.6) 70%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+  }
+
+  html[data-theme="dark"] .section-head {
+    background: linear-gradient(180deg, rgba(9, 14, 34, 0.86) 0%, rgba(9, 14, 34, 0.6) 70%, rgba(9, 14, 34, 0) 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-head {
+    position: static;
+  }
+}
+
+/* ㉙ 主题切换的柔和过渡（避免生硬闪变） */
+html.theme-transition,
+html.theme-transition body {
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
