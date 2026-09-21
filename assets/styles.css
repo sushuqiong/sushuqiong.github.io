@@ -12592,3 +12592,88 @@ body.music-pulsing .cursor-glow-outer {
 .manifesto-inner > :not(.manifesto-line):not(.manifesto-inner) {
   display: none !important;
 }
+
+
+/* ============================================================
+   v93 · 宣言区彻底清理（用户要求：该区域只显示 5 行宣言文字）
+
+   原因说明：此前的 .m-key 使用 background-clip:text + 透明文字 + drop-shadow 光晕，
+   在屏幕上会形成"发光重影"，看起来像多出一份文字；inline-block 也会让关键词
+   脱离正常文字流。本段将所有这些效果全部取消，宣言区只剩**纯文字**。
+   ============================================================ */
+
+/* ① 关键词：改为纯色文字（不使用 transparent + background-clip，避免"第二层文字"观感） */
+.manifesto-inner .manifesto-line .m-key,
+.manifesto-inner .manifesto-line .m-key.m-red,
+.manifesto-inner .manifesto-line .m-key.m-blue,
+.manifesto-inner .manifesto-line .m-key.m-purple,
+.manifesto-inner .manifesto-line .m-key:nth-of-type(2n),
+.manifesto-inner .manifesto-line .m-key:nth-of-type(3n) {
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: inherit;
+  filter: none !important;
+  text-shadow: none !important;
+  animation: none !important;
+  display: inline !important;
+  transform: none !important;
+}
+
+/* 关键词配色（纯色，保持"多色彩"要求） */
+.manifesto-inner .manifesto-line .m-key.m-red { color: #fb923c !important; }
+.manifesto-inner .manifesto-line .m-key.m-blue { color: #38bdf8 !important; }
+.manifesto-inner .manifesto-line .m-key.m-purple { color: #c084fc !important; }
+/* 未被分类的关键词（如第 4 行的"幸福"）用青绿 */
+.manifesto-inner .manifesto-line .m-key:not(.m-red):not(.m-blue):not(.m-purple) { color: #5eead4 !important; }
+
+/* ② 宣言行：取消所有可能形成重影的光效
+   注意：text-shadow 不能被清空（黎明亮背景上需要暗影保证可读），
+        只保留"单层暗影"，不保留任何彩色发光 */
+.manifesto-inner .manifesto-line,
+.manifesto-inner .manifesto-line::before,
+.manifesto-inner .manifesto-line::after {
+  animation: none !important;
+  background: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+  display: block !important;
+  transform: none !important;
+}
+
+/* ③ 依次高亮（动态字幕）：只用颜色深浅，不用发光
+   注意：暗态仍须清晰可读（此前 0.5 透明度导致正文几乎看不见） */
+.manifesto-inner .manifesto-line {
+  color: rgba(255, 255, 255, 0.88) !important;
+  /* 单层暗影：用于在黎明亮背景上保证可读性（不是发光，不会产生第二层文字观感） */
+  text-shadow: 0 1px 3px rgba(8, 14, 32, 0.7) !important;
+  transition: color 0.7s ease, text-shadow 0.7s ease !important;
+}
+
+.manifesto-inner .manifesto-line.is-subbing {
+  color: #ffffff !important;
+  text-shadow: 0 1px 5px rgba(8, 14, 32, 0.85) !important;
+}
+
+/* ④ 隐藏 eyebrow 及宣言区内除 5 行宣言之外的一切文字元素 */
+.manifesto-inner > .eyebrow,
+.manifesto-inner > :not(.manifesto-line) {
+  display: none !important;
+}
+
+/* ⑤ 宣言区内的装饰性文字（若有）一并隐藏；纯装饰图形保留 */
+.manifesto .scene-sign,
+.manifesto .manifesto-tag,
+.manifesto .m-float,
+.manifesto .m-key-float {
+  display: none !important;
+}
+
+
+/* v94 补充：关键词同样带单层暗影，保证在黎明背景上清晰可见 */
+.manifesto-inner .manifesto-line .m-key {
+  text-shadow: 0 1px 3px rgba(8, 14, 32, 0.75) !important;
+}
