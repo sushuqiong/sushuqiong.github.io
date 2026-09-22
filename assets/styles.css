@@ -13780,3 +13780,46 @@ html[data-theme="dark"] main a:not([class*="button"]):not([class*="btn"]):not(.r
     opacity: 0.35;
   }
 }
+
+/* ── v107 · 按钮与导航艺术化（渐变 + 光晕，无位移）── */
+.button,
+.btn,
+.button-primary,
+a[class*="button"] {
+  background-image: linear-gradient(100deg,
+    #0ea5e9 0%, #6366f1 42%, #a855f7 68%, #0ea5e9 100%);
+  background-size: 220% 100%;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow:
+    0 6px 20px rgba(59, 130, 246, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  animation: btn-flow 8s ease-in-out infinite;
+}
+@keyframes btn-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.button:hover,
+.btn:hover,
+.button-primary:hover {
+  box-shadow:
+    0 10px 30px rgba(99, 102, 241, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+.site-header .nav a,
+header .nav a {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.site-header .nav a:hover,
+header .nav a:hover {
+  color: #0ea5e9;
+  text-shadow: 0 0 12px rgba(14, 165, 233, 0.5);
+}
+html[data-theme="dark"] .site-header .nav a:hover,
+html[data-theme="dark"] header .nav a:hover {
+  color: #7dd3fc;
+}
+@media (prefers-reduced-motion: reduce) {
+  .button, .btn, .button-primary, a[class*="button"] { animation: none; }
+}
