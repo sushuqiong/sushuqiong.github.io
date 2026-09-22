@@ -4081,3 +4081,13 @@ function initManifestoArt2() {
 }
 
 initManifestoArt2()
+
+/* v102：滚动状态标记（供导航光线使用） */
+(function () {
+  const root = document.body
+  function tick() {
+    root.classList.toggle("is-scrolled", window.scrollY > 30)
+  }
+  window.addEventListener("scroll", tick, { passive: true })
+  tick()
+})()
