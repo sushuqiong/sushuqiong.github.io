@@ -6,7 +6,7 @@ description: 端到端构建并持续迭代一个"深空实验室"主题的 GitH
 # Deep-Space Personal Website（深空实验室个人网站）
 
 纯原生 HTML/CSS/JS 零框架、GitHub Pages 直接托管的个人网站构建全流程沉淀。
-从 v1 迭代到 **v87+**，本 skill 记录最终稳定下来的架构、设计原则、验证方法与踩坑经验。
+从 v1 迭代到 **v115+**，本 skill 记录最终稳定下来的架构、设计原则、验证方法与踩坑经验。
 
 > **这份文档的价值在于"坑"**：下面每条 ⚠️/🐛 都是真实发生过、被用户当面指出的问题。
 > 照抄架构很容易，避开这些坑才是省时间的地方。
@@ -198,6 +198,60 @@ if (low) document.documentElement.classList.add("perf-low")
 ```
 
 
+---
+
+## 三之三、艺术化改造（v88 → v115，27 项）
+
+用户诉求从"能看"升级到"**要有艺术感、要有动感、要像大厂**"，本阶段做了集中改造。
+**每一项都经过 OCR/像素复核**，确保"加了效果但文字依然清晰可读、排版不变"。
+
+### 宣言区（用户最关注的区域）
+
+| 效果 | 实现要点 |
+|---|---|
+| **渐变流光文字** | `background-image` 渐变 + `background-size: 300%` + `background-position` 动画 → 视觉上像光带在文字上扫过；**必须配 `@supports` 降级**，先给 fallback 纯色 |
+| **逐字卡拉OK高亮** | 拆文本节点为 `<span class="ch">`，**必须用 `display:inline`**（用 `inline-block` 会把中文切成独立块、破坏字距与排版）；JS 定时切换 `.lit` 类 |
+| **逐行高亮切换** | 定时给行加 `.is-subbing`，用**颜色深浅**表现（不用发光，避免"重影"观感） |
+| **行下光带生长** | 行内绝对定位的 `span`，宽度 0 → 100% + `transition` |
+| **装饰画框 / SVG 引号 / 四角线 / 星芒 / 波浪线** | **全部 SVG 图形**（用户明确要求"不要加任何文字"，文字引号也会被视为内容） |
+| **可读性** | 黎明背景下白字必须配**单层小范围锐利暗影**；多层大范围发光会变成"糊" |
+
+### 全站艺术化
+
+| 类别 | 做法 |
+|---|---|
+| **标题** | 蓝紫渐变 + `background-position` 流动（Stripe/Framer 风）；深色主题单独配色 |
+| **eyebrow 小标** | 字距 `0.2em` + `text-transform: uppercase` + 三色渐变 |
+| **卡片** | 常驻**彩虹流光边框**：`@property --card-angle` + `conic-gradient` + `mask-composite: exclude`（只描边不填充）；悬停加速 |
+| **按钮** | 渐变背景 + `background-size: 220%` 流动 + 悬停光晕 |
+| **数字** | 渐变填充 + 流动（`@supports` 降级） |
+| **列表项** | 彩色图标 + hover 渐变光带 |
+| **区块** | 渐变分隔线 + 角落彩色光斑（`nth-of-type(even)` 左右交替） |
+| **页脚** | 双径向光斑 + 渐变标题 |
+| **正文色** | 纯黑 → 深蓝灰 `#1e2a44`（用户反馈"很多黑色字体很生硬"） |
+
+### 区块与页面之间的过渡（借鉴 Stripe）
+
+用户长期反馈"区块之间硬切"。解决方式（来自 `popular-web-designs` skill 的
+`templates/stripe.md`："White sections alternate with dark brand sections,
+creating a dramatic light/dark cadence"）：
+
+```css
+/* 每个区块上下各 88px 渐变过渡带（纯背景层，不动布局） */
+.section::before { background: linear-gradient(180deg, rgba(238,240,251,.85), transparent); }
+.section::after  { background: linear-gradient(0deg,  rgba(238,240,251,.8),  transparent); }
+/* 区块之间补一条品牌色「渐变缝合线」 */
+.section + .section > .container::after {
+  background: linear-gradient(90deg, transparent, #0ea5e9, #533afd, #ea2261, transparent);
+}
+```
+
+**同时借鉴的 Stripe 手法**：
+- **蓝调多层阴影**：`rgba(50,50,93,.14)` 远层 + `rgba(0,0,0,.08)` 近层 —— 让阴影带品牌色
+- **标题墨色**：深海军蓝 `#061b31` 而非纯黑
+- **保守圆角**：4–8px，不用胶囊形状做卡片/按钮
+
+
 ## 四、外部工具借鉴（本地化 + 渐进增强）
 
 | 灵感源 | 借鉴方式 | 本站落地 |
@@ -270,6 +324,42 @@ if (low) document.documentElement.classList.add("perf-low")
 - 🐛 **headless 默认 800px 宽**导致响应式分支判断失误（小地图"没生成"，其实是被宽度条件挡了）
 - ⚠️ **模糊消散这类"初始不可见"的动效**：务必挂在 JS 添加的类（`body.reveal-ready`）下 + 保留 2s 兜底
 
+
+
+### v88–v115 阶段（艺术化改造中踩到的）
+
+- 🐛 **emoji 被 `background-clip:text` 压成单色（重要）**
+  为了"艺术化"给 `.pub-icon-badge / .road-icon / .road-index` 统一套用了
+  `background-clip:text + -webkit-text-fill-color: transparent` 渐变，
+  但这些元素装的是**彩色 emoji**（🧬🔬📊🏥💊）→ emoji 被压成**单一蓝色**（用户立刻发现）。
+  **教训**：`background-clip:text` 只用于**纯文字**元素；含 emoji / 图标的元素
+  必须 `background-image: none` + `-webkit-text-fill-color: initial`
+  （并用 `font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji"` 保底）。
+
+- 🐛 **拆字用 `inline-block` 破坏中文排版**
+  为实现"逐字动画"把每个字包成 `<span>` 并设 `display:inline-block` →
+  中文失去连续字流、字距被拉开、视觉"散架"（用户评价"很难看"）。
+  **修正**：拆字必须用 `display:inline`（或仅对拉丁文字使用 inline-block）。
+
+- 🐛 **多层 `drop-shadow` 让文字发糊**
+  网站原有的 `.manifesto-line` 叠了 `0 0 18px / 24px / 34px` 多层暖金发光，
+  在浅色背景上形成大片光斑 —— 用户看到的就是"文字很模糊"。
+  **修正**：清除 `filter`，改用**单层小范围** `text-shadow`。
+
+- 🐛 **渐变文字必须带 `@supports` 降级**
+  `background-clip:text + color:transparent` 在不支持的环境会让文字彻底隐形。
+  **正确写法**：先声明 `color: #fff`，再在 `@supports ((-webkit-background-clip: text) or (background-clip: text))` 内启用渐变。
+
+- 🐛 **"文字消失"的三次不同成因**（每次都靠 OCR 复核抓出来）
+  ① 动画初始 `opacity:0` 未触发 → 改为**动画不改变 opacity**、默认即可见
+  ② 背景太亮 + 白字 → 加**深度遮罩**
+  ③ 多层发光 → 改**单层锐利暗影**
+  **通用原则**：任何动效改完后，**必须用 OCR 逐字复核文字是否仍然可读**（本次共做 12 次复核）。
+
+- ⚠️ **借鉴大厂设计要"落到具体属性"**
+  加载设计系统 skill 后，真正有用的是**可抄的具体数值**：
+  Stripe 的蓝调阴影 `rgba(50,50,93,.25)`、标题墨色 `#061b31`、圆角 4–8px、
+  明暗区块交替节奏。只读目录不等于借鉴，必须把数值落进 CSS。
 
 ### v65–v87 阶段（"36 项动效"集中迭代中踩到的）
 
@@ -366,4 +456,4 @@ site/
 2. **每次改动跑完验证四件套**：语法 → DOM → 控制台错误 → 像素/OCR。
 3. **动效的安全底线**：任何"初始不可见"的元素，都必须有 JS 失败时的可见兜底 + 超时强制显示。
 
-*本 skill 由网站作者与 AI 助手在 2026 年多轮迭代中共同沉淀。最后更新：v87（新增 36 项动效与性能自适应）。*
+*本 skill 由网站作者与 AI 助手在 2026 年多轮迭代中共同沉淀。最后更新：v115（新增 36 项动效 + 27 项艺术化改造 + Stripe 式区块过渡）。*
