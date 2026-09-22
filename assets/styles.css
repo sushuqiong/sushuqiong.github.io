@@ -13886,3 +13886,47 @@ html[data-theme="dark"] [data-count] {
 @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
   .road-index { color: #0ea5e9; }
 }
+
+/* ── v110 · 区块装饰增强（渐变分隔线 + 角落光斑）── */
+.section::before {
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(14, 165, 233, 0.7) 22%,
+    rgba(168, 85, 247, 0.75) 50%,
+    rgba(244, 114, 182, 0.6) 78%,
+    transparent 100%);
+  box-shadow: 0 0 14px rgba(99, 102, 241, 0.4);
+}
+.section {
+  position: relative;
+}
+.section > .container::before {
+  content: "";
+  position: absolute;
+  right: -4%;
+  top: 8%;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle,
+    rgba(14, 165, 233, 0.09) 0%,
+    rgba(168, 85, 247, 0.06) 45%,
+    transparent 72%);
+  filter: blur(30px);
+  animation: corner-aura 12s ease-in-out infinite;
+}
+.section:nth-of-type(even) > .container::before {
+  right: auto;
+  left: -4%;
+  background: radial-gradient(circle,
+    rgba(244, 114, 182, 0.08) 0%,
+    rgba(34, 211, 238, 0.06) 45%,
+    transparent 72%);
+}
+@keyframes corner-aura {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.08); }
+}
