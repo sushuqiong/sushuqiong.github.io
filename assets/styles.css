@@ -13850,3 +13850,39 @@ html[data-theme="dark"] [data-count] {
   0%, 100% { background-position: 0% 50%; }
   50%      { background-position: 100% 50%; }
 }
+
+/* ── v109 · 列表项艺术化（彩色编号 + hover 光带）── */
+.pub-row::after,
+.road-step::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(96deg,
+    rgba(14, 165, 233, 0.08) 0%,
+    rgba(168, 85, 247, 0.08) 50%,
+    rgba(244, 114, 182, 0.06) 100%);
+  transition: opacity 0.35s ease;
+}
+.pub-row:hover::after,
+.road-step:hover::after {
+  opacity: 1;
+}
+.pub-row,
+.road-step {
+  position: relative;
+  overflow: hidden;
+}
+.pub-icon-badge,
+.road-index,
+.road-icon {
+  background-image: linear-gradient(135deg, #0ea5e9, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .road-index { color: #0ea5e9; }
+}
