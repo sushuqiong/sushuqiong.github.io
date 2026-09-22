@@ -13441,3 +13441,40 @@ html[data-theme="dark"] .note-card {
     0 1px 3px rgba(3, 6, 16, 0.9),
     0 0 10px rgba(255, 224, 150, 0.35) !important;
 }
+
+/* ── v101 · 标题层次与光效（不作用于宣言区文字）── */
+.section-head > h2:not(.manifesto h2) {
+  background-image: linear-gradient(92deg,
+    #0f172a 0%, #1e3a8a 38%, #6d28d9 62%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .section-head > h2 {
+    color: #0f172a;
+  }
+}
+html[data-theme="dark"] .section-head > h2:not(.manifesto h2) {
+  background-image: linear-gradient(92deg,
+    #e6f1ff 0%, #93c5fd 40%, #c4b5fd 64%, #e6f1ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.section-head .eyebrow {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+/* 标题下方一条渐变细线（背景层，不影响文字位置） */
+.section-head::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 2px;
+  margin-top: 10px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #64ffda, #a78bfa, transparent);
+  opacity: 0.75;
+}
