@@ -13302,3 +13302,33 @@ footer::before {
 .manifesto-wave path {
   stroke: rgba(255, 236, 180, 0.75);
 }
+
+/* ── v100 · 卡片质感分层（仅阴影/边框，无位移）── */
+.card,
+.feature-tile,
+.note-card,
+.skill-card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 8px 22px rgba(7, 13, 31, 0.09),
+    0 2px 5px rgba(7, 13, 31, 0.05);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+.card:hover,
+.feature-tile:hover,
+.note-card:hover {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 16px 38px rgba(7, 13, 31, 0.14),
+    0 3px 8px rgba(7, 13, 31, 0.07),
+    0 0 0 1px rgba(100, 255, 218, 0.16);
+  border-color: rgba(100, 255, 218, 0.3);
+}
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .feature-tile,
+html[data-theme="dark"] .note-card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 8px 22px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(100, 255, 218, 0.08);
+}
