@@ -12938,3 +12938,344 @@ footer::before {
     animation: none !important;
   }
 }
+
+
+/* ============================================================
+   v97 · 宣言区大改造：动态字幕 / 艺术字效 / 修饰图案
+   ============================================================ */
+
+/* ---------- ① 艺术字体：更粗的字重、更舒展的字距、多层同色光晕（不脏不重影） ---------- */
+.manifesto-inner .manifesto-line {
+  font-weight: 800 !important;
+  letter-spacing: 0.055em !important;
+  text-shadow:
+    0 0 22px rgba(255, 236, 180, 0.32),
+    0 0 46px rgba(251, 191, 36, 0.16),
+    0 2px 7px rgba(8, 14, 32, 0.5) !important;
+}
+
+/* 关键词：更亮 + 白色细描边（艺术质感） */
+.manifesto-inner .manifesto-line .m-key {
+  -webkit-text-stroke: 0.55px rgba(255, 255, 255, 0.32);
+  text-shadow:
+    0 0 18px currentColor,
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 2px 6px rgba(8, 14, 32, 0.5) !important;
+  font-weight: 900 !important;
+}
+
+/* ---------- ② 动态字幕：逐字"从光中凝结"浮现 ---------- */
+.manifesto-inner .manifesto-line .ch {
+  /* 安全设计：默认即为"完全可见"状态。
+     动画只改变 blur / 缩放 / 位移，**不改变 opacity**，
+     因此即使 JS、IntersectionObserver 或动画任一步骤失败，文字也一定可见。 */
+  display: inline-block;
+  opacity: 1;
+  will-change: filter, transform;
+}
+
+.manifesto-inner .manifesto-line.chars-in .ch {
+  animation: char-condense 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--ci, 0) * 58ms);
+}
+
+@keyframes char-condense {
+  0% {
+    filter: blur(7px) brightness(1.85);
+    transform: translateY(0.4em) scale(1.2) rotate(-1.4deg);
+  }
+  55% {
+    filter: blur(1.4px) brightness(1.45);
+  }
+  100% {
+    filter: blur(0) brightness(1);
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* ---------- ③ 当前"字幕行"增强：底部一条流动的细光带 ---------- */
+.manifesto-inner .manifesto-line {
+  position: relative;
+}
+
+.manifesto-inner .manifesto-line .line-underline {
+  position: absolute;
+  left: 0;
+  bottom: -0.42em;
+  height: 2px;
+  width: 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 236, 180, 0.9) 22%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(251, 191, 36, 0.85) 78%,
+    transparent 100%);
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.6);
+  transition: width 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.manifesto-inner .manifesto-line.is-subbing .line-underline {
+  width: 100%;
+}
+
+/* ---------- ④ 修饰图案：引号 / 四角线 / 星芒 / 波浪线 ---------- */
+.manifesto-ornament {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 大引号（左上 + 右下） */
+.manifesto-quote {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 128px;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(251, 191, 36, 0.45);
+  text-shadow: 0 0 30px rgba(251, 191, 36, 0.25);
+  opacity: 0.75;
+  user-select: none;
+}
+
+.manifesto-quote.q-open { left: 4%; top: 6%; }
+.manifesto-quote.q-close { right: 4%; bottom: 12%; transform: rotate(180deg); }
+
+/* 四角装饰线（L 形） */
+.manifesto-corner {
+  width: 54px;
+  height: 54px;
+  border: 1.6px solid rgba(251, 191, 36, 0.5);
+  opacity: 0.7;
+}
+
+.manifesto-corner.c-tl { left: 3%; top: 5%; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
+.manifesto-corner.c-tr { right: 3%; top: 5%; border-left: 0; border-bottom: 0; border-radius: 0 10px 0 0; }
+.manifesto-corner.c-bl { left: 3%; bottom: 8%; border-right: 0; border-top: 0; border-radius: 0 0 0 10px; }
+.manifesto-corner.c-br { right: 3%; bottom: 8%; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+
+/* 星芒（缓慢旋转闪烁） */
+.manifesto-spark {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  animation: spark-twiggle 5.5s ease-in-out infinite;
+}
+
+@keyframes spark-twiggle {
+  0%, 100% { opacity: 0.25; transform: scale(0.8) rotate(0deg); }
+  50%      { opacity: 1; transform: scale(1.25) rotate(45deg); }
+}
+
+/* 波浪装饰线（SVG 描边动画） */
+.manifesto-wave path {
+  fill: none;
+  stroke: rgba(255, 236, 180, 0.55);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.5));
+}
+
+.manifesto.is-charging .manifesto-wave path,
+.reveal.is-visible .manifesto-wave path {
+  animation: wave-draw 2.4s ease-out 0.5s forwards;
+}
+
+@keyframes wave-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-inner .manifesto-line .ch {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .manifesto-inner .manifesto-line .ch {
+    animation: none !important;
+  }
+  .manifesto-spark,
+  .manifesto-wave path {
+    animation: none !important;
+  }
+  .manifesto-wave path { stroke-dashoffset: 0; }
+}
+
+
+/* ============================================================
+   v97c · 宣言区可读性修复
+   问题：宣言区背景为明亮的黎明风景，白色/浅色文字在其上几乎不可见
+        （只有彩色关键词可见）。此前依赖的深色暗影在 v97 被改成暖金发光后，
+        白色正文彻底失去对比。
+   解决：① 为宣言区叠加一层深度遮罩（保留日出氛围，但整体压暗到深蓝）
+        ② 恢复文字的深色暗影（保底可读）
+        ③ 保留暖金光晕与描边（在深背景上呈现"力量感"）
+   ============================================================ */
+
+/* ① 深度遮罩：整体压暗，仅让太阳区域略微透出（保留"黎明"意象） */
+.manifesto::before {
+  background:
+    radial-gradient(ellipse 62% 46% at 50% 62%,
+      rgba(255, 214, 130, 0.14) 0%,
+      rgba(255, 190, 100, 0.06) 38%,
+      transparent 68%),
+    linear-gradient(180deg,
+      rgba(6, 12, 30, 0.72) 0%,
+      rgba(8, 16, 38, 0.62) 42%,
+      rgba(10, 20, 46, 0.68) 100%) !important;
+  z-index: 1;
+}
+
+/* 内容层需在遮罩之上 */
+.manifesto-inner {
+  position: relative;
+  z-index: 3;
+}
+
+/* 太阳保持可见（在遮罩之上显示为发光光源） */
+.manifesto-sun,
+.manifesto-beams {
+  z-index: 2;
+}
+
+/* ② 正文：恢复深色暗影（保底可读）+ 保留暖金光晕 */
+.manifesto-inner .manifesto-line {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.055em !important;
+  text-shadow:
+    0 2px 8px rgba(4, 8, 20, 0.85),
+    0 4px 18px rgba(4, 8, 20, 0.6),
+    0 0 26px rgba(255, 224, 150, 0.28) !important;
+}
+
+/* ③ 关键词：深色暗影之上叠加同色发光 */
+.manifesto-inner .manifesto-line .m-key {
+  -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.4);
+  text-shadow:
+    0 2px 7px rgba(4, 8, 20, 0.9),
+    0 0 20px currentColor,
+    0 0 42px rgba(255, 255, 255, 0.22) !important;
+  font-weight: 900 !important;
+}
+
+/* ④ 非当前行：略微收暗，但必须仍然清晰可读（不再低于 0.9） */
+.manifesto-inner .manifesto-line:not(.is-subbing) {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.manifesto-inner .manifesto-line.is-subbing {
+  color: #ffffff !important;
+}
+
+/* ⑤ 逐字动画：保持"始终可见"（无 opacity 变化） */
+.manifesto-inner .manifesto-line .ch {
+  opacity: 1 !important;
+}
+
+
+/* ============================================================
+   v97d · 修正
+   ① 放弃拆字：中文被切成 inline-block 会破坏排版与字距（也是"难看"的原因）
+      → 改为**整行**凝结动画（文字始终完整、排版不变）
+   ② 压暗宣言区顶部的亮色过渡带（它盖在白字上导致上部不可读）
+   ============================================================ */
+
+/* ① 整行凝结动画（默认完全可见，动画只改 blur/亮度，不改透明度） */
+.manifesto-inner .manifesto-line.line-in {
+  animation: line-condense 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes line-condense {
+  0% {
+    filter: blur(9px) brightness(1.75);
+    transform: translateY(0.14em);
+  }
+  55% {
+    filter: blur(1.8px) brightness(1.35);
+  }
+  100% {
+    filter: blur(0) brightness(1);
+    transform: translateY(0);
+  }
+}
+
+/* ② 恢复正常的字距（撤销 v97 的 0.055em，避免中文字距被拉散） */
+.manifesto-inner .manifesto-line {
+  letter-spacing: 0.02em !important;
+  font-weight: 800 !important;
+}
+
+/* ③ 压暗顶部亮色过渡带（原本是 rgba(238,240,251,0.9) 的亮白，压住白字） */
+.manifesto::after {
+  background: linear-gradient(180deg,
+    rgba(12, 22, 48, 0.55) 0%,
+    rgba(14, 26, 56, 0.28) 42%,
+    transparent 100%) !important;
+  height: 150px !important;
+}
+
+/* ④ 逐字 span 若已生成（历史遗留），强制恢复正常显示与字距 */
+.manifesto-inner .manifesto-line .ch {
+  display: inline !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  animation: none !important;
+  letter-spacing: inherit !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-inner .manifesto-line.line-in {
+    animation: none !important;
+  }
+}
+
+
+/* ============================================================
+   v98 · 宣言区文字清晰度修复
+   问题：多层发光（暖金 + 大范围 text-shadow）让白色正文边缘发糊，
+        在深色黎明背景上反而不清晰。
+   解决：正文改为「纯白 + 单层锐利暗影 + 极细白色描边」，清晰且有质感；
+        发光只保留在关键词上（彩色，本身就是视觉焦点）。
+   ============================================================ */
+
+.manifesto-inner .manifesto-line {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  -webkit-text-stroke: 0.35px rgba(255, 255, 255, 0.45);
+  text-shadow:
+    0 2px 5px rgba(3, 6, 16, 0.92),
+    0 3px 12px rgba(3, 6, 16, 0.55) !important;
+}
+
+/* 非当前行：略收暗但必须清晰 */
+.manifesto-inner .manifesto-line:not(.is-subbing) {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* 关键词：彩色 + 同色发光（作为视觉焦点，保留"艺术感"） */
+.manifesto-inner .manifesto-line .m-key {
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.35);
+  text-shadow:
+    0 2px 5px rgba(3, 6, 16, 0.95),
+    0 0 16px currentColor !important;
+  font-weight: 800 !important;
+}
+
+/* 逐行凝结动画：保持轻量（大 blur 会让文字发糊） */
+@keyframes line-condense {
+  0% {
+    filter: blur(5px) brightness(1.4);
+    transform: translateY(0.1em);
+  }
+  100% {
+    filter: blur(0) brightness(1);
+    transform: translateY(0);
+  }
+}

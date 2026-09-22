@@ -3883,3 +3883,201 @@ function initManifestoPower() {
 }
 
 initManifestoPower()
+
+
+/* ───────────── v97 · 宣言区大改造：逐字动态字幕 + 装饰图案 ───────────── */
+
+function initManifestoArt() {
+  const section = document.querySelector(".manifesto")
+  if (!section) return
+  const lines = Array.from(document.querySelectorAll(".manifesto-inner .manifesto-line"))
+  if (!lines.length) return
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  /* ① 逐字拆解：仅处理**文本节点**，保留 m-key 等元素结构
+        （拆字失败时文字原样显示，绝不会消失） */
+  try {
+    lines.forEach((line) => {
+      if (line.dataset.charsDone === "1") return
+      const walker = document.createTreeWalker(line, NodeFilter.SHOW_TEXT, null)
+      const textNodes = []
+      let node
+      while ((node = walker.nextNode())) textNodes.push(node)
+      textNodes.forEach((tn) => {
+        const text = tn.nodeValue
+        if (!text || !text.trim()) return
+        const frag = document.createDocumentFragment()
+        let ci = 0
+        for (const ch of text) {
+          if (ch === " " || ch === "\n") {
+            frag.appendChild(document.createTextNode(ch))
+            continue
+          }
+          const span = document.createElement("span")
+          span.className = "ch"
+          span.style.setProperty("--ci", String(ci))
+          span.textContent = ch
+          frag.appendChild(span)
+          ci += 1
+        }
+        if (tn.parentNode) tn.parentNode.replaceChild(frag, tn)
+      })
+      line.dataset.charsDone = "1"
+    })
+  } catch (e) {
+    /* 拆字失败：保持原样，不抛错 */
+  }
+
+  /* ② 行下划线装饰（纯图形元素） */
+  lines.forEach((line) => {
+    if (line.querySelector(".line-underline")) return
+    const u = document.createElement("span")
+    u.className = "line-underline"
+    u.setAttribute("aria-hidden", "true")
+    line.appendChild(u)
+  })
+
+  /* ③ 逐行播放（进入视口时触发；含 3 秒兜底） */
+  if (reduced || !("IntersectionObserver" in window)) {
+    lines.forEach((l) => l.classList.add("chars-in"))
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const en of entries) {
+          if (!en.isIntersecting) continue
+          const line = en.target
+          const idx = lines.indexOf(line)
+          setTimeout(() => line.classList.add("chars-in"), Math.max(0, idx) * 150)
+          io.unobserve(line)
+        }
+      },
+      { threshold: 0.28 },
+    )
+    lines.forEach((l) => io.observe(l))
+    setTimeout(() => lines.forEach((l) => l.classList.add("chars-in")), 1200)
+  }
+
+  /* ④ 装饰图案：引号 / 四角线 / 星芒 / 波浪线 —— **全部为 SVG 图形，不添加任何文字** */
+  if (section.querySelector(".manifesto-ornament-wrap")) return
+  const wrap = document.createElement("div")
+  wrap.className = "manifesto-ornament-wrap"
+  wrap.setAttribute("aria-hidden", "true")
+  wrap.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden"
+
+  const sparks = Array.from({ length: 7 })
+    .map((_, i) => {
+      const left = 8 + i * 13
+      const top = 14 + (i % 4) * 22
+      return '<svg class="manifesto-ornament manifesto-spark" viewBox="0 0 24 24" style="left:' +
+        left + "%;top:" + top + "%;animation-delay:" + (-i * 0.85).toFixed(2) + 's">' +
+        '<path d="M12 2 L13.7 10.3 L22 12 L13.7 13.7 L12 22 L10.3 13.7 L2 12 L10.3 10.3 Z" fill="rgba(255,236,180,0.9)"/></svg>'
+    })
+    .join("")
+
+  wrap.innerHTML =
+    // 引号：用 SVG 图形绘制，不使用文字字符
+    '<svg class="manifesto-ornament" viewBox="0 0 90 60" style="left:5%;top:5%;width:78px;height:52px;opacity:.65">' +
+    '<path d="M6 44 C6 20 18 6 38 4 C26 12 20 20 20 30 C30 30 38 36 38 46 C38 55 30 58 22 58 C12 58 6 53 6 44 Z" fill="none" stroke="rgba(251,191,36,.7)" stroke-width="2.2"/>' +
+    '<path d="M46 44 C46 20 58 6 78 4 C66 12 60 20 60 30 C70 30 78 36 78 46 C78 55 70 58 62 58 C52 58 46 53 46 44 Z" fill="none" stroke="rgba(251,191,36,.7)" stroke-width="2.2"/>' +
+    "</svg>" +
+    '<svg class="manifesto-ornament" viewBox="0 0 90 60" style="right:5%;bottom:14%;width:66px;height:44px;opacity:.5;transform:rotate(180deg)">' +
+    '<path d="M6 44 C6 20 18 6 38 4 C26 12 20 20 20 30 C30 30 38 36 38 46 C38 55 30 58 22 58 C12 58 6 53 6 44 Z" fill="none" stroke="rgba(251,191,36,.7)" stroke-width="2.2"/>' +
+    '<path d="M46 44 C46 20 58 6 78 4 C66 12 60 20 60 30 C70 30 78 36 78 46 C78 55 70 58 62 58 C52 58 46 53 46 44 Z" fill="none" stroke="rgba(251,191,36,.7)" stroke-width="2.2"/>' +
+    "</svg>" +
+    // 四角装饰线
+    '<span class="manifesto-ornament manifesto-corner c-tl"></span>' +
+    '<span class="manifesto-ornament manifesto-corner c-tr"></span>' +
+    '<span class="manifesto-ornament manifesto-corner c-bl"></span>' +
+    '<span class="manifesto-ornament manifesto-corner c-br"></span>' +
+    sparks +
+    // 波浪装饰线
+    '<svg class="manifesto-ornament manifesto-wave" viewBox="0 0 220 20" style="left:7%;bottom:24%;width:220px;height:20px">' +
+    '<path d="M2 12 Q28 2 54 12 T106 12 T158 12 T218 12"/></svg>' +
+    '<svg class="manifesto-ornament manifesto-wave" viewBox="0 0 220 20" style="right:7%;bottom:28%;width:180px;height:20px;transform:scaleX(-1)">' +
+    '<path d="M2 12 Q28 2 54 12 T106 12 T158 12 T218 12"/></svg>'
+
+  section.appendChild(wrap)
+}
+
+/* v97d 停用拆字（inline-block 破坏中文排版）：initManifestoArt() */
+
+
+/* ───────────── v97d · 宣言区：整行动画 + 装饰图案（不拆字） ───────────── */
+
+function initManifestoArt2() {
+  const section = document.querySelector(".manifesto")
+  if (!section) return
+  const lines = Array.from(document.querySelectorAll(".manifesto-inner .manifesto-line"))
+  if (!lines.length) return
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  /* ① 整行"凝结"动画：不拆字，保持中文排版与字距
+        安全：默认即为完全可见状态，动画只改变 blur 与轻微缩放 */
+  if (!reduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const en of entries) {
+          if (!en.isIntersecting) continue
+          const line = en.target
+          const idx = Math.max(0, lines.indexOf(line))
+          setTimeout(() => line.classList.add("line-in"), idx * 170)
+          io.unobserve(line)
+        }
+      },
+      { threshold: 0.25 },
+    )
+    lines.forEach((l) => io.observe(l))
+    setTimeout(() => lines.forEach((l) => l.classList.add("line-in")), 1400)
+  } else {
+    lines.forEach((l) => l.classList.add("line-in"))
+  }
+
+  /* ② 行下划线装饰（纯图形） */
+  lines.forEach((line) => {
+    if (line.querySelector(".line-underline")) return
+    const u = document.createElement("span")
+    u.className = "line-underline"
+    u.setAttribute("aria-hidden", "true")
+    line.appendChild(u)
+  })
+
+  /* ③ 装饰图案：全部为 SVG 图形（不加任何文字） */
+  if (section.querySelector(".manifesto-ornament-wrap")) return
+  const wrap = document.createElement("div")
+  wrap.className = "manifesto-ornament-wrap"
+  wrap.setAttribute("aria-hidden", "true")
+  wrap.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden"
+
+  const sparks = Array.from({ length: 7 })
+    .map((_, i) => {
+      const left = 8 + i * 13
+      const top = 14 + (i % 4) * 22
+      return (
+        '<svg class="manifesto-ornament manifesto-spark" viewBox="0 0 24 24" style="left:' +
+        left + "%;top:" + top + "%;animation-delay:" + (-i * 0.85).toFixed(2) + 's">' +
+        '<path d="M12 2 L13.7 10.3 L22 12 L13.7 13.7 L12 22 L10.3 13.7 L2 12 L10.3 10.3 Z" fill="rgba(255,236,180,0.9)"/></svg>'
+      )
+    })
+    .join("")
+
+  const QUOTE =
+    '<path d="M6 44 C6 20 18 6 38 4 C26 12 20 20 20 30 C30 30 38 36 38 46 C38 55 30 58 22 58 C12 58 6 53 6 44 Z" fill="none" stroke="rgba(251,191,36,.72)" stroke-width="2.2"/>' +
+    '<path d="M46 44 C46 20 58 6 78 4 C66 12 60 20 60 30 C70 30 78 36 78 46 C78 55 70 58 62 58 C52 58 46 53 46 44 Z" fill="none" stroke="rgba(251,191,36,.72)" stroke-width="2.2"/>'
+
+  wrap.innerHTML =
+    '<svg class="manifesto-ornament" viewBox="0 0 90 62" style="left:4.5%;top:6%;width:76px;height:52px;opacity:.7">' + QUOTE + "</svg>" +
+    '<svg class="manifesto-ornament" viewBox="0 0 90 62" style="right:4.5%;bottom:13%;width:64px;height:44px;opacity:.55;transform:rotate(180deg)">' + QUOTE + "</svg>" +
+    '<span class="manifesto-ornament manifesto-corner c-tl"></span>' +
+    '<span class="manifesto-ornament manifesto-corner c-tr"></span>' +
+    '<span class="manifesto-ornament manifesto-corner c-bl"></span>' +
+    '<span class="manifesto-ornament manifesto-corner c-br"></span>' +
+    sparks +
+    '<svg class="manifesto-ornament manifesto-wave" viewBox="0 0 220 20" style="left:6%;bottom:23%;width:210px;height:19px">' +
+    '<path d="M2 12 Q28 2 54 12 T106 12 T158 12 T218 12"/></svg>' +
+    '<svg class="manifesto-ornament manifesto-wave" viewBox="0 0 220 20" style="right:6%;bottom:27%;width:170px;height:17px;transform:scaleX(-1)">' +
+    '<path d="M2 12 Q28 2 54 12 T106 12 T158 12 T218 12"/></svg>'
+
+  section.appendChild(wrap)
+}
+
+initManifestoArt2()
