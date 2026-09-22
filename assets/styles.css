@@ -13332,3 +13332,112 @@ html[data-theme="dark"] .note-card {
     0 8px 22px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(100, 255, 218, 0.08);
 }
+
+
+/* ============================================================
+   v103 · 宣言区彻底去模糊（重要）
+   根因：网站原有的 .manifesto-line 使用了**多层 filter: drop-shadow**
+        （0 0 18px / 0 0 24px / 0 0 34px 的暖金与紫色光晕，叠加成大片光斑），
+        看起来就是"文字很模糊"。此外还有 manifesto-glow 的发光呼吸动画与
+        hover 时更强的多层发光。
+   处理：全部清除 filter（drop-shadow），改用 text-shadow 做**单层小范围**
+        锐利暗影保证可读；文字保持纯白实色，边缘清晰。
+   ============================================================ */
+
+/* ① 清除宣言文字上的所有 filter（含伪元素），并停用发光动画 */
+.manifesto .manifesto-line,
+.manifesto .manifesto-line:hover,
+.manifesto .manifesto-line.is-in,
+.manifesto-inner .manifesto-line,
+.manifesto-inner .manifesto-line:hover,
+.manifesto-inner .manifesto-line::before,
+.manifesto-inner .manifesto-line::after {
+  filter: none !important;
+  animation: none !important;
+  transition: color 0.6s ease !important;
+}
+
+/* ② 文字：纯白 + 单层小范围锐利暗影（清晰、有厚度、不发光） */
+.manifesto-inner .manifesto-line {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 3px rgba(3, 6, 16, 0.85) !important;
+}
+
+/* 非当前行同样清晰（只是略低一点亮度，不低于 0.9） */
+.manifesto-inner .manifesto-line:not(.is-subbing) {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* ③ 关键词：彩色 + 极小范围同色光（保持艺术感但绝不发糊） */
+.manifesto-inner .manifesto-line .m-key,
+.manifesto-inner .manifesto-line .m-key.m-red,
+.manifesto-inner .manifesto-line .m-key.m-blue,
+.manifesto-inner .manifesto-line .m-key.m-purple,
+.manifesto-inner .manifesto-line .m-key:nth-of-type(2n),
+.manifesto-inner .manifesto-line .m-key:nth-of-type(3n) {
+  filter: none !important;
+  animation: none !important;
+  -webkit-text-stroke: 0.45px rgba(255, 255, 255, 0.3);
+  text-shadow:
+    0 1px 3px rgba(3, 6, 16, 0.9),
+    0 0 8px currentColor !important;
+  font-weight: 800 !important;
+}
+
+/* ④ 装饰图案：外移到边缘，避免与文字重叠（曾造成"多出一个字"的错觉） */
+.manifesto-ornament-wrap {
+  pointer-events: none;
+}
+
+.manifesto-quote.q-open,
+.manifesto-ornament[style*="left:4.5%"] {
+  left: 2.5% !important;
+  top: 2% !important;
+  opacity: 0.5 !important;
+}
+
+.manifesto-corner {
+  opacity: 0.45 !important;
+}
+
+.manifesto-spark {
+  opacity: 0.55 !important;
+  filter: none !important;
+}
+
+.manifesto-wave path {
+  filter: none !important;
+  opacity: 0.7;
+}
+
+/* ⑤ 逐字/逐行凝结动画全部停用（blur 动画是模糊的另一来源） */
+.manifesto .manifesto-line,
+.manifesto-inner .manifesto-line {
+  animation: none !important;
+}
+
+@keyframes line-condense {
+  0%, 100% {
+    filter: none;
+    transform: none;
+  }
+}
+
+@keyframes char-condense {
+  0%, 100% {
+    filter: none;
+    transform: none;
+  }
+}
+
+/* ⑥ 当前行"字幕"感：仅用颜色与描边变化（清晰锐利） */
+.manifesto-inner .manifesto-line.is-subbing {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.5px rgba(255, 244, 200, 0.75);
+  text-shadow:
+    0 1px 3px rgba(3, 6, 16, 0.9),
+    0 0 10px rgba(255, 224, 150, 0.35) !important;
+}
