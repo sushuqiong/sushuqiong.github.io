@@ -13279,3 +13279,26 @@ footer::before {
     transform: translateY(0);
   }
 }
+
+/* ── v99 · 宣言区装饰深化（图形层，不碰文字）── */
+.manifesto-spark {
+  animation-duration: 4.2s;
+  filter: drop-shadow(0 0 6px rgba(255, 224, 150, 0.75));
+}
+.manifesto-ornament.manifesto-quote {
+  animation: quote-breathe 6.5s ease-in-out infinite;
+}
+@keyframes quote-breathe {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.95; }
+}
+.manifesto-corner {
+  animation: corner-glow 5s ease-in-out infinite;
+}
+@keyframes corner-glow {
+  0%, 100% { border-color: rgba(251, 191, 36, 0.35); }
+  50%      { border-color: rgba(255, 236, 180, 0.85); }
+}
+.manifesto-wave path {
+  stroke: rgba(255, 236, 180, 0.75);
+}
