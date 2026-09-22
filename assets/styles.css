@@ -13986,3 +13986,32 @@ footer .footer-links a:hover {
   color: #a855f7;
   text-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
 }
+
+/* ── v113 · 宣言区装饰再增强 ── */
+.manifesto-ornament-wrap::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 78%;
+  height: 62%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border: 1px solid rgba(255, 224, 150, 0.14);
+  border-radius: 26px;
+  box-shadow:
+    0 0 60px rgba(255, 190, 100, 0.08) inset,
+    0 0 40px rgba(99, 102, 241, 0.08) inset;
+  animation: frame-breathe 7.5s ease-in-out infinite;
+}
+@keyframes frame-breathe {
+  0%, 100% { border-color: rgba(255, 224, 150, 0.12); }
+  50%      { border-color: rgba(255, 224, 150, 0.3); }
+}
+.manifesto-spark {
+  animation-duration: 3s;
+  filter: none !important;
+}
+.manifesto-wave path {
+  stroke: rgba(255, 236, 180, 0.8);
+}
