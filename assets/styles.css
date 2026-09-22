@@ -13517,3 +13517,195 @@ body.is-scrolled header::after,
 header.is-scrolled::after {
   opacity: 1;
 }
+
+
+/* ============================================================
+   v104 · 大改造第一批：渐变流光文字 + 标题艺术化
+   ============================================================ */
+
+/* ══ ① 宣言区：渐变"流光"文字（持续动，像字幕高光扫过） ══
+   安全：先给 fallback 纯白；仅在支持 background-clip:text 时启用渐变，
+        并用 @supports not 兜底，绝不会出现"文字隐形"。 */
+.manifesto-inner .manifesto-line {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  background-image: linear-gradient(102deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    #ffffff 14%,
+    #ffe9b0 26%,
+    #ffffff 38%,
+    rgba(255, 255, 255, 0.5) 50%,
+    #ffffff 62%,
+    #cfe4ff 74%,
+    #ffffff 86%,
+    rgba(255, 255, 255, 0.5) 100%);
+  background-size: 300% 100%;
+  background-position: 130% 0;
+  animation: line-flow 5.2s linear infinite;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .manifesto-inner .manifesto-line {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@keyframes line-flow {
+  from { background-position: 130% 0; }
+  to   { background-position: -30% 0; }
+}
+
+/* 关键词：保留自身彩色（覆盖父级渐变的透明填充），并加同色微光 */
+.manifesto-inner .manifesto-line .m-key,
+.manifesto-inner .manifesto-line .m-key.m-red,
+.manifesto-inner .manifesto-line .m-key.m-blue,
+.manifesto-inner .manifesto-line .m-key.m-purple {
+  -webkit-text-fill-color: currentColor !important;
+  background-image: none !important;
+  text-shadow:
+    0 1px 3px rgba(3, 6, 16, 0.9),
+    0 0 10px currentColor !important;
+  font-weight: 800 !important;
+}
+
+/* 当前"字幕行"：底部光带更亮 + 文字稍大一点点（不改变行高，用 scale 的视觉等价：描边加粗） */
+.manifesto-inner .manifesto-line.is-subbing {
+  -webkit-text-stroke: 0.7px rgba(255, 244, 200, 0.85);
+}
+
+.manifesto-inner .manifesto-line.is-subbing .line-underline {
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.85);
+}
+
+/* ══ ② 全站标题：渐变流动（大厂常见：Stripe / Framer / Linear 风格） ══ */
+.section-head > h2,
+.article-header > h1,
+h1.page-title,
+.post-title {
+  color: #0f172a; /* fallback */
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .section-head > h2,
+  .article-header > h1 {
+    background-image: linear-gradient(96deg,
+      #0f172a 0%,
+      #1d4ed8 26%,
+      #7c3aed 48%,
+      #0ea5e9 68%,
+      #0f172a 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: title-flow 11s ease-in-out infinite;
+  }
+
+  html[data-theme="dark"] .section-head > h2,
+  html[data-theme="dark"] .article-header > h1 {
+    background-image: linear-gradient(96deg,
+      #e8f1ff 0%,
+      #93c5fd 26%,
+      #c4b5fd 48%,
+      #67e8f9 68%,
+      #e8f1ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@keyframes title-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* eyebrow：更精致的字距 + 颜色层次 */
+.section-head .eyebrow,
+.article-header .eyebrow {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background-image: linear-gradient(90deg, #0ea5e9, #7c3aed, #db2777);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .section-head .eyebrow,
+  .article-header .eyebrow {
+    color: #0284c7;
+  }
+}
+
+/* ══ ③ 正文颜色柔和化（避免"很多黑色字体"的生硬感） ══ */
+body {
+  color: #1e2a44;
+}
+
+html[data-theme="dark"] body {
+  color: #dbe7ff;
+}
+
+p,
+li,
+.row,
+.card p {
+  color: #24304d;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] li,
+html[data-theme="dark"] .row,
+html[data-theme="dark"] .card p {
+  color: #cddcf5;
+}
+
+/* 强调词/链接：彩色，避免整页黑字 */
+main a:not([class*="button"]):not([class*="btn"]):not(.row) {
+  color: #1d4ed8;
+}
+
+html[data-theme="dark"] main a:not([class*="button"]):not([class*="btn"]):not(.row) {
+  color: #7dd3fc;
+}
+
+/* ══ ④ 装饰图案增强（宣言区）══ */
+.manifesto-spark {
+  animation-duration: 3.6s;
+}
+
+.manifesto-ornament-wrap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  width: 46%;
+  height: 90px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%,
+    rgba(255, 214, 130, 0.28) 0%,
+    rgba(255, 190, 100, 0.1) 42%,
+    transparent 72%);
+  filter: blur(18px);
+  animation: quote-aura 5.6s ease-in-out infinite;
+}
+
+@keyframes quote-aura {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-inner .manifesto-line,
+  .section-head > h2,
+  .article-header > h1,
+  .manifesto-spark,
+  .manifesto-ornament-wrap::after {
+    animation: none !important;
+  }
+}
