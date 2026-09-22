@@ -13726,3 +13726,57 @@ html[data-theme="dark"] main a:not([class*="button"]):not([class*="btn"]):not(.r
     0 0 12px rgba(255, 224, 150, 0.75),
     0 0 24px rgba(251, 191, 36, 0.4);
 }
+
+/* ── v106 · 卡片常驻彩虹流光边框（大厂常见的"活"卡片）── */
+.card,
+.feature-tile,
+.note-card,
+.skill-card {
+  position: relative;
+}
+.card::before,
+.feature-tile::before,
+.note-card::before,
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: conic-gradient(from var(--card-angle, 0deg),
+    rgba(100, 255, 218, 0) 0deg,
+    rgba(100, 255, 218, 0.75) 48deg,
+    rgba(167, 139, 250, 0.8) 110deg,
+    rgba(244, 114, 182, 0.65) 170deg,
+    rgba(56, 189, 248, 0.7) 230deg,
+    rgba(100, 255, 218, 0) 300deg,
+    rgba(100, 255, 218, 0) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 2;
+  animation: card-angle-spin 9s linear infinite;
+}
+.card:hover::before,
+.feature-tile:hover::before,
+.note-card:hover::before {
+  opacity: 1;
+  animation-duration: 3.4s;
+}
+@property --card-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes card-angle-spin {
+  to { --card-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card::before, .feature-tile::before, .note-card::before, .skill-card::before {
+    animation: none;
+    opacity: 0.35;
+  }
+}
