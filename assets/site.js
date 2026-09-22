@@ -4091,3 +4091,51 @@ initManifestoArt2()
   window.addEventListener("scroll", tick, { passive: true })
   tick()
 })()
+
+
+/* v105 · 宣言区逐字卡拉OK：按节奏逐字点亮（display:inline 不破坏排版） */
+function initManifestoKaraoke() {
+  const section = document.querySelector(".manifesto")
+  if (!section) return
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  const lines = Array.from(document.querySelectorAll(".manifesto-inner .manifesto-line"))
+  if (!lines.length) return
+
+  try {
+    lines.forEach((line) => {
+      if (line.dataset.karaoke === "1") return
+      const walker = document.createTreeWalker(line, NodeFilter.SHOW_TEXT, null)
+      const nodes = []
+      let n
+      while ((n = walker.nextNode())) nodes.push(n)
+      nodes.forEach((tn) => {
+        const text = tn.nodeValue
+        if (!text || !text.trim()) return
+        const frag = document.createDocumentFragment()
+        for (const ch of text) {
+          if (ch === " ") {
+            frag.appendChild(document.createTextNode(ch))
+            continue
+          }
+          const s = document.createElement("span")
+          s.className = "ch"
+          s.textContent = ch
+          frag.appendChild(s)
+        }
+        if (tn.parentNode) tn.parentNode.replaceChild(frag, tn)
+      })
+      line.dataset.karaoke = "1"
+    })
+  } catch (e) {
+    return
+  }
+
+  const chars = Array.from(document.querySelectorAll(".manifesto-inner .manifesto-line .ch"))
+  if (!chars.length) return
+  let i = 0
+  setInterval(() => {
+    chars.forEach((c, k) => c.classList.toggle("lit", k === i))
+    i = (i + 1) % chars.length
+  }, 260)
+}
+initManifestoKaraoke()
