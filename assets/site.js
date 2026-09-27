@@ -1340,7 +1340,6 @@ initCommentsCta()
 initHeaderScroll()
 initStarfield()
 initReveal()
-initPageLoader()
 initBackTop()
 initSearch()
 
@@ -1407,7 +1406,7 @@ function renderSkillCard(item, index) {
     ? `<a class="button button-soft" href="${item.demo}" target="_blank" rel="noopener noreferrer">Demo</a>`
     : ""
   return `
-      <article class="feature-card track-card track-card--${track.tint}" data-card data-tags="${item.tags.join("|")}" data-index="${item.__index}" data-lane="${item.lane}">
+    <article class="feature-card track-card track-card--${track.tint}${index === 0 ? " track-card--featured" : ""}" data-card data-tags="${item.tags.join("|")}" data-index="${item.__index}" data-lane="${item.lane}">
       <div class="feature-topline">
         <span class="badge badge-${track.tint}">${track.label}</span>
         <span class="muted">更新 ${item.updated}</span>
@@ -1427,7 +1426,7 @@ function renderSkillCard(item, index) {
 
 function renderWechatCard(item, index) {
   return `
-    <article class="feature-card wechat-card" data-card data-topic="${item.topic}" data-index="${index}">
+    <article class="feature-card wechat-card${index === 0 ? " wechat-card--lead" : ""}" data-card data-topic="${item.topic}" data-index="${index}">
       <div class="feature-topline">
         <span class="rank">#${String(item.rank).padStart(2, "0")}</span>
         <span class="badge badge-rose">精选</span>
@@ -1476,7 +1475,7 @@ function renderTrackSection(track, items) {
         </div>
       </div>
       <div class="toolbar track-toolbar" data-skill-filters="${track.id}" aria-label="${track.label} 筛选"></div>
-      <div class="feature-grid track-grid" data-skill-grid="${track.id}">
+      <div class="feature-grid track-grid track-grid--${track.id}" data-skill-grid="${track.id}">
         ${sorted.map((item, index) => renderSkillCard(item, index)).join("")}
       </div>
     </section>
