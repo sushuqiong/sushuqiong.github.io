@@ -3,112 +3,471 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="sushuqiong 的公开研究工作台：医学研究、生信代码、AI 工具与公开写作。">
-    <meta name="theme-color" content="#08141d">
-    <title>sushuqiong · 医学研究、代码与 AI</title>
+    <meta name="description" content="sushuqiong 的个人主页，展示公开 GitHub skills、医学与生信写作、公众号精选内容。研究方向：肿瘤 / 胃癌临床与生信。">
+    <meta name="theme-color" content="#0a1226">
+    <title>sushuqiong · 医学研究，代码与 AI 的公开工作台</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/assets/styles.css?v116">
-    <script>
-      (function () {
-        try {
-          var t = localStorage.getItem("theme");
-          if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
-        } catch (e) {}
-      })();
-    </script>
+    <link rel="stylesheet" href="/assets/styles.css?v115">
+  <script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="sushuqiong · Science Instrument Cabin">
-    <meta property="og:title" content="sushuqiong · 医学研究、代码与 AI">
-    <meta property="og:description" content="医学博士的公开研究工作台：skills、论文、公众号精选与可复用工具。">
+    <meta property="og:site_name" content="sushuqiong · Deep-Space Lab">
+    <meta property="og:title" content="sushuqiong · 医学研究，代码与 AI 的公开工作台">
+    <meta property="og:description" content="医学博士的公开工作台：GitHub skills、论文、公众号精选与灵感电台。">
     <meta property="og:url" content="https://sushuqiong.github.io/">
     <meta property="og:image" content="https://sushuqiong.github.io/assets/og-image.webp">
+    <meta property="og:locale" content="zh_CN">
     <meta name="twitter:card" content="summary_large_image">
-  </head>
+    <meta name="twitter:title" content="sushuqiong · 医学研究，代码与 AI 的公开工作台">
+    <meta name="twitter:description" content="医学博士的公开工作台：GitHub skills、论文、公众号精选与灵感电台。">
+    <meta name="twitter:image" content="https://sushuqiong.github.io/assets/og-image.webp">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Shuqiong Su",
+      "alternateName": "sushuqiong",
+      "url": "https://sushuqiong.github.io/",
+      "description": "医学博士，肿瘤科与介入科医生，生信与 AI 爱好者",
+      "sameAs": ["https://github.com/sushuqiong"]
+    }
+    </script></head>
   <body data-page="home">
     <a class="skip-link" href="#content">跳到内容</a>
     <div data-shell></div>
     <main id="content" class="page">
-      <section class="instrument-hero">
+      <section class="hero hero-command">
         <canvas class="hero-canvas" id="starfield" aria-hidden="true"></canvas>
-        <div class="container instrument-hero-grid">
-          <div class="instrument-copy">
-            <p class="instrument-label"><span class="signal-led"></span> PUBLIC RESEARCH CONSOLE</p>
+        <div class="aurora aurora-1" aria-hidden="true"></div>
+        <div class="aurora aurora-2" aria-hidden="true"></div>
+        <div class="aurora aurora-3" aria-hidden="true"></div>
+        <div class="aurora aurora-4" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="scene-sign">DEEP-SPACE Research Lab</p>
+            <p class="eyebrow">Public Research Workbench · Est. 2026</p>
             <p class="hero-greeting" data-greeting></p>
-            <h1>医学研究<br><span>代码与 AI</span></h1>
-            <p class="hero-bio">医学博士，985 临床医学本科，曾任肿瘤内科和介入科医生，爱好代码和 AI。</p>
-            <p class="instrument-lead">把临床问题转成可阅读、可复用、可核验的公开工作：研究工具、开源 skills、论文与知识写作。</p>
+            <div class="profile-lockup">
+              <span class="profile-index">PROFILE</span>
+              <strong>sushuqiong</strong>
+              <span>医学研究 · 生信代码 · AI 工具</span>
+            </div>
+            <h1>
+              <span class="hero-title-line">医学研究，代码与 AI</span>
+              <span class="hero-title-line hero-title-accent">的公开工作台</span>
+            </h1>
+            <p class="hero-bio">医学博士，985 临床医学本硕，曾任肿瘤科和介入科医生，爱好代码和 AI。</p>
+            <p class="hero-typewriter"><span data-typewriter></span><span class="type-caret" aria-hidden="true"></span></p>
+            <p class="hero-desc">公开我的研究、代码与写作：skills、论文与公众号精选。</p>
+            <p class="hero-focus">研究方向 · 肿瘤 / 胃癌临床与生信</p>
+            <div class="public-tags" aria-label="公开内容标签">
+              <span class="public-tag public-tag--blue">医学研究</span>
+              <span class="public-tag public-tag--teal">生信代码</span>
+              <span class="public-tag public-tag--coral">AI 工具</span>
+              <span class="public-tag public-tag--gold">R 可视化</span>
+            </div>
             <div class="hero-actions">
-              <a class="button button-primary" href="/skills.html">进入 Skills 舱</a>
-              <a class="button button-dark" href="/wechat.html">阅读公众号精选</a>
-              <a class="text-link" href="https://github.com/sushuqiong/" target="_blank" rel="noopener noreferrer">GitHub 主页 <span aria-hidden="true">↗</span></a>
-            </div>
-            <div class="instrument-tags" aria-label="公开内容标签">
-              <span>医学研究</span><span>生信代码</span><span>AI 工具</span><span>R 可视化</span>
+              <a class="button button-primary" href="/skills.html">浏览 Skills</a>
+              <a class="button" href="/wechat.html">公众号精选</a>
+              <a class="button" href="https://github.com/sushuqiong/" target="_blank" rel="noopener noreferrer">GitHub 主页</a>
             </div>
           </div>
-          <div class="research-signal" aria-label="医学研究、代码与 AI 的公开工作关系图">
-            <div class="signal-head"><span>RESEARCH SIGNAL</span><span>LIVE / STATIC DATA</span></div>
-            <div class="signal-visual">
-              <svg viewBox="0 0 640 420" role="img" aria-label="临床问题经过分析与写作形成公开成果的信号图">
-                <defs><linearGradient id="signal-line" x1="0" x2="1"><stop offset="0" stop-color="#4de5e0"/><stop offset="1" stop-color="#e88745"/></linearGradient></defs>
-                <path class="signal-path" d="M36 286 C122 130 168 332 244 210 S376 108 442 224 S522 300 604 112"/>
-                <path class="signal-path signal-path--thin" d="M36 326 C130 270 166 192 254 282 S386 310 470 178 S548 100 604 196"/>
-                <g class="signal-node signal-node--a"><circle cx="36" cy="286" r="13"/><text x="36" y="290">01</text></g>
-                <g class="signal-node signal-node--b"><circle cx="244" cy="210" r="13"/><text x="244" y="214">02</text></g>
-                <g class="signal-node signal-node--c"><circle cx="442" cy="224" r="13"/><text x="442" y="228">03</text></g>
-                <g class="signal-node signal-node--d"><circle cx="604" cy="112" r="13"/><text x="604" y="116">04</text></g>
-              </svg>
-              <div class="signal-caption signal-caption--a"><strong>临床问题</strong><span>Question</span></div>
-              <div class="signal-caption signal-caption--b"><strong>分析路径</strong><span>Analysis</span></div>
-              <div class="signal-caption signal-caption--c"><strong>代码工具</strong><span>Reusable</span></div>
-              <div class="signal-caption signal-caption--d"><strong>公开成果</strong><span>Shareable</span></div>
+          <aside class="hero-panel signal-panel" aria-label="站点概览">
+            <div class="sticky-note sticky-note--yellow" aria-hidden="true">🐔 树鸡在线<br>咕咕！</div>
+            <div class="panel-topline">
+              <p class="eyebrow">站点中枢</p>
+              <span class="panel-status"><i></i> OPEN / PUBLIC</span>
             </div>
-            <div class="signal-readout"><span>CHANNELS</span><strong data-home-lane-count>3</strong><span>LANES</span><i></i><span>OPEN DATA / OPEN METHODS</span></div>
-          </div>
+            <div class="metric-grid">
+              <div>
+                <strong data-home-skill-count>8</strong>
+                <span>公开 skills / 工具</span>
+              </div>
+              <div>
+                <strong data-home-post-count>20</strong>
+                <span>公众号精选推文</span>
+              </div>
+              <div>
+                <strong data-home-lane-count>3</strong>
+                <span>Skills 内容分区</span>
+              </div>
+              <div>
+                <strong data-home-topic-count>16</strong>
+                <span>公众号专题分组</span>
+              </div>
+            </div>
+            <div class="lane-mini-grid" aria-label="快速入口">
+              <a class="lane-mini lane-mini--medical" href="/skills.html#medical">
+                <span>🔭 医学科研导航</span>
+                <strong data-track-count="medical">4</strong>
+                <small>统计 / 生信 / 论文输出</small>
+              </a>
+              <a class="lane-mini lane-mini--writing" href="/skills.html#writing">
+                <span>💻 知识写作工作台</span>
+                <strong data-track-count="writing">3</strong>
+                <small>阅读 / 站点 / 队列 / 精确提问</small>
+              </a>
+              <a class="lane-mini lane-mini--visual" href="/skills.html#visual">
+                <span>📊 R 图形风格系统</span>
+                <strong data-track-count="visual">1</strong>
+                <small>ggplot2 / 多软件风格</small>
+              </a>
+              <div class="lane-mini lane-mini--neutral">
+                <span>🔒 公开边界</span>
+                <strong>0</strong>
+                <small>不公开手机号、住址、私密后台</small>
+              </div>
+            </div>
+            <p class="hero-note">内容来自公开检索，不伪造数据。</p>
+          </aside>
         </div>
-        <div class="container hero-footer-line"><span>临床训练 → 生信代码 → AI 工具</span><span>SCROLL TO EXPLORE</span></div>
+        <div class="hero-scroll-hint" aria-hidden="true">SCROLL</div>
       </section>
 
-      <section class="section instrument-section" id="publications">
+      
+
+      <section class="section reveal" id="road">
         <div class="container">
-          <div class="section-heading-row"><div><p class="section-kicker">SELECTED OUTPUT</p><h2>把问题做成可以继续使用的东西</h2></div><a class="text-link" href="/publications/">查看全部成果 ↗</a></div>
-          <div class="publication-strip">
-            <a class="publication-feature" href="/publications/multiplot.html"><span class="publication-type">R PACKAGE / VISUAL</span><h3>multiplot</h3><p>把常见统计软件的图形风格接入 ggplot2 工作流，让图形选择也成为可复用的方法。</p><span class="publication-arrow">打开成果 <b>↗</b></span></a>
-            <div class="publication-list">
-              <a href="/publications/crc-icd.html"><span>CLINICAL BIOINFORMATICS</span><strong>结直肠癌免疫特征预后模型</strong><small>TCGA / GEO / 免疫微环境</small></a>
-              <a href="/publications/ra-cervical-cancer.html"><span>MOLECULAR RESEARCH</span><strong>类风湿关节炎与宫颈癌共享基因</strong><small>网络分析 / 预后研究</small></a>
-              <a href="/publications/mbo-review.html"><span>CLINICAL REVIEW</span><strong>恶性肠梗阻的治疗现状与展望</strong><small>临床问题 / 综合治疗</small></a>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">The Road</p>
+              <h2>从病床到代码：我的路线</h2>
+              <p>临床、科研、代码与 AI 是同一条路上的不同站点。每一步都让下一个问题更清晰。</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="section lane-section" id="skills-hub">
-        <div class="container">
-          <div class="section-heading-row"><div><p class="section-kicker">OPEN SKILLS</p><h2>三条路线，三个入口</h2><p class="section-intro">不是一个泛列表，而是三种不同的工作方式：研究、写作、图形。</p></div><a class="text-link" href="/skills.html">进入 Skills 舱 ↗</a></div>
-          <div class="lane-rail">
-            <a class="lane-entry lane-entry--medical" href="/skills.html#medical"><span class="lane-mark">MEDICAL</span><strong>医学科研导航</strong><p>从研究问题到统计、生信与论文输出，找到下一步。</p><span class="lane-cta">4 个公开工具 ↗</span></a>
-            <a class="lane-entry lane-entry--writing" href="/skills.html#writing"><span class="lane-mark">WRITING</span><strong>知识写作工作台</strong><p>阅读、整理、建站与精确提问，组织公开知识。</p><span class="lane-cta">3 个公开工具 ↗</span></a>
-            <a class="lane-entry lane-entry--visual" href="/skills.html#visual"><span class="lane-mark">VISUAL</span><strong>R 图形风格系统</strong><p>用 multiplot 把图形风格变成可执行的 R 工作流。</p><span class="lane-cta">1 个公开工具 ↗</span></a>
+          <div class="road-grid road-grid--six">
+            <a class="road-step" href="/road.html">
+              <span class="road-index">01</span>
+              <span class="road-icon" aria-hidden="true">🎓</span>
+              <h3>中山大学求学</h3>
+              <p>中山大学临床医学本科与硕士，在名校打下临床与科研的起点。</p>
+            </a>
+            <a class="road-step" href="/road.html">
+              <span class="road-index">02</span>
+              <span class="road-icon" aria-hidden="true">🩺</span>
+              <h3>临床训练</h3>
+              <p>肿瘤内科与介入科医生，在病床前理解真实临床问题与未被满足的需求。</p>
+            </a>
+            <a class="road-step" href="/road.html">
+              <span class="road-index">03</span>
+              <span class="road-icon" aria-hidden="true">🧭</span>
+              <h3>L-Path 转折</h3>
+              <p>职业转折期选择自我成长路线：学 AI、写代码、写论文、考博，把不确定性转化为可迁移的能力。</p>
+            </a>
+            <a class="road-step" href="/road.html">
+              <span class="road-index">04</span>
+              <span class="road-icon" aria-hidden="true">🚀</span>
+              <h3>自学考博读博</h3>
+              <p>2025 年通过自学考博读博，进入博士阶段，聚焦肿瘤与胃癌研究；爱好 Vibe Coding，关注 AI + 医疗发展。</p>
+            </a>
+            <a class="road-step" href="/road.html">
+              <span class="road-index">05</span>
+              <span class="road-icon" aria-hidden="true">💻</span>
+              <h3>生信与代码</h3>
+              <p>用 R 与 Python 处理多组学数据：TCGA、GEO、单细胞、孟德尔随机化。</p>
+            </a>
+            <a class="road-step" href="/road.html">
+              <span class="road-index">06</span>
+              <span class="road-icon" aria-hidden="true">🤖</span>
+              <h3>AI 与公开创作</h3>
+              <p>把 AI 装进科研工作流，打磨 R 包 multiplot，在公众号持续公开写作。</p>
+            </a>
           </div>
         </div>
       </section>
 
-      <section class="section wechat-section" id="wechat">
-        <div class="container wechat-home-grid">
-          <div><p class="section-kicker">WECHAT SELECTION</p><h2>Oncology树鸡的<br>生信代码</h2><p class="section-intro">从公开检索可见的 20 篇文章里，挑出统计建模、Python、公共数据库和科研工具等主题。</p><a class="button button-primary" href="/wechat.html">浏览 20 篇精选</a></div>
-          <div class="wechat-sample"><div class="wechat-sample-top"><span>PUBLIC SEARCH / CURATED</span><span>20 ARTICLES</span></div><ul data-wechat-compact><li>加载中…</li></ul><a class="text-link" href="/wechat.html">按专题继续阅读 ↗</a></div>
+<section class="manifesto" id="manifesto" aria-label="个人宣言">
+  <div class="manifesto-sky">
+    <span class="manifesto-sun" aria-hidden="true"></span>
+    <svg class="manifesto-planet" viewBox="0 0 60 60" aria-hidden="true">
+      <circle cx="30" cy="30" r="16" fill="rgba(147, 130, 255, 0.4)"/>
+      <ellipse cx="30" cy="30" rx="30" ry="7" fill="none" stroke="rgba(147, 130, 255, 0.35)" stroke-width="1.5" transform="rotate(-18 30 30)"/>
+    </svg>
+    <svg class="manifesto-ship" viewBox="0 0 90 34" aria-hidden="true">
+      <ellipse cx="45" cy="20" rx="30" ry="9" fill="rgba(230,241,255,0.8)"/>
+      <path d="M34 11 Q45 2 56 11 Z" fill="rgba(230,241,255,0.6)"/>
+      <circle cx="34" cy="20" r="2.5" fill="rgba(96,165,250,0.9)"/>
+      <circle cx="45" cy="21" r="2.5" fill="rgba(100,255,218,0.9)"/>
+      <circle cx="56" cy="20" r="2.5" fill="rgba(167,139,250,0.9)"/>
+    </svg>
+    <span class="manifesto-cloud" style="top: 36%; left: 8%;" aria-hidden="true"></span>
+    <span class="manifesto-cloud" style="top: 46%; right: 10%; animation-delay: -9s; width: 240px;" aria-hidden="true"></span>
+    <svg class="manifesto-bird" viewBox="0 0 30 14" style="top: 24%; left: 0;" aria-hidden="true">
+      <path d="M1 7 Q6 1 12 7 Q17 2 22 7 Q26 4 29 7" fill="none" stroke="rgba(30, 40, 60, 0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <svg class="manifesto-bird" viewBox="0 0 30 14" style="top: 32%; left: 0; animation-delay: -7s; animation-duration: 24s;" aria-hidden="true">
+      <path d="M1 7 Q6 1 12 7 Q17 2 22 7 Q26 4 29 7" fill="none" stroke="rgba(30, 40, 60, 0.55)" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span class="m-dust" style="left: 30%; top: 70%; animation-delay: 0s;" aria-hidden="true"></span>
+    <span class="m-dust" style="left: 55%; top: 68%; animation-delay: -1.7s;" aria-hidden="true"></span>
+    <span class="m-dust" style="left: 78%; top: 72%; animation-delay: -3.1s;" aria-hidden="true"></span>
+    </div>
+  <div class="container manifesto-inner">
+    <p class="eyebrow">Manifesto · 我的宣言</p>
+    <p class="manifesto-line">追求<span class="m-key m-red">幸福</span>是人的权利，</p>
+    <p class="manifesto-line">破除幸福是别人<span class="m-key m-blue">恩赐</span>的错误认识，</p>
+    <p class="manifesto-line"><span class="m-key m-purple">大胆探索</span>自己的道路，</p>
+    <p class="manifesto-line">在寻找个人幸福的同时</p>
+    <p class="manifesto-line">为<span class="m-key m-red">社会幸福</span>奉献心力。</p>
+  </div>
+  <svg class="manifesto-skyline" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+    <!-- 远景浅色建筑层 -->
+    <g fill="rgba(230,241,255,0.1)">
+      <rect x="0" y="140" width="90" height="80"/><rect x="110" y="120" width="70" height="100"/>
+      <rect x="210" y="150" width="110" height="70"/><rect x="360" y="130" width="80" height="90"/>
+      <rect x="480" y="155" width="100" height="65"/><rect x="620" y="125" width="90" height="95"/>
+      <rect x="760" y="145" width="70" height="75"/><rect x="880" y="120" width="100" height="100"/>
+      <rect x="1030" y="150" width="80" height="70"/><rect x="1160" y="130" width="110" height="90"/>
+      <rect x="1310" y="145" width="90" height="75"/>
+    </g>
+    <!-- 中景：东方明珠塔 -->
+    <g transform="translate(240,20)">
+      <path d="M60 200 L80 120 L100 200 Z" fill="rgba(13,27,54,0.5)"/>
+      <circle cx="80" cy="112" r="12" fill="rgba(13,27,54,0.6)"/>
+      <circle cx="80" cy="80" r="22" fill="rgba(13,27,54,0.65)"/>
+      <line x1="80" y1="58" x2="80" y2="8" stroke="rgba(13,27,54,0.6)" stroke-width="3"/>
+      <line x1="80" y1="8" x2="92" y2="14" stroke="rgba(147,197,253,0.7)" stroke-width="1.5"/>
+    </g>
+    <!-- 中景：埃菲尔铁塔 -->
+    <g transform="translate(1040,10)">
+      <path d="M40 210 L60 60 L80 210 Z" fill="none" stroke="rgba(13,27,54,0.6)" stroke-width="6"/>
+      <line x1="45" y1="185" x2="75" y2="185" stroke="rgba(13,27,54,0.6)" stroke-width="4"/>
+      <line x1="42" y1="160" x2="78" y2="160" stroke="rgba(13,27,54,0.6)" stroke-width="3"/>
+      <line x1="48" y1="130" x2="72" y2="130" stroke="rgba(13,27,54,0.6)" stroke-width="2.5"/>
+      <rect x="56" y="42" width="8" height="22" fill="rgba(13,27,54,0.65)"/>
+      <line x1="60" y1="42" x2="60" y2="12" stroke="rgba(147,197,253,0.7)" stroke-width="2.5"/>
+    </g>
+    <!-- 中景高楼 -->
+    <g fill="rgba(13,27,54,0.45)">
+      <rect x="330" y="100" width="44" height="120"/>
+      <rect x="380" y="80" width="30" height="140"/>
+      <rect x="700" y="95" width="40" height="125"/>
+      <rect x="750" y="70" width="32" height="150"/>
+      <rect x="560" y="110" width="52" height="110"/>
+    </g>
+    <!-- 前景深色城市 -->
+    <g fill="rgba(7,13,31,0.78)">
+      <rect x="0" y="175" width="70" height="45"/><rect x="80" y="185" width="55" height="35"/>
+      <rect x="145" y="165" width="40" height="55"/><rect x="195" y="190" width="60" height="30"/>
+      <rect x="300" y="180" width="50" height="40"/><rect x="420" y="170" width="42" height="50"/>
+      <rect x="470" y="192" width="70" height="28"/><rect x="600" y="175" width="48" height="45"/>
+      <rect x="660" y="188" width="58" height="32"/><rect x="820" y="172" width="44" height="48"/>
+      <rect x="880" y="188" width="66" height="32"/><rect x="960" y="178" width="40" height="42"/>
+      <rect x="1120" y="182" width="52" height="38"/><rect x="1190" y="168" width="38" height="52"/>
+      <rect x="1250" y="190" width="70" height="30"/><rect x="1340" y="178" width="48" height="42"/>
+      <rect x="1400" y="186" width="40" height="34"/>
+    </g>
+    <!-- 城市灯火（蓝白闪烁） -->
+    <g>
+      <circle class="flicker" cx="20" cy="182" r="1.5" fill="rgba(147,197,253,0.9)"/>
+      <circle class="flicker" cx="40" cy="188" r="1.5" fill="rgba(255,255,255,0.9)" style="animation-delay:-1.1s"/>
+      <circle class="flicker" cx="100" cy="192" r="1.5" fill="rgba(147,197,253,0.9)" style="animation-delay:-2s"/>
+      <circle class="flicker" cx="163" cy="172" r="1.5" fill="rgba(255,255,255,0.9)" style="animation-delay:-0.5s"/>
+      <circle class="flicker" cx="320" cy="186" r="1.5" fill="rgba(147,197,253,0.9)" style="animation-delay:-1.6s"/>
+      <circle class="flicker" cx="438" cy="178" r="1.5" fill="rgba(255,255,255,0.9)" style="animation-delay:-2.4s"/>
+      <circle class="flicker" cx="618" cy="182" r="1.5" fill="rgba(147,197,253,0.9)" style="animation-delay:-0.9s"/>
+      <circle class="flicker" cx="680" cy="194" r="1.5" fill="rgba(255,255,255,0.9)" style="animation-delay:-1.4s"/>
+      <circle class="flicker" cx="838" cy="178" r="1.5" fill="rgba(147,197,253,0.9)" style="animation-delay:-2.1s"/>
+      <circle class="flicker" cx="910" cy="194" r="1.5" fill="rgba(255,255,255,0.9)" style="animation-delay:-0.7s"/>
+      <circle class="flicker" cx="1208" cy="174" r="1.5" fill="rgba(147,197,253,0.9)" style="animation-delay:-1.9s"/>
+      <circle class="flicker" cx="1270" cy="196" r="1.5" fill="rgba(255,255,255,0.9)" style="animation-delay:-0.3s"/>
+      <circle class="flicker" cx="1360" cy="184" r="1.5" fill="rgba(147,197,253,0.9)" style="animation-delay:-2.6s"/>
+    </g>
+    <!-- 人群剪影（面向太阳） -->
+    <g fill="rgba(7,13,31,0.9)">
+      <circle cx="58" cy="168" r="3.4"/><path d="M58 171 L58 184 L56 184 L56 189 L60 189 L60 184 L58 184 Z"/>
+      <circle cx="130" cy="172" r="3.4"/><path d="M130 175 L130 188 L128 188 L128 193 L132 193 L132 188 L130 188 Z"/>
+      <circle cx="210" cy="166" r="3.2"/><path d="M210 169 L210 181 L208 181 L208 186 L212 186 L212 181 L210 181 Z"/>
+      <circle cx="455" cy="164" r="3.4"/><path d="M455 167 L455 180 L453 180 L453 185 L457 185 L457 180 L455 180 Z"/>
+      <circle cx="520" cy="170" r="3.2"/><path d="M520 173 L520 185 L518 185 L518 190 L522 190 L522 185 L520 185 Z"/>
+      <circle cx="645" cy="168" r="3.4"/><path d="M645 171 L645 184 L643 184 L643 189 L647 189 L647 184 L645 184 Z"/>
+      <circle cx="860" cy="166" r="3.2"/><path d="M860 169 L860 181 L858 181 L858 186 L862 186 L862 181 L860 181 Z"/>
+      <circle cx="925" cy="172" r="3.4"/><path d="M925 175 L925 188 L923 188 L923 193 L927 193 L927 188 L925 188 Z"/>
+      <circle cx="1005" cy="167" r="3.2"/><path d="M1005 170 L1005 182 L1003 182 L1003 187 L1007 187 L1007 182 L1005 182 Z"/>
+      <circle cx="1290" cy="170" r="3.4"/><path d="M1290 173 L1290 186 L1288 186 L1288 191 L1292 191 L1292 186 L1290 186 Z"/>
+      <circle cx="1380" cy="166" r="3.2"/><path d="M1380 169 L1380 181 L1378 181 L1378 186 L1382 186 L1382 181 L1380 181 Z"/>
+    </g>
+  </svg>
+</section>
+
+      <section class="section music-band reveal" id="music">
+        <div class="container">
+          <div class="section-head">
+            <div class="sticky-note sticky-note--pink music-note" aria-hidden="true">🎧 边听边逛<br>别把代码删了</div>
+            <div>
+              <p class="eyebrow">Soundtrack</p>
+              <h2>灵感电台</h2>
+              <p>几首陪我写代码、跑分析的古风歌。点击播放，边听边逛。</p>
+            </div>
+          </div>
+          <div class="music-grid" data-music-grid aria-label="歌曲列表"></div>
         </div>
       </section>
 
-      <section class="section route-section" id="road">
-        <div class="container route-grid"><div><p class="section-kicker">PERSONAL ROUTE</p><h2>从临床问题<br>走向公开工具</h2><p class="section-intro">医学训练提供问题意识，代码和 AI 让解决路径更容易被复用。</p><a class="text-link" href="/road.html">查看路线说明 ↗</a></div><div class="route-line"><div><b>01</b><span>临床训练</span></div><div><b>02</b><span>研究问题</span></div><div><b>03</b><span>生信代码</span></div><div><b>04</b><span>AI 与公开创作</span></div></div></div>
+      <section class="section section-tint reveal" id="publications">
+        <div class="container" style="position: relative;">
+          <span class="floating-deco" style="top: -18px; right: 4%;" aria-hidden="true">🧬</span>
+          <div class="section-head">
+            <div class="sticky-note sticky-note--teal pub-note" aria-hidden="true">📄 论文都在这里<br>欢迎引用</div>
+            <div>
+              <p class="eyebrow">Publications</p>
+              <h2>学术成果</h2>
+              <p>从临床问题出发，用生信与代码回答：免疫微环境、公共数据库挖掘与临床综述。点击卡片进入沉浸式阅读。</p>
+            </div>
+          </div>
+          <div class="list-rows pub-list">
+            <a class="row pub-row pub-row--ctarc" href="/publications/crc-icd.html"><span class="pub-icon-badge" aria-hidden="true">🧬</span>
+              <div>
+                <h3>ICD 基因集衍生的结直肠癌免疫特征预后模型</h3>
+                <p>整合 TCGA/GEO 单细胞与批量转录组，以 WGCNA 与机器学习构建 7 基因免疫环境签名（CD79A、CXCR6、IRF4、ISG20、PLCG2、TIGIT、TRAF1），并在外部队列验证其预后分层价值。</p>
+                <div class="post-meta"><span>Cancer Treatment and Research Communications · 2026</span><span>·</span><span>第一作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
+              </div>
+              <span class="badge badge-journal">CTARC</span>
+            </a>
+            <a class="row pub-row pub-row--sci" href="/publications/ra-cervical-cancer.html"><span class="pub-icon-badge" aria-hidden="true">🔬</span>
+              <div>
+                <h3>类风湿关节炎与宫颈癌共享基因的预后研究</h3>
+                <p>通过 WGCNA 与蛋白互作网络挖掘类风湿关节炎与宫颈癌的共享分子通路，鉴定 CXCL1、CXCL13、ZWINT、PTTG1 四个关键基因与宫颈癌预后相关。</p>
+                <div class="post-meta"><span>Scientific Reports · 2025</span><span>·</span><span>第一作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
+              </div>
+              <span class="badge badge-journal">Sci Rep</span>
+            </a>
+            <a class="row pub-row pub-row--f1000" href="/publications/multiplot.html"><span class="pub-icon-badge" aria-hidden="true">📊</span>
+              <div>
+                <h3>multiplot：在 R 中近似九种作图软件的统计图形风格</h3>
+                <p>开源 ggplot2 扩展，29 个函数一键模拟 Prism、SPSS、Origin、Stata、MATLAB 等九种软件与学术出版风格，以 Plot Style Ontology 形式化图形风格规范。</p>
+                <div class="post-meta"><span>F1000Research · 2026</span><span>·</span><span>第一作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
+              </div>
+              <span class="badge badge-journal">F1000R</span>
+            </a>
+            <a class="row pub-row pub-row--review" href="/publications/mbo-review.html"><span class="pub-icon-badge" aria-hidden="true">🏥</span>
+              <div>
+                <h3>恶性肠梗阻的治疗现状与展望</h3>
+                <p>系统综述恶性肠梗阻的概念演变、综合治疗策略与未来研究方向，为临床诊治提供参考。</p>
+                <div class="post-meta"><span>中国临床研究 · 2025</span><span>·</span><span>通讯作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
+              </div>
+              <span class="badge badge-journal">综述</span>
+            </a>
+            <a class="row pub-row pub-row--chemo" href="/publications/mbo-chemo.html"><span class="pub-icon-badge" aria-hidden="true">💊</span>
+              <div>
+                <h3>化疗治疗胃腺癌腹膜转移合并恶性肠梗阻的临床疗效分析</h3>
+                <p>回顾性分析化疗在胃腺癌腹膜转移合并恶性肠梗阻中的临床疗效与安全性，关注晚期患者的生存质量。</p>
+                <div class="post-meta"><span>消化肿瘤杂志（电子版） · 2024</span><span>·</span><span>通讯作者</span><span>·</span><span class="pub-read-hint">点击沉浸阅读 →</span></div>
+              </div>
+              <span class="badge badge-journal">论著</span>
+            </a>
+          </div>
+        </div>
       </section>
 
-      <section class="section music-band" id="music"><div class="container music-minimal"><div><p class="section-kicker">OPTIONAL SOUNDTRACK</p><h2>灵感电台</h2><p>手动播放的彩蛋，不打断阅读。</p></div><div class="music-grid" data-music-grid aria-label="歌曲列表"></div></div></section>
+      <section class="section reveal" id="skills-hub">
+        <div class="container"><span class="floating-deco" style="top: -10px; left: 6%;" aria-hidden="true">📊</span>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Skills Hub</p>
+              <h2>公开 skills 与研究工具</h2>
+              <p>按医学科研、知识写作和 R 可视化三条线组织，每个入口都会走向不同内容池。</p>
+            </div>
+            <a class="section-link" href="/skills.html">进入中心</a>
+          </div>
+          <div class="feature-strip">
+            <a class="feature-tile tile-medical" href="/skills.html#medical">
+              <span class="tile-mark">01 / MEDICAL</span>
+              <h3>医学科研导航</h3>
+              <p>统计、生信、论文输出三条路线，把医学研究问题拆成可执行任务。</p>
+            </a>
+            <a class="feature-tile tile-writing" href="/skills.html#writing">
+              <span class="tile-mark">02 / WRITING</span>
+              <h3>知识写作工作台</h3>
+              <p>从阅读、可视化、站点、队列和精确提问五个入口组织知识生产。</p>
+            </a>
+            <a class="feature-tile tile-visual" href="/skills.html#visual">
+              <span class="tile-mark">03 / VISUAL</span>
+              <h3>R 图形风格系统</h3>
+              <p>用 multiplot 把常见统计软件图形风格接入 ggplot2 工作流。</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      
+
+      <section class="section section-band reveal" id="wechat">
+        <div class="container split"><span class="floating-deco" style="top: -10px; left: 5%;" aria-hidden="true">📱</span>
+          <div>
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">WeChat Selection</p>
+                <h2>公众号精选：Oncology树鸡的生信代码</h2>
+                <p>公开检索已扩展到 20 篇代表作，继续保留精选、可核验和隐私边界三条原则。</p>
+              </div>
+              <span class="fans-badge" title="公众号当前关注人数">⭐ 粉丝 1.6 万</span>
+            </div>
+            <div class="list-rows">
+              <ul class="wechat-compact" data-wechat-compact aria-label="公众号精选推文列表">
+                <li>加载中…</li>
+              </ul>
+              <p class="wechat-more-note">以上为公开检索可见的 20 篇代表作，完整内容请扫码关注公众号查看。</p>
+            </div>
+          </div>
+          <aside class="figure-panel">
+            <p class="eyebrow">扫码关注 · 树鸡的生信代码</p>
+            <div class="qr-row">
+              <img class="qr-img" src="/assets/wechat-qr.webp" alt="Oncology树鸡的生信代码 公众号二维码" width="104" height="104" loading="lazy">
+              <div>
+                <p class="qr-text">用微信扫一扫，关注「Oncology树鸡的生信代码」，一起学生信、写代码、做科研。</p>
+                <a class="button button-primary" href="/wechat.html">查看精选</a>
+              </div>
+            </div>
+            <p class="qr-note">这里不使用公众号后台链接，不公开登录凭据，不声称无法验证的阅读量排行。文章入口使用公开搜索链接，便于读者自行核对。</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section section-notes reveal" id="notes">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Recent Notes</p><span class="floating-deco" style="top: -12px; right: 8%;" aria-hidden="true">✍️</span>
+              <h2>站点更新</h2>
+            </div>
+            <a class="section-link" href="/archives/">归档</a>
+          </div>
+          <div class="grid-two">
+            <article class="note-card">
+              <h3>深空实验室大版本更新</h3>
+              <p>银河背景、学术成果沉浸阅读、L-Path 路线、小公鸡吉祥物与全站动效上线。</p>
+              <div class="post-meta"><time datetime="2026-08-28">2026-08-28</time><span>·</span><span>视觉升级</span></div>
+            </article>
+            <article class="note-card">
+              <h3>学术成果页上线</h3>
+              <p>五篇论文加入沉浸式阅读详情页，支持点击卡片进入全文导读。</p>
+              <div class="post-meta"><time datetime="2026-08-28">2026-08-28</time><span>·</span><span>内容更新</span></div>
+            </article>
+            <article class="note-card">
+              <h3>建立 skills 中心</h3>
+              <p>把公开 GitHub 仓库整理为可筛选、可打开、可扩展的技能卡片。</p>
+              <div class="post-meta"><time datetime="2026-08-07">2026-08-07</time><span>·</span><span>站点升级</span></div>
+            </article>
+            <article class="note-card">
+              <h3>接入公众号精选</h3>
+              <p>根据公开检索结果整理“Oncology树鸡的生信代码”的代表性推文。</p>
+              <div class="post-meta"><time datetime="2026-08-07">2026-08-07</time><span>·</span><span>公开内容</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
     <div data-footer></div>
-    <script src="/assets/vendor/anime.min.js"></script>
-    <script type="module" src="/assets/site.js?v116"></script>
+        <script src="/assets/vendor/anime.min.js"></script>
+<script type="module" src="/assets/site.js?v115"></script>
   </body>
 </html>

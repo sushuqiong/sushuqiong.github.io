@@ -2,8 +2,7 @@
 """v114：修复小图标/emoji 变蓝（移除误加的渐变填充），保留 emoji 原色"""
 import os
 
-# Run this helper from the repository root so it remains portable.
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(r"C:\Users\fengq\website-redesign\site")
 css_path = "assets/styles.css"
 css = open(css_path, encoding="utf-8").read()
 

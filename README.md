@@ -59,7 +59,7 @@
 ```bash
 git clone https://github.com/sushuqiong/sushuqiong.github.io.git
 cd sushuqiong.github.io
-python -m http.server 8777   # then open the local preview URL shown by the server
+python -m http.server 8777   # 打开 http://127.0.0.1:8777
 ```
 
 ## 📌 隐私声明

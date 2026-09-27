@@ -272,7 +272,7 @@ creating a dramatic light/dark cadence"）：
 - 网站公开，**不得出现私人邮箱、手机号、住址、后台入口、登录凭据、本机绝对路径**
 - 页脚社交行只放 GitHub / 公众号 / 电台；投稿邮箱不出现在公开页
 - 路线叙事抽象化（L-Path），不出现具体人名 / 单位名
-- 上线前用 grep 扫描：邮箱正则、手机号正则、本机绝对路径、真实姓名
+- 上线前用 grep 扫描：邮箱正则、手机号正则、`C:\Users`、真实姓名
 
 ---
 
@@ -377,7 +377,7 @@ creating a dramatic light/dark cadence"）：
   用 `file:///.../index.html` 打开验证时，站点里 `/assets/site.js?v87` 这类**绝对路径资源
   在 file:// 协议下解析为 `file:///assets/site.js`，根本加载不到** → 所有 JS 效果都不会执行，
   控制台也不会报错（资源 404 静默）。我曾据此得出"功能未生效"的错误结论。
-  **教训**：静态站渲染验证**必须**用 `python -m http.server` 后打开服务器显示的本地预览地址；
+  **教训**：静态站渲染验证**必须**用 `python -m http.server` + `http://127.0.0.1:port/`；
   只有"纯 DOM 结构检查"才可以用 file://。
 
 - 🐛 **幂等判断过宽导致批次被误跳过**
