@@ -3010,6 +3010,8 @@ body {
 .pub-row--f1000 { background: linear-gradient(120deg, rgba(255, 247, 237, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
 .pub-row--review { background: linear-gradient(120deg, rgba(240, 249, 255, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
 .pub-row--chemo { background: linear-gradient(120deg, rgba(255, 241, 242, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
+.pub-row--jceh { background: linear-gradient(120deg, rgba(236, 253, 245, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
+.pub-row--frontiers { background: linear-gradient(120deg, rgba(253, 244, 255, 0.82) 0%, rgba(255, 255, 255, 0.7) 55%); }
 
 /* ── 场景标牌（借鉴 FIND-A-WORLD 式地图名） ── */
 .scene-sign {
@@ -3297,18 +3299,24 @@ body {
 .pub-row--f1000 { --pub-accent: #f97316; }
 .pub-row--review { --pub-accent: #0ea5e9; }
 .pub-row--chemo { --pub-accent: #e11d48; }
+.pub-row--jceh { --pub-accent: #059669; }
+.pub-row--frontiers { --pub-accent: #c026d3; }
 
 .pub-row--ctarc { background: linear-gradient(120deg, #eff6ff 0%, var(--surface) 55%); }
 .pub-row--sci { background: linear-gradient(120deg, #f5f3ff 0%, var(--surface) 55%); }
 .pub-row--f1000 { background: linear-gradient(120deg, #fff7ed 0%, var(--surface) 55%); }
 .pub-row--review { background: linear-gradient(120deg, #f0f9ff 0%, var(--surface) 55%); }
 .pub-row--chemo { background: linear-gradient(120deg, #fff1f2 0%, var(--surface) 55%); }
+.pub-row--jceh { background: linear-gradient(120deg, #ecfdf5 0%, var(--surface) 55%); }
+.pub-row--frontiers { background: linear-gradient(120deg, #fdf4ff 0%, var(--surface) 55%); }
 
 .pub-row--ctarc .badge-journal { background: rgba(37, 99, 235, 0.12); color: #1d4ed8; border-color: rgba(37, 99, 235, 0.25); }
 .pub-row--sci .badge-journal { background: rgba(124, 58, 237, 0.12); color: #6d28d9; border-color: rgba(124, 58, 237, 0.25); }
 .pub-row--f1000 .badge-journal { background: rgba(249, 115, 22, 0.12); color: #c2410c; border-color: rgba(249, 115, 22, 0.25); }
 .pub-row--review .badge-journal { background: rgba(14, 165, 233, 0.12); color: #0369a1; border-color: rgba(14, 165, 233, 0.25); }
 .pub-row--chemo .badge-journal { background: rgba(225, 29, 72, 0.12); color: #be123c; border-color: rgba(225, 29, 72, 0.25); }
+.pub-row--jceh .badge-journal { background: rgba(5, 150, 105, 0.12); color: #047857; border-color: rgba(5, 150, 105, 0.25); }
+.pub-row--frontiers .badge-journal { background: rgba(192, 38, 211, 0.12); color: #a21caf; border-color: rgba(192, 38, 211, 0.25); }
 
 /* ── 公众号精选：紧凑列表 ── */
 .wechat-compact {
@@ -5289,6 +5297,8 @@ main#content.page {
 .pub-row--f1000 { background: linear-gradient(120deg, rgba(255, 247, 237, 0.94) 0%, rgba(255, 255, 255, 0.9) 55%); }
 .pub-row--review { background: linear-gradient(120deg, rgba(240, 249, 255, 0.94) 0%, rgba(255, 255, 255, 0.9) 55%); }
 .pub-row--chemo { background: linear-gradient(120deg, rgba(255, 241, 242, 0.94) 0%, rgba(255, 255, 255, 0.9) 55%); }
+.pub-row--jceh { background: linear-gradient(120deg, rgba(236, 253, 245, 0.94) 0%, rgba(255, 255, 255, 0.9) 55%); }
+.pub-row--frontiers { background: linear-gradient(120deg, rgba(253, 244, 255, 0.94) 0%, rgba(255, 255, 255, 0.9) 55%); }
 
 /* 卡片内文字保持深色（白底上） */
 .pub-row h3,
@@ -7650,6 +7660,8 @@ html[data-theme="dark"] .pub-row--sci { background: linear-gradient(120deg, rgba
 html[data-theme="dark"] .pub-row--f1000 { background: linear-gradient(120deg, rgba(120, 53, 15, 0.95), rgba(30, 41, 88, 0.9)); }
 html[data-theme="dark"] .pub-row--review { background: linear-gradient(120deg, rgba(8, 47, 73, 0.95), rgba(30, 41, 88, 0.9)); }
 html[data-theme="dark"] .pub-row--chemo { background: linear-gradient(120deg, rgba(136, 19, 55, 0.95), rgba(30, 41, 88, 0.9)); }
+html[data-theme="dark"] .pub-row--jceh { background: linear-gradient(120deg, rgba(6, 78, 59, 0.95), rgba(30, 41, 88, 0.9)); }
+html[data-theme="dark"] .pub-row--frontiers { background: linear-gradient(120deg, rgba(112, 26, 117, 0.95), rgba(30, 41, 88, 0.9)); }
 
 html[data-theme="dark"] #wechat .list-rows {
   background: rgba(255, 255, 255, 0.05);

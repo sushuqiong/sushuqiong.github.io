@@ -820,6 +820,8 @@ async function initSearch() {
     { title: "个人宣言", url: "/#manifesto", desc: "追求幸福是人的权利，大胆探索自己的道路" },
     { title: "灵感电台 · 音乐", url: "/#music", desc: "红昭愿 / 游山恋 / 春庭雪 / 琵琶行" },
     { title: "学术成果", url: "/#publications", desc: "SCI 论文、R 包与中文综述" },
+    { title: "胃癌公共组学数据的二次利用（GC-PROVE）", url: "/publications/gc-omics-reuse.html", desc: "Frontiers in Oncology 综述：从发现过剩到可转化证据" },
+    { title: "慢性肝病中的脂质悖论（JCEH 2026）", url: "/publications/cld-lipid-paradox.html", desc: "肝内转录组 + NHANES/CHARLS：低 AIP 反映代谢脆弱性" },
     { title: "The Road · 我的路线", url: "/#road", desc: "从临床到代码：个人成长路线" },
     { title: "公众号精选", url: "/wechat.html", desc: "Oncology树鸡的生信代码" },
     { title: "关于我", url: "/about/", desc: "医学博士 · 代码与 AI 爱好者" },
